@@ -1,6 +1,6 @@
 const MainFooter = () => {
     return (
-        <footer></footer>
+        <footer style={{ backgroundColor: 'red', height: '300px'}}></footer>
     );
 };
 

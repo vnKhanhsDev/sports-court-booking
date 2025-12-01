@@ -1,0 +1,127 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.viewAll {
+    color: #007bff;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.listWrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.list {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    flex: 0 0 calc((100% - 3 * 16px) / 4);
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 18px;
+    color: #111827;
+}
+
+.arrowLeft {
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.arrowRight {
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.arrow:hover {
+    background-color: #e5e7eb;
+}
+
+/* Mask ở 2 bên */
+.maskLeft,
+.maskRight {
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    pointer-events: none;
+}
+
+.maskLeft {
+    left: 0;
+    background: linear-gradient(to right, white, transparent);
+}
+
+.maskRight {
+    right: 0;
+    background: linear-gradient(to left, white, transparent);
+}
+
+.empty {
+    padding: 16px 0;
+    text-align: center;
+}
+
+.emptyText {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+@media (max-width: 1024px) {
+    .item {
+        flex: 0 0 calc((100% - 2 * 16px) / 3); /* show ~3 cards */
+    }
+}
+
+@media (max-width: 768px) {
+    .item {
+        flex: 0 0 calc((100% - 1 * 16px) / 2); /* show ~2 cards */
+    }
+}
+
+@media (max-width: 480px) {
+    .item {
+        flex: 0 0 100%; /* 1 card per view on small screens */
+    }
+}
