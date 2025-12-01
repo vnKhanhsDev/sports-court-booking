@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: scb-backend
+  profiles:
+    active: dev
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:namkhanhs.per@gmail.com}
+    password: ${MAIL_PASSWORD:abc}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+
+jwt:
+  signer-key: ${JWT_SECRET:abc}
+  access-expiration: 3600000       # 1 hour
+  refresh-expiration: 604800000    # 7 days
+
+app:
+  master-data:
+    enabled: true
+    admin:
+      email: ${ADMIN_EMAIL:admin@domain.com}
+      password: ${ADMIN_PASSWORD:admin}
+      full-name: System Administrator
+
+---
+# ======================================
+# DEV PROFILE (Local Configuration)
+# ======================================
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sports_court_booking
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  mock-data:
+    enabled: true
+
+---
+# ======================================
+# PROD PROFILE (Server Configuration)
+# ======================================
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+app:
+  mock-data:
+    enabled: false
