@@ -1,4 +1,10 @@
+export { default as AboutUs } from "./AboutUs";
 export { default as CartEmpty } from "./CartEmpty";
+export { default as ColorCourt } from "./ColorCourt";
+export { default as Community } from "./Community";
+export { default as Competition } from "./Competition";
+export { default as FindTeam } from "./FindTeam";
 export { default as Help } from "./Help";
 export { default as Notification } from "./Notification";
 export { default as ShoppingCart } from "./ShoppingCart";
+export { default as Support } from "./Support";
