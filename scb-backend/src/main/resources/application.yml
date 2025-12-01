@@ -8,7 +8,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: ${MAIL_USERNAME:namkhanhs.per@gmail.com}
-    password: ${MAIL_PASSWORD:abc}
+    password: ${MAIL_PASSWORD:mcaq qbky jfpe tsgc}
     protocol: smtp
     properties:
       mail:
@@ -20,7 +20,7 @@ spring:
             trust: smtp.gmail.com
 
 jwt:
-  signer-key: ${JWT_SECRET:abc}
+  signer-key: ${JWT_SECRET:e2639cd3386d24172c7e92f6e3190afaf3457c910ac2819e7cc782360919f2a6}
   access-expiration: 3600000       # 1 hour
   refresh-expiration: 604800000    # 7 days
 
