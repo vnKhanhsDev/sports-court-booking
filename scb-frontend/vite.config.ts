@@ -10,12 +10,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components'),
+      '@constants': path.resolve(__dirname, './src/constants'),
       '@features': path.resolve(__dirname, './src/features'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@mocks': path.resolve(__dirname, './src/mocks'),
       '@routes': path.resolve(__dirname, './src/routes'),
       '@types': path.resolve(__dirname, './src/types'),
+      '@utils': path.resolve(__dirname, './src/utils'),
     }
   }
 })

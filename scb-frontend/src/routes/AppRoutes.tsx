@@ -1,9 +1,12 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { MainLayout } from '@layouts/index';
+import { MainLayout, AuthLayout } from '@layouts/index';
+import { ROUTES } from '@constants/route';
 
 const HomePage = lazy(() => import('@features/public/home/HomePage'));
 const CourtSearchPage = lazy(() => import('@features/public/court/search/CourtSearchPage'));
+
+const RegisterPage = lazy(() => import('@features/auth/pages/RegisterPage'));
 
 const AppRoutes = () => {
   return (
@@ -12,6 +15,10 @@ const AppRoutes = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/courts" element={<CourtSearchPage />} />
+        </Route>
+
+        <Route element={<AuthLayout />}>
+          <Route path={ROUTES.AUTH.REGISTER_TEMPLATE} element={<RegisterPage />} />
         </Route>
       </Routes>
     </Suspense>

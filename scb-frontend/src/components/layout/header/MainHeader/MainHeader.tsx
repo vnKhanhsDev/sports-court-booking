@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Help, Notification } from '@/components/ui/icons';
 import Cart from './Cart';
+import { ROUTES } from '@/constants/route';
+import { USER_ROLES } from '@/constants/role';
 import styles from './MainHeader.module.css';
 
 const MainHeader = () => {
@@ -9,8 +11,12 @@ const MainHeader = () => {
             <div className='container mx-auto px-6'>
                 <nav className='flex items-center justify-between'>
                     <ul className='flex items-center gap-1'>
-                        <li className={styles.navbarTop__item}><Link to="/">kênh chủ sân</Link></li>
-                        <li className={styles.navbarTop__item}><Link to="/">trở thành chủ sân</Link></li>
+                        <li className={styles.navbarTop__item}>
+                            <Link to={ROUTES.AUTH.getLogin(USER_ROLES.OWNER)}>kênh chủ sân</Link>
+                        </li>
+                        <li className={styles.navbarTop__item}>
+                            <Link to={ROUTES.AUTH.getRegister(USER_ROLES.OWNER)}>trở thành chủ sân</Link>
+                        </li>
                         <li className={styles.navbarTop__item}><a href="">tải ứng dụng</a></li>
                     </ul>
                     <ul className='flex items-center gap-1'>
@@ -26,8 +32,12 @@ const MainHeader = () => {
                                 <span>hỗ trợ</span>
                             </a>
                         </li>
-                        <li className={styles.navbarTop__item}><Link to="/">đăng ký</Link></li>
-                        <li className={styles.navbarTop__item}><Link to="/">đăng nhập</Link></li>
+                        <li className={styles.navbarTop__item}>
+                            <Link to={ROUTES.AUTH.getRegister(USER_ROLES.PLAYER)}>đăng ký</Link>
+                        </li>
+                        <li className={styles.navbarTop__item}>
+                            <Link to={ROUTES.AUTH.getLogin(USER_ROLES.PLAYER)}>đăng nhập</Link>
+                        </li>
                     </ul>
                 </nav>
 

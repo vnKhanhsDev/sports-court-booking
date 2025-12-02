@@ -19,13 +19,14 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
+      "@constants/*": ["./src/constants/*"],
       "@features/*": ["./src/features/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@mocks/*": ["./src/mocks/*"],
       "@routes/*": ["./src/routes/*"],
       "@types/*": ["./src/types/*"],
-
+      "@utils/*": ["./src/utils/*"]
     },
 
     /* Linting */

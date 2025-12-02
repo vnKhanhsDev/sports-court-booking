@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --primary-color: #172a53;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
