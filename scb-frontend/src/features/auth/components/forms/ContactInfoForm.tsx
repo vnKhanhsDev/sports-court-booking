@@ -1,5 +1,6 @@
 import Input from "@components/form/Input";
 import Button from "@components/ui/button/Button";
+import AuthFormFooter from "../ui/AuthFormFooter";
 import useForm from "@/hooks/useForm";
 import { validateContact } from "@/utils/validate";
 import styles from './AuthForm.module.css';
@@ -17,12 +18,7 @@ export default function ContactInfoForm() {
     };
 
     return (
-        <div style={{
-            width: '400px',
-            padding: '30px',
-            backgroundColor: '#fff',
-            borderRadius: '4px',
-        }}>
+        <div className={`${styles.authForm} ${styles.authSideForm}`}>
             <form onSubmit={handleSubmit}>
                 <Input
                     placeholder="Email hoặc số điện thoại"
@@ -39,6 +35,13 @@ export default function ContactInfoForm() {
                     className={styles.submitBtn}
                 />
             </form>
+
+            <AuthFormFooter
+                type="register"
+                onGoogleClick={() => {}}
+                onFacebookClick={() => {}}
+                onNavigateToLogin={() => {}}
+            />
         </div>
     );
 }

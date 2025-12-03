@@ -1,0 +1,67 @@
+/* Forgot password */
+.forgotPassword {
+    font-size: .75rem;
+    color: #05a;
+}
+
+/* Separator */
+.separator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #dbdbdb;
+}
+
+.separatorText {
+    font-size: .75rem;
+    color: #ccc;
+    text-transform: uppercase;
+    padding: 0 16px;
+}
+
+/* Social buttons */
+.socialButton {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, .3);
+    border-radius: 2px;
+}
+
+.socialButton span {
+    color: rgba(0, 0, 0, .8);
+    margin-top: 1.5px;
+}
+
+/* Agreement */
+.agreement {
+    text-align: center;
+    font-size: .75rem;
+    color: #757575;
+    margin-top: 25px;
+}
+
+.agreement a {
+    color: var(--primary-color);
+}
+
+/* Navigation */
+.navigation {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 30px;
+}
+
+.navigation span {
+    color: rgba(0, 0, 0, .3);
+}

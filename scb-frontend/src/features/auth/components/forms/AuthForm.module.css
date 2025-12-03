@@ -1,3 +1,13 @@
+.authForm {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.authSideForm {
+    width: 400px;
+}
+
 .submitBtn {
     width: 100%;
     margin-top: 10px;

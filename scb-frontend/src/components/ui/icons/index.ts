@@ -6,6 +6,7 @@ export { default as Competition } from "./Competition";
 export { default as CourtOutlined } from "./CourtOutlined";
 export { default as Facebook } from "./Facebook";
 export { default as FindTeam } from "./FindTeam";
+export { default as Google } from "./Google";
 export { default as Help } from "./Help";
 export { default as Instagram } from "./Instagram";
 export { default as LocationOutlined } from "./LocationOutlined";
