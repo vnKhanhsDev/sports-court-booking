@@ -14,6 +14,7 @@ export default defineConfig({
       '@features': path.resolve(__dirname, './src/features'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
+      '@lib': path.resolve(__dirname, './src/lib'),
       '@mocks': path.resolve(__dirname, './src/mocks'),
       '@routes': path.resolve(__dirname, './src/routes'),
       '@types': path.resolve(__dirname, './src/types'),

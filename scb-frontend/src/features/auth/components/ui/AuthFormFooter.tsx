@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Google, Facebook } from "@/components/ui/icons";
 import styles from './AuthFormFooter.module.css';
 
@@ -27,7 +26,13 @@ export default function AuthFormFooter({
         <div>
             <div className='h-[30px] flex items-center justify-start'>
                 {!isRegister && (
-                    <Link to="/" className={styles.forgotPassword}>Quên mật khẩu</Link>
+                    <button
+                        type="button" 
+                        onClick={onForgotPassword} 
+                        className={styles.forgotPassword}
+                    >
+                        Quên mật khẩu
+                    </button>
                 )}
             </div>
 

@@ -1,6 +1,7 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
-export default function AuthHeader({ title }: { title: string }) {
+const AuthHeader = React.memo(({ title }: { title: string }) => {
     return (
         <header className="w-full h-21 shadow-md">
             <div className="max-w-[1200px] h-full mx-auto flex items-center justify-between">
@@ -15,4 +16,6 @@ export default function AuthHeader({ title }: { title: string }) {
             </div>
         </header>
     );
-}
+});
+
+export default AuthHeader;

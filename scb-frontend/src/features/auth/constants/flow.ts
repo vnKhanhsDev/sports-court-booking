@@ -1,19 +1,20 @@
 import { lazy } from "react";
 
-export const REGISTER_FLOW = {
-    // OTP: {
-    //     TITLE: 'Xác thực OTP',
-    //     COMPONENT: lazy(() => import('../pages/Register/RegisterVerifyOtp'))
-    // },
-    // USER_INFO: {
-    //     TITLE: 'Thông tin người dùng',
-    //     COMPONENT: lazy(() => import('../components/register/UserInfoForm'))
-    // },
-    // CREATE_PASSWORD: {
-    //     TITLE: 'Tạo mật khẩu',
-    //     COMPONENT: lazy(() => import('../pages/Register/RegisterCreatePassword'))
-    // },
-    // SUCCESS: {
-    //     TITLE: 'Đăng ký thành công',
-    // }
+export const AUTH_STEPS = {
+    OTP: {
+        TITLE: 'Xác thực OTP',
+        COMPONENT: lazy(() => import('../components/forms/VerifyOtpForm'))
+    },
+    PERSONAL_INFO: {
+        TITLE: 'Thông tin cá nhân',
+        COMPONENT: lazy(() => import('../components/forms/UserInfoForm'))
+    },
+    CREATE_PASSWORD: {
+        TITLE: 'Tạo mật khẩu',
+        COMPONENT: lazy(() => import('../components/forms/CreatePasswordForm'))
+    },
+    SUCCESS: {
+        TITLE: 'Thành công',
+        COMPONENT: lazy(() => import('../components/forms/SuccessForm'))
+    }
 } as const;

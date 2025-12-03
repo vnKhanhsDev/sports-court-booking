@@ -7,8 +7,19 @@ import { validateContact } from "@/utils/validate";
 import { ROUTES } from "@/constants/route";
 import { type UserRole } from "@/types/user.types";
 import styles from './AuthForm.module.css';
+import { useEffect } from "react";
 
-export default function ContactInfoForm({ role }: { role: UserRole }) {
+interface ContactInfoFormProps {
+    role: UserRole;
+    onSubmit: (data: { contact: string }) => void;
+    apiErrors?: Record<string, string | string[]>;
+};
+
+export default function ContactInfoForm({
+    role,
+    onSubmit,
+    apiErrors
+}: ContactInfoFormProps) {
     const navigate = useNavigate();
 
     const form = useForm(
@@ -16,10 +27,16 @@ export default function ContactInfoForm({ role }: { role: UserRole }) {
         { contact: validateContact }
     );
 
+    useEffect(() => {
+        if (apiErrors && Object.keys(apiErrors).length > 0) {
+            form.setApiErrors(apiErrors);
+        }
+    }, [apiErrors])
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!form.validateForm()) return;
-        console.log(form.data);
+        await onSubmit(form.data);
     };
 
     return (

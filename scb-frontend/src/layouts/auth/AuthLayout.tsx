@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { type UserRole } from "@/types/user.types";
 import { USER_ROLES } from "@/constants/role";
@@ -8,7 +8,7 @@ import AuthHeader from "./AuthHeader";
 const getAction = (pathname: string) => 
     pathname.split('/').pop()?.toUpperCase() || '';
 
-export default function AuthLayout() {
+const AuthLayout = React.memo(() => {
     const { role } = useParams<{ role: UserRole }>();
     const location = useLocation();
 
@@ -30,4 +30,6 @@ export default function AuthLayout() {
             </main>
         </>
     );
-}
+});
+
+export default AuthLayout;
