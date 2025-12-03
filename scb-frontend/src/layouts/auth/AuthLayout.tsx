@@ -26,7 +26,7 @@ export default function AuthLayout() {
         <>
             <AuthHeader title={title} />
             <main>
-                <Outlet />
+                <Outlet context={{ role }} />
             </main>
         </>
     );

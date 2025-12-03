@@ -1,18 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import Input from "@components/form/Input";
-import Button from "@components/ui/button/Button";
-import AuthFormFooter from "../ui/AuthFormFooter";
-import useForm from "@/hooks/useForm";
-import { validateContact } from "@/utils/validate";
-import { ROUTES } from "@/constants/route";
-import { type UserRole } from "@/types/user.types";
+import Input from '@components/form/Input';
+import Button from '@components/ui/button/Button';
+import AuthFormFooter from '../ui/AuthFormFooter';
+import useForm from '@/hooks/useForm';
+import { validateContact } from '@/utils/validate';
+import { ROUTES } from '@/constants/route';
 import styles from './AuthForm.module.css';
+import { type UserRole } from '@/types/user.types';
+import { useNavigate } from 'react-router-dom';
 
-export default function ContactInfoForm({ role }: { role: UserRole }) {
+export default function LoginForm({ role }: { role: UserRole }) {
     const navigate = useNavigate();
 
     const form = useForm(
-        { contact: "" },
+        { contact: "", password: "" },
         { contact: validateContact }
     );
 
@@ -33,19 +33,29 @@ export default function ContactInfoForm({ role }: { role: UserRole }) {
                     error={form.errors.contact}
                 />
 
+                <Input
+                    type="password"
+                    placeholder="Mật khẩu"                
+                    name="password"
+                    value={form.data.password}
+                    onChange={form.handleChange("password")}
+                    error={form.errors.password}
+                />
+
                 <Button
                     type="submit"
-                    label="tiếp theo"
+                    label="đăng nhập"
                     disabled={!form.isValid}
                     className={styles.submitBtn}
                 />
             </form>
 
             <AuthFormFooter
-                type="register"
+                type="login"
+                onForgotPassword={() => navigate(ROUTES.AUTH.getForgotPassword(role))}
                 onGoogleClick={() => {}}
                 onFacebookClick={() => {}}
-                onNavigateToLogin={() => navigate(ROUTES.AUTH.getLogin(role))}
+                onNavigateToRegister={() => navigate(ROUTES.AUTH.getRegister(role))}
             />
         </div>
     );

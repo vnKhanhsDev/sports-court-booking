@@ -57,12 +57,12 @@ export default function AuthFormFooter({
                 {isRegister ? (
                     <>
                         <span>Bạn đã có tài khoản?</span>{" "}
-                        <Link to="/login">Đăng nhập</Link>
+                        <button type="button" onClick={onNavigateToLogin}>Đăng nhập</button>
                     </>
                 ) : (
                     <>
                         <span>Bạn chưa có tài khoản?</span>{" "}
-                        <Link to="/register">Đăng ký</Link>
+                        <button type="button" onClick={onNavigateToRegister}>Đăng ký</button>
                     </>
                 )}
             </p>
