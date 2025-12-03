@@ -57,6 +57,15 @@ public class Account {
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private Set<AccountRole> roles;
 
+    @OneToOne(mappedBy = "account")
+    private UserProfile userProfile;
+
+    @OneToOne(mappedBy = "account")
+    private PlayerInfo playerInfo;
+
+    @OneToOne(mappedBy = "account")
+    private OwnerInfo ownerInfo;
+
     @Transient
     public boolean hasRole(UserRole role) {
         return roles.stream().map(AccountRole::getRole).anyMatch(role::equals);
