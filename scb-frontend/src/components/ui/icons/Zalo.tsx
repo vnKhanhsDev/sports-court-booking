@@ -7,7 +7,7 @@ const SvgZalo = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 50 50"
     width="1em"
     height="1em"
-    className="icon"
+    className={props.className}
     {...props}
   >
     <path

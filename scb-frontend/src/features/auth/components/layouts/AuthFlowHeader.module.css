@@ -1,0 +1,27 @@
+.flowForm__header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.flowForm__header .backBtn {
+    width: 60px;
+    height: 100%;
+    justify-content: flex-start;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    background-color: transparent;
+    transform: translateX(3px);
+    transition: transform .3s ease;
+}
+
+.flowForm__header .backBtn:hover {
+    transform: translateX(0);
+}
+
+.flowForm__header .title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.25rem;
+    padding-right: 60px;
+}

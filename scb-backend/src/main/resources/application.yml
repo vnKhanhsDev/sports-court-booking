@@ -57,7 +57,7 @@ spring:
 
 app:
   mock-data:
-    enabled: true
+    enabled: false
 
 ---
 # ======================================

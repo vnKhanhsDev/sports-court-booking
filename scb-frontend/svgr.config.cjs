@@ -1,17 +1,23 @@
 module.exports = {
-    expandProps: 'end',
+    expandProps: "end",
     svgProps: {
-        className: 'icon'
+        className: "{props.className}"
     },
     svgo: true,
     svgoConfig: {
         plugins: [
             {
-                name: 'addAttributesToSVGElement',
+                name: "removeAttrs",
+                params: {
+                    attrs: ("fill:none")
+                }
+            },
+            {
+                name: "addAttributesToSVGElement",
                 params: {
                     attributes: [
                         {
-                            'fill': 'currentColor'
+                            fill: "currentColor"
                         }
                     ]
                 }

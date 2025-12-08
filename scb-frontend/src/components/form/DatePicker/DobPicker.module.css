@@ -1,0 +1,13 @@
+.dobPickerLabel {
+    color: #606770;
+    font-size: .75rem;
+    margin-bottom: 3px;
+}
+
+.dobPickerSelect {
+    flex: 1;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}

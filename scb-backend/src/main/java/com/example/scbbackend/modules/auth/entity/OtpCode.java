@@ -11,7 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "otp_codes")
+@Table(
+        name = "otp_codes",
+        indexes = {
+                @Index(name = "idx_contact_type_used", columnList = "contact, type, used")
+        }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,12 +27,8 @@ public class OtpCode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @Column(name = "contact_info", nullable = false, length = 100)
-    private String contactInfo;
+    @Column(nullable = false, length = 100)
+    private String contact;
 
     @Column(nullable = false, length = 10)
     private String code;

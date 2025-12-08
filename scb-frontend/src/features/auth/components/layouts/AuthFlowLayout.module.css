@@ -1,0 +1,7 @@
+.flowForm {
+    width: 500px;
+    padding: 20px 30px 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .14);
+}

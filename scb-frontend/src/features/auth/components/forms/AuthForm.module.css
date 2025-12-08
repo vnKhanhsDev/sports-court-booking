@@ -8,7 +8,23 @@
     width: 400px;
 }
 
+.authFlowForm {
+    width: 500px;
+    padding-top: 20px;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .14);
+}
+
 .submitBtn {
     width: 100%;
     margin-top: 10px;
+}
+
+.timeLeft {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
+.submitBtn {
+    width: 100%;
 }

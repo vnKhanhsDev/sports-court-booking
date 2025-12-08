@@ -1,4 +1,5 @@
 export { default as AboutUs } from "./AboutUs";
+export { default as Back } from "./Back";
 export { default as CartEmpty } from "./CartEmpty";
 export { default as ColorCourt } from "./ColorCourt";
 export { default as Community } from "./Community";
@@ -8,9 +9,12 @@ export { default as Facebook } from "./Facebook";
 export { default as FindTeam } from "./FindTeam";
 export { default as Google } from "./Google";
 export { default as Help } from "./Help";
+export { default as Hide } from "./Hide";
 export { default as Instagram } from "./Instagram";
+export { default as LeftArrow } from "./LeftArrow";
 export { default as LocationOutlined } from "./LocationOutlined";
 export { default as Notification } from "./Notification";
 export { default as ShoppingCart } from "./ShoppingCart";
+export { default as Show } from "./Show";
 export { default as Support } from "./Support";
 export { default as Zalo } from "./Zalo";

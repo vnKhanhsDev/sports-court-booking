@@ -8,18 +8,10 @@ import { ROUTES } from "@/constants/route";
 import { type UserRole } from "@/types/user.types";
 import styles from './AuthForm.module.css';
 import { useEffect } from "react";
+import { useRegisterContext } from "../../context/RegisterContext";
 
-interface ContactInfoFormProps {
-    role: UserRole;
-    onSubmit: (data: { contact: string }) => void;
-    apiErrors?: Record<string, string | string[]>;
-};
-
-export default function ContactInfoForm({
-    role,
-    onSubmit,
-    apiErrors
-}: ContactInfoFormProps) {
+export default function ContactInfoForm({ role }: { role: UserRole }) {
+    const { initFlow, isLoading, apiErrors } = useRegisterContext();
     const navigate = useNavigate();
 
     const form = useForm(
@@ -36,7 +28,7 @@ export default function ContactInfoForm({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!form.validateForm()) return;
-        await onSubmit(form.data);
+        await initFlow(form.data.contact, role);
     };
 
     return (

@@ -1,7 +1,15 @@
 export const ENDPOINTS = {
     AUTH: {
         REGISTER: {
-            AVAILABILITY: '/auth/register/availability',
-        }
+            BASE: '/auth/register',
+            ADD_ROLE: '/auth/register/new-role',
+            AVAILABILITY: '/auth/register/availability'
+        },
+        LOGIN: '/auth/login',
+        FORGOT_PASSWORD: '/auth/forgot-password',
+        LOGOUT: '/auth/logout',
+        VERIFY_OTP: '/auth/verify-otp',
+        RESEND_OTP: '/auth/resend-otp',
+        REFRESH_TOKEN: '/auth/refresh-token'
     }
 } as const;

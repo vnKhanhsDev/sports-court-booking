@@ -13,7 +13,7 @@ public class AuthFlowService {
     public List<AuthFlowStep> determineRegisterSteps(Account account) {
         List<AuthFlowStep> steps = new ArrayList<>();
 
-        steps.add(AuthFlowStep.OTP);
+        steps.add(AuthFlowStep.REGISTER_OTP);
 
         if (account == null) {
             steps.add(AuthFlowStep.PERSONAL_INFO);

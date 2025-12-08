@@ -7,7 +7,7 @@ const SvgColorCourt = (props: SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     width="1em"
     height="1em"
-    className="icon"
+    className={props.className}
     {...props}
   >
     <path

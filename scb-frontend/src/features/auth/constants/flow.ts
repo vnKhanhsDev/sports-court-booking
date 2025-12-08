@@ -1,17 +1,17 @@
 import { lazy } from "react";
 
 export const AUTH_STEPS = {
-    OTP: {
-        TITLE: 'Xác thực OTP',
-        COMPONENT: lazy(() => import('../components/forms/VerifyOtpForm'))
+    REGISTER_OTP: {
+        TITLE: "Xác thực OTP",
+        COMPONENT: lazy(() => import('../components/RegisterSteps/RegisterOtpStep'))
     },
     PERSONAL_INFO: {
         TITLE: 'Thông tin cá nhân',
-        COMPONENT: lazy(() => import('../components/forms/UserInfoForm'))
+        COMPONENT: lazy(() => import('../components/forms/PersonalInfoForm/PersonalInfoForm'))
     },
     CREATE_PASSWORD: {
         TITLE: 'Tạo mật khẩu',
-        COMPONENT: lazy(() => import('../components/forms/CreatePasswordForm'))
+        COMPONENT: lazy(() => import('../components/forms/CreatePasswordForm/CreatePasswordForm'))
     },
     SUCCESS: {
         TITLE: 'Thành công',

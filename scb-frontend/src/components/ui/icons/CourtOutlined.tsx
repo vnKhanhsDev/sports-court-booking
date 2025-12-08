@@ -7,7 +7,7 @@ const SvgCourtOutlined = (props: SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     width="1em"
     height="1em"
-    className="icon"
+    className={props.className}
     {...props}
   >
     <path d="M57 12H7a3.003 3.003 0 0 0-3 3v34a3.003 3.003 0 0 0 3 3h50a3.003 3.003 0 0 0 3-3v-2a1 1 0 0 0-2 0v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V15a1 1 0 0 1 1-1h50a1 1 0 0 1 1 1v27a1 1 0 0 0 2 0V15a3.003 3.003 0 0 0-3-3" />

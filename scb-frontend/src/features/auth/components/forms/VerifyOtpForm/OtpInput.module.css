@@ -1,0 +1,61 @@
+.wrapper {
+    position: relative;
+    margin-top: 30px;
+    cursor: text;
+}
+
+.otpInput {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -9999;
+}
+
+.boxes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.box {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.box.active {
+    border-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+}
+
+.box.error {
+    background: #fff6f7;
+    border-color: #ff424f;
+}
+
+.caret {
+    width: 1px;
+    height: 60%;
+    background-color: #000;
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+}
+
+.errorMessage {
+    height: 20px;
+    font-size: .75rem;
+    color: #ff424f;
+    margin-top: 2px;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}

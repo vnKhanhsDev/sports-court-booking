@@ -8,7 +8,7 @@ const SvgHelp = (props: SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     width="1em"
     height="1em"
-    className="icon"
+    className={props.className}
     {...props}
   >
     <path d="M256 0C114.509 0 0 114.496 0 256c0 141.489 114.496 256 256 256 141.491 0 256-114.496 256-256C512 114.509 397.504 0 256 0m0 476.279c-121.462 0-220.279-98.816-220.279-220.279S134.538 35.721 256 35.721 476.279 134.537 476.279 256 377.463 476.279 256 476.279" />

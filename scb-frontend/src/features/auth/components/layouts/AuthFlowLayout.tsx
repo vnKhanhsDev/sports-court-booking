@@ -1,4 +1,5 @@
 import ProgressBar from "../ui/ProgressBar";
+import styles from './AuthFlowLayout.module.css';
 
 interface AuthFlowLayoutProps {
     children: React.ReactNode;
@@ -15,7 +16,9 @@ export default function AuthFlowLayout({
         <div>
             <div className="max-w-[1040px] mx-auto min-h-[600px] flex flex-col items-center justify-start">
                 <ProgressBar steps={steps} currentStep={currentStep} />
-                {children}
+                <section className={styles.flowForm}>
+                    {children}
+                </section>
             </div>
         </div>
     );

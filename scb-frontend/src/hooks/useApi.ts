@@ -4,27 +4,14 @@ import { useCallback, useState } from "react";
 export default function useApi() {
     const [isLoading, setIsLoading] = useState(false);
 
-    const execute = useCallback(async (
-        apiCall: () => Promise<any>,
-        options: {
-            onSuccess?: (data: any) => void,
-            onError?: (error: any) => void
-        }
-    ) => {
+    const execute = useCallback(async (apiCall: () => Promise<any>) => {
         setIsLoading(true);
 
         try {
-            const response = await apiCall();
-
-            options.onSuccess?.(response);
-
-            return response;
+            return await apiCall();
         } catch (error) {
             const axiosError = error as AxiosError<any>;
-
-            options.onError?.(axiosError);
-
-            return { error: axiosError.response?.data };
+            return axiosError.response?.data;
         } finally {
             setIsLoading(false);
         }
