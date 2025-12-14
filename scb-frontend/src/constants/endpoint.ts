@@ -11,5 +11,15 @@ export const ENDPOINTS = {
         VERIFY_OTP: '/auth/verify-otp',
         RESEND_OTP: '/auth/resend-otp',
         REFRESH_TOKEN: '/auth/refresh-token'
+    },
+    PUBLIC: {
+        CATALOG: '/public/catalog',
+    },
+    OWNER: {
+        COURTS: '/owner/courts',
+        PRICE_TEMPLATES: '/owner/courts/price-templates'
+    },
+    MEDIA: {
+        UPLOAD: '/media'
     }
 } as const;

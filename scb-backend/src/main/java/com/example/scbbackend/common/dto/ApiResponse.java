@@ -18,6 +18,7 @@ public class ApiResponse <T> {
 
     private boolean success;
     private int code;
+    private String error;
     private String message;
     private T data;
     private Map<String, Object> errors;
@@ -49,6 +50,7 @@ public class ApiResponse <T> {
         return new ApiResponse<T>().toBuilder()
                 .success(false)
                 .code(apiCode.getCode())
+                .error(apiCode.name())
                 .message(apiCode.getMessage())
                 .errors(errors)
                 .httpStatus(apiCode.getHttpStatus())
@@ -59,6 +61,7 @@ public class ApiResponse <T> {
         return new ApiResponse<T>().toBuilder()
                 .success(false)
                 .code(apiCode.getCode())
+                .error(apiCode.name())
                 .message(apiCode.getMessage())
                 .httpStatus(apiCode.getHttpStatus())
                 .build();

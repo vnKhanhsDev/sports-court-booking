@@ -1,0 +1,35 @@
+.toolbarButton {
+    width: auto !important;
+    min-width: 120px;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 8px;
+}
+
+.cancelButton {
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+}
+
+.cancelButton:hover:not(.disabled) {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    opacity: 1 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modalActions {
+        flex-direction: column-reverse;
+    }
+
+    .modalActions button {
+        width: 100%;
+    }
+}

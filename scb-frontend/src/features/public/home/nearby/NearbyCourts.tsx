@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useGeolocation } from "@/hooks/useGeolocation";
-import { type PublicCourt } from "@/types/court.types";
 import HorizontalCardList from "@/components/common/HorizontalCardList/HorizontalCardList";
 import PublicCourtCard from "@/components/common/card/court/PublicCourtCard";
 
 function NearbyCourts() {
     const { location, loading, error } = useGeolocation();
-    const [courts, setCourts] = useState<PublicCourt[]>([]);
+    const [courts, setCourts] = useState<any[]>([]);
 
     useEffect(() => {
         if (!location) return;
@@ -26,7 +25,7 @@ function NearbyCourts() {
                     title="Sân gần bạn"
                     viewAllLink="/courts"
                     items={courts}
-                    renderItem={(court: PublicCourt) => <PublicCourtCard court={court} />}
+                    renderItem={(court: any) => <PublicCourtCard court={court} />}
                 />
             </div>
         </div>

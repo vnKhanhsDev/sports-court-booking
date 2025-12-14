@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import styles from './PublicCourtCard.module.css';
-import { type PublicCourt } from '@/types/court.types';
 
 export interface PublicCourtCardProps {
-    court?: PublicCourt;
+    court?: any;
 }
 
 const PublicCourtCard = ({ court: propCourt }: PublicCourtCardProps) => {

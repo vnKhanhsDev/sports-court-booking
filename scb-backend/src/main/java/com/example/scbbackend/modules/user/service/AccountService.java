@@ -32,12 +32,6 @@ public class AccountService {
                 accountRepository.findByPhone(contact).orElse(null);
     }
 
-    @Transactional(readOnly = true)
-    public UUID getAccountIdByContact(String contact) {
-        Account account = findAccountByContact(contact);
-        return account != null ? account.getId() : null;
-    }
-
     @Transactional
     public Account createAccount(UserCreationRequest request) {
         boolean isEmail = request.contact().contains("@");

@@ -1,0 +1,161 @@
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    min-width: 300px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #172a53 0%, #3b82f6 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+.meta {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0;
+    font-weight: 500;
+}
+
+.time svg {
+    width: 16px;
+    height: 16px;
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.address {
+    font-size: 0.875rem;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.5;
+}
+
+.address::before {
+    content: '📍';
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+    align-items: flex-start;
+    padding-top: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .actions {
+    opacity: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .card {
+        min-width: 280px;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .title {
+        font-size: 1.125rem;
+    }
+
+    .time,
+    .address {
+        font-size: 0.8125rem;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        min-width: 280px;
+        padding: 16px;
+    }
+
+    .info {
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+}

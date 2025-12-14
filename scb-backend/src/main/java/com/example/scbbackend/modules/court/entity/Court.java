@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "courts")
@@ -40,17 +41,18 @@ public class Court {
     private SurfaceType surfaceType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "facility_price_template_id", nullable = false)
-    private FacilityPriceTemplate facilityPriceTemplate;
+    @JoinColumn(name = "price_template_id")
+    private PriceTemplate priceTemplate;
 
     @Column(nullable = false, length = 100)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(nullable = false, length = 20)
     private CourtStatus status;
 
-    private boolean isOverridePrice = false;
+    @Column(nullable = false, length = 10)
+    private boolean isOverridePrice;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -59,4 +61,13 @@ public class Court {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "court", fetch = FetchType.LAZY)
+    Set<CourtImage> images;
+
+    @PrePersist
+    public void prePersist() {
+        this.status = CourtStatus.PENDING;
+        this.isOverridePrice = this.priceTemplate == null;
+    }
 }

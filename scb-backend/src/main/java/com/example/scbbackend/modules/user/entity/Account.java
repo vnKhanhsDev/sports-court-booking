@@ -7,10 +7,15 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "accounts")
@@ -19,7 +24,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder(toBuilder = true)
-public class Account {
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -69,5 +74,20 @@ public class Account {
     @Transient
     public boolean hasRole(UserRole role) {
         return roles.stream().map(AccountRole::getRole).anyMatch(role::equals);
+    }
+
+    @Transient
+    public Set<String> getRoleNames() {
+        return roles.stream()
+                .map(AccountRole::getRole)
+                .map(UserRole::name)
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoleNames().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .toList();
     }
 }

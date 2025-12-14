@@ -1,0 +1,47 @@
+.header {
+    height: 64px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 6px 24px rgba(15, 28, 56, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    color: #0f1c38;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.backButton:hover {
+    background: #e5e7eb;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.backIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f1c38;
+}

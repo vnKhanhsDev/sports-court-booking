@@ -3,8 +3,8 @@ import useApi from "@/hooks/useApi";
 import type { RegisterContextType, RegisterData, VerifyOtpData, RegisterOtpVerifiedUser } from "../types/auth.types";
 import type { UserRole } from "@/types/user.types";
 import { authService } from "../services/authService";
-import { getErrorMessage } from "@utils/errorMessages";
 import type { OtpType } from "../types/auth.types";
+import { getErrorMessage } from "@/utils/errorHelpers";
 
 const RegisterContext = createContext<RegisterContextType | null>(null);
 
@@ -25,10 +25,9 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
     });
     const [registerOtpVerifiedUser, setRegisterOtpVerifiedUser] = useState<RegisterOtpVerifiedUser | null>(null);
 
-    // ========================
-    // =   REGISTER ACTIONS   =
-    // ========================
-
+    // ======================
+    //    REGISTER ACTIONS   
+    // ======================
     /**
      *  Action 1: Check account availability
      *  @param contact - The contact to check
@@ -38,10 +37,11 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
     const initFlow = useCallback(async (contact: string, role: UserRole) => {
         setApiErrors(null);
 
-        const result = await execute(() => authService.checkAccountAvailability(contact, role));
+        const result = await execute(() => authService.checkRegisterAvailability(contact, role));
 
         if (!result.success) {
-            setApiErrors({ contact: getErrorMessage(result.code) });
+            const errorDetail = getErrorMessage(result.error);
+            setApiErrors({ [errorDetail.field]: errorDetail.message });
             return;
         }
 

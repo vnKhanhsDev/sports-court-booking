@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "facilities")
@@ -45,8 +46,8 @@ public class Facility {
     private LocalTime closingTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 15)
-    private FacilityStatus status = FacilityStatus.PENDING;
+    @Column(length = 15, nullable = false)
+    private FacilityStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -55,4 +56,12 @@ public class Facility {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "facility", fetch = FetchType.LAZY)
+    private Set<Court> courts;
+
+    @PrePersist
+    public void prePersist() {
+        if (status == null) status = FacilityStatus.PENDING;
+    }
 }

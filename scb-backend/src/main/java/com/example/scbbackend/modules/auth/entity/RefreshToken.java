@@ -24,7 +24,7 @@ public class RefreshToken {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, columnDefinition = "TEXT")
     private String token;
 
     @Column(nullable = false, updatable = false)

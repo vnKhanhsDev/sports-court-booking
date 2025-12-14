@@ -3,21 +3,27 @@ import styles from './IconButton.module.css';
 
 interface IconButtonProps {
     children: React.ReactNode;
-    onClick?: () => void;
+    onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
     disabled?: boolean;
     className?: string;
+    type?: "button" | "submit" | "reset";
 }
 
 export default function IconButton({
     children,
     onClick,
     disabled = false,
-    className = ''
+    className = "",
+    type = "button",
 }: IconButtonProps) {
-
     return (
-        <button className={clsx(styles.iconButton, className)}>
+        <button
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+            className={clsx(styles.iconButton, className)}
+        >
             {children}
-        </button>        
+        </button>
     );
 }

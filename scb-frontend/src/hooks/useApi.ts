@@ -10,6 +10,7 @@ export default function useApi() {
         try {
             return await apiCall();
         } catch (error) {
+            console.log(error);
             const axiosError = error as AxiosError<any>;
             return axiosError.response?.data;
         } finally {

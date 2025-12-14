@@ -21,8 +21,14 @@ spring:
 
 jwt:
   signer-key: ${JWT_SECRET:e2639cd3386d24172c7e92f6e3190afaf3457c910ac2819e7cc782360919f2a6}
-  access-expiration: 3600000       # 1 hour
-  refresh-expiration: 604800000    # 7 days
+  access-expiration: 900000       # 15 minutes
+  refresh-expiration: 604800000   # 7 days
+  register-expiration: 1800000    # 30 minutes
+
+cloudinary:
+  cloud-name: dfconmate
+  api-key: 748165771485967
+  api-secret: fNfkvYr-w658DE74fGnmaOyK6jQ
 
 app:
   master-data:
@@ -57,7 +63,7 @@ spring:
 
 app:
   mock-data:
-    enabled: false
+    enabled: true
 
 ---
 # ======================================

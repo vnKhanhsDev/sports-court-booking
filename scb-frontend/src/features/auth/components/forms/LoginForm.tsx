@@ -1,14 +1,36 @@
-import Input from '@components/form/Input';
+// 1. Frameworks & Libraries
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// 2. External Components
+import { TextField, PasswordField } from '@components/form';
 import Button from '@components/ui/button/Button';
-import AuthFormFooter from '../ui/AuthFormFooter';
+
 import useForm from '@/hooks/useForm';
 import { validateContact } from '@/utils/validate';
 import { ROUTES } from '@/constants/route';
-import styles from './AuthForm.module.css';
 import { type UserRole } from '@/types/user.types';
-import { useNavigate } from 'react-router-dom';
 
-export default function LoginForm({ role }: { role: UserRole }) {
+// 3. Internal Components
+import type { LoginData } from '../../types/auth.types';
+import AuthFormFooter from '../ui/AuthFormFooter';
+
+// 4. Styles
+import styles from './AuthForm.module.css';
+
+interface LoginFormProps {
+    role: UserRole;
+    onSubmit: (data: LoginData) => Promise<void>;
+    apiError: any;
+    isLoading?: boolean;
+}
+
+export default function LoginForm({
+    role,
+    onSubmit,
+    apiError,
+    isLoading = false,
+}: LoginFormProps) {
     const navigate = useNavigate();
 
     const form = useForm(
@@ -16,16 +38,22 @@ export default function LoginForm({ role }: { role: UserRole }) {
         { contact: validateContact }
     );
 
+    useEffect(() => {
+        if (apiError && Object.keys(apiError).length > 0) {
+            form.setApiErrors(apiError);
+        }
+    }, [apiError])
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!form.validateForm()) return;
-        console.log(form.data);
+        await onSubmit({ ...form.data, role });
     };
 
     return (
         <div className={`${styles.authForm} ${styles.authSideForm}`}>
             <form onSubmit={handleSubmit}>
-                <Input
+                <TextField
                     placeholder="Email hoặc số điện thoại"
                     name="contact"
                     value={form.data.contact}
@@ -33,7 +61,7 @@ export default function LoginForm({ role }: { role: UserRole }) {
                     error={form.errors.contact}
                 />
 
-                <Input
+                <PasswordField
                     type="password"
                     placeholder="Mật khẩu"                
                     name="password"
@@ -45,7 +73,7 @@ export default function LoginForm({ role }: { role: UserRole }) {
                 <Button
                     type="submit"
                     label="đăng nhập"
-                    disabled={!form.isValid}
+                    disabled={!form.isValid || isLoading}
                     className={styles.submitBtn}
                 />
             </form>
@@ -53,8 +81,8 @@ export default function LoginForm({ role }: { role: UserRole }) {
             <AuthFormFooter
                 type="login"
                 onForgotPassword={() => navigate(ROUTES.AUTH.getForgotPassword(role))}
-                onGoogleClick={() => {}}
-                onFacebookClick={() => {}}
+                onGoogleClick={() => console.log('google click')}
+                onFacebookClick={() => console.log('facebook click')}
                 onNavigateToRegister={() => navigate(ROUTES.AUTH.getRegister(role))}
             />
         </div>

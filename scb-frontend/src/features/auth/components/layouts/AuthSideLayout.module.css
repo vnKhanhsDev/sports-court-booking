@@ -1,0 +1,28 @@
+.authSide {
+    background-color: #f1f5f9;
+}
+
+.authSide__background {
+    height: 600px;
+    background-image: url('https://i.pinimg.com/1200x/ec/03/e1/ec03e15d6cf1b556cc3bc28a51aff30d.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.authSide__container {
+    max-width: 1040px;
+    min-height: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.authSide__content {
+    width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: var(--radius-md);
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .14);
+}

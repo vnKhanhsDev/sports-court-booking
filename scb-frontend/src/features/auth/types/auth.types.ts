@@ -3,6 +3,12 @@ import type { OTP_TYPE } from "../constants/otpType";
 
 export type OtpType = (typeof OTP_TYPE)[keyof typeof OTP_TYPE];
 
+export interface LoginData {
+    contact: string;
+    role: UserRole;
+    password: string;
+};
+
 export interface VerifyOtpData {
     contact: string;
     type: OtpType;

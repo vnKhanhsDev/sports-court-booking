@@ -1,0 +1,248 @@
+.container {
+    width: 100%;
+}
+
+.hiddenInput {
+    display: none;
+}
+
+/* Single Upload Mode */
+.singleContainer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.singleUpload {
+    width: 200px;
+    height: 200px;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 0.9375rem;
+}
+
+.previewWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.preview {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    display: block;
+}
+
+.removeButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    z-index: 1;
+}
+
+.removeButton:hover {
+    background: rgba(239, 68, 68, 0.9);
+    transform: scale(1.05);
+}
+
+.removeButton:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.removeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.removeButton svg {
+    width: 18px;
+    height: 18px;
+}
+
+.replaceButton {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.replaceButton:hover {
+    background: rgba(15, 23, 42, 0.9);
+    transform: translateX(-50%) scale(1.05);
+}
+
+.replaceButton:active:not(:disabled) {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.replaceButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateX(-50%);
+}
+
+/* Multiple Upload Mode */
+.multipleContainer {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.multipleContainer .previewWrapper {
+    flex-shrink: 0;
+}
+
+.multipleContainer .preview {
+    width: 120px;
+    height: 120px;
+}
+
+/* Upload Button */
+.uploadButton {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.uploadButton:hover {
+    border-color: #6366f1;
+    background: #eef2ff;
+    color: #6366f1;
+}
+
+.uploadButton.dragging {
+    border-color: #6366f1;
+    background: #eef2ff;
+    color: #6366f1;
+    transform: scale(1.02);
+}
+
+.uploadButton:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.uploadButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+    color: #94a3b8;
+    transform: none;
+}
+
+.uploadButton svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+}
+
+.uploadButton span {
+    user-select: none;
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+    .preview,
+    .singleUpload {
+        width: 180px;
+        height: 180px;
+    }
+
+    .multipleContainer .preview {
+        width: 100px;
+        height: 100px;
+    }
+
+    .uploadButton {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Responsive: mobile */
+@media (max-width: 768px) {
+    .preview,
+    .singleUpload {
+        width: 160px;
+        height: 160px;
+    }
+
+    .multipleContainer {
+        gap: 10px;
+    }
+
+    .multipleContainer .preview {
+        width: 90px;
+        height: 90px;
+    }
+
+    .uploadButton {
+        width: 90px;
+        height: 90px;
+        font-size: 0.8125rem;
+    }
+
+    .uploadButton svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .removeButton {
+        width: 28px;
+        height: 28px;
+        top: 6px;
+        right: 6px;
+    }
+
+    .removeButton svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .replaceButton {
+        padding: 6px 12px;
+        font-size: 0.8125rem;
+        bottom: 6px;
+    }
+}
+
