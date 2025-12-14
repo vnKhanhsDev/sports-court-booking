@@ -3,18 +3,18 @@ package com.example.scbbackend.modules.court.controller;
 import com.example.scbbackend.common.dto.ApiResponse;
 import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.modules.court.dto.request.CreateCourtRequest;
 import com.example.scbbackend.modules.court.dto.response.FacilityBasicForOwner;
 import com.example.scbbackend.modules.court.dto.response.PriceTemplateDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.PriceTemplateResponse;
+import com.example.scbbackend.modules.court.service.CourtService;
 import com.example.scbbackend.modules.court.service.FacilityService;
 import com.example.scbbackend.modules.court.service.PriceTemplateService;
 import com.example.scbbackend.modules.user.entity.Account;
 import com.example.scbbackend.security.annotation.CurrentAccount;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class CourtControllerForOwner {
 
     private final FacilityService facilityService;
     private final PriceTemplateService priceTemplateService;
+    private final CourtService courtService;
 
     @GetMapping
     public ApiResponse<List<FacilityBasicForOwner>> getFacilitiesWithCourts(@CurrentAccount Account account) {
@@ -60,6 +61,18 @@ public class CourtControllerForOwner {
         }
 
         return ApiResponse.success(ApiCode.GET_PRICE_TEMPLATE_SUCCESS, priceTemplate);
+    }
+
+    @PostMapping
+    public ApiResponse<Long> createCourt(
+            @Valid @RequestBody CreateCourtRequest request,
+            @CurrentAccount Account account) {
+        if (account.getOwnerInfo() == null) {
+            throw new AppException(ApiCode.ACCOUNT_NOT_FOUND);
+        }
+
+        var court = courtService.createCourt(request, account.getOwnerInfo());
+        return ApiResponse.success(ApiCode.CREATE_COURT_SUCCESS, court.getId());
     }
 
 }

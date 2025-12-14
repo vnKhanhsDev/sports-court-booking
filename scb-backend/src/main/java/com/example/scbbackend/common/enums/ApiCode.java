@@ -19,6 +19,7 @@ public enum ApiCode {
     UPLOAD_MEDIA_SUCCESS(2005, "Upload media successfully", HttpStatus.OK),
     GET_PRICE_TEMPLATES_SUCCESS(2006, "Get price templates successfully", HttpStatus.OK),
     GET_PRICE_TEMPLATE_SUCCESS(2007, "Get price template successfully", HttpStatus.OK),
+    CREATE_COURT_SUCCESS(2008, "Create court successfully", HttpStatus.CREATED),
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),

@@ -23,6 +23,46 @@ export const courtServiceForOwner = {
             `${ENDPOINTS.OWNER.PRICE_TEMPLATES}/${id}`
         );
         return response.data.data!;
+    },
+
+    createCourt: async (data: {
+        facilityId: number;
+        sportId: number;
+        courtTypeId: number;
+        surfaceTypeId: number;
+        name: string;
+        priceTemplateId?: number;
+        priceItems?: Array<{ startTime: string; endTime: string; price: number }>;
+        imageUrls?: string[];
+    }): Promise<number> => {
+        const requestBody: any = {
+            facilityId: data.facilityId,
+            sportId: data.sportId,
+            courtTypeId: data.courtTypeId,
+            surfaceTypeId: data.surfaceTypeId,
+            name: data.name,
+        };
+        
+        // Only include priceTemplateId if it's a valid number
+        if (data.priceTemplateId !== undefined && data.priceTemplateId !== null && !isNaN(data.priceTemplateId)) {
+            requestBody.priceTemplateId = data.priceTemplateId;
+        }
+        
+        // Only include priceItems if provided and not empty
+        if (data.priceItems && data.priceItems.length > 0) {
+            requestBody.priceItems = data.priceItems;
+        }
+        
+        // Only include imageUrls if provided and not empty
+        if (data.imageUrls && data.imageUrls.length > 0) {
+            requestBody.imageUrls = data.imageUrls;
+        }
+        
+        const response = await privateClient.post<ApiResponse<number>>(
+            ENDPOINTS.OWNER.COURTS,
+            requestBody
+        );
+        return response.data.data!;
     }
 }
 

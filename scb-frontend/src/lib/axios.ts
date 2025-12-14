@@ -59,6 +59,12 @@ privateClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         const token = localStorageUtil.get<string>("accessToken");
         if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
+        
+        // Remove Content-Type header for FormData to let axios set it automatically with boundary
+        if (config.data instanceof FormData && config.headers) {
+            delete config.headers['Content-Type'];
+        }
+        
         return config;
     },
     (error: any) => Promise.reject(error)

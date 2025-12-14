@@ -31,7 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/auth/**",
-            "/api/v1/public/**"
+            "/api/v1/public/**",
+            "/api/v1/media/**"
     };
 
     @Override

@@ -11,7 +11,7 @@ import type { CourtBasicForOwner } from "../types/court.types";
 import styles from "./CourtPageForOwner.module.css";
 
 export default function CourtPageForOwner() {
-    const { facilities, courts, isLoading } = useCourtForOwner();
+    const { facilities, courts, isLoading, refetch } = useCourtForOwner();
     
     const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
     const [isCourtModalOpen, setIsCourtModalOpen] = useState(false);
@@ -22,9 +22,10 @@ export default function CourtPageForOwner() {
         setIsFacilityModalOpen(false);
     };
 
-    const handleCourtSubmit = () => {
-        // CourtForm handles its own state, we just need to close the modal
-        // TODO: Implement API call to create court
+    const handleCourtSubmit = async (courtId: number) => {
+        console.log("Court created with ID:", courtId);
+        // Refresh the courts list to show the newly added court
+        await refetch();
         setIsCourtModalOpen(false);
     };
 
@@ -105,20 +106,11 @@ export default function CourtPageForOwner() {
                 title="Thêm sân mới"
                 size="large"
             >
-                <CourtForm facilities={facilities} />
-                <div className={styles.modalActions}>
-                    <Button
-                        type="button"
-                        label="Hủy"
-                        onClick={() => setIsCourtModalOpen(false)}
-                        className={styles.cancelButton}
-                    />
-                    <Button
-                        type="button"
-                        label="Lưu"
-                        onClick={handleCourtSubmit}
-                    />
-                </div>
+                <CourtForm 
+                    facilities={facilities}
+                    onSubmit={handleCourtSubmit}
+                    onCancel={() => setIsCourtModalOpen(false)}
+                />
             </Modal>
         </>
     );

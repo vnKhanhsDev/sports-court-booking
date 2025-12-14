@@ -92,6 +92,15 @@ export default function PriceTable({
 
     const timeOptions = generateTimeOptions(minTime, maxTime);
     
+    // Sort slots by start time in ascending order
+    const sortedTimeSlots = useMemo(() => {
+        return [...timeSlots].sort((a, b) => {
+            const startA = parseTimeToHour(a.startTime);
+            const startB = parseTimeToHour(b.startTime);
+            return startA - startB;
+        });
+    }, [timeSlots]);
+    
     // Load initial slots when provided
     useEffect(() => {
         if (initialSlots && initialSlots.length > 0) {
@@ -101,29 +110,35 @@ export default function PriceTable({
                 endTime: slot.endTime,
                 price: slot.price.toString(),
             }));
-            setTimeSlots(slots);
+            // Sort initial slots before setting
+            const sortedSlots = slots.sort((a, b) => {
+                const startA = parseTimeToHour(a.startTime);
+                const startB = parseTimeToHour(b.startTime);
+                return startA - startB;
+            });
+            setTimeSlots(sortedSlots);
         } else if (initialSlots && initialSlots.length === 0) {
             // Explicitly empty array means clear the slots
             setTimeSlots([]);
         }
     }, [initialSlots]);
 
-    // Notify parent of changes
+    // Notify parent of changes with sorted slots
     useEffect(() => {
         if (onChange) {
-            onChange(timeSlots);
+            onChange(sortedTimeSlots);
         }
-    }, [timeSlots, onChange]);
+    }, [sortedTimeSlots, onChange]);
     
-    // Validate slots and get errors
-    const slotErrors = useMemo(() => validateSlots(timeSlots), [timeSlots]);
+    // Validate slots and get errors (using sorted slots)
+    const slotErrors = useMemo(() => validateSlots(sortedTimeSlots), [sortedTimeSlots]);
 
     const handleAddSlot = () => {
         let newStartTime: number;
         
-        if (timeSlots.length > 0) {
-            // Get the end time of the last slot
-            const lastSlot = timeSlots[timeSlots.length - 1];
+        if (sortedTimeSlots.length > 0) {
+            // Get the end time of the last slot (after sorting)
+            const lastSlot = sortedTimeSlots[sortedTimeSlots.length - 1];
             newStartTime = parseTimeToHour(lastSlot.endTime);
         } else {
             // If no slots exist, start from minTime
@@ -144,6 +159,7 @@ export default function PriceTable({
             endTime: formatTime(newEndTime),
             price: '',
         };
+        // Add new slot and let sorting handle the order
         setTimeSlots([...timeSlots, newSlot]);
     };
 
@@ -169,7 +185,7 @@ export default function PriceTable({
                     </tr>
                 </thead>
                 <tbody>
-                    {timeSlots.map((slot) => {
+                    {sortedTimeSlots.map((slot) => {
                         const error = slotErrors.get(slot.id);
                         const hasError = error !== undefined;
                         

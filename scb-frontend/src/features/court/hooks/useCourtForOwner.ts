@@ -1,5 +1,5 @@
 import useApi from "@/hooks/useApi";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { courtServiceForOwner } from "../services/courtService";
 import type { FacilityBasicForOwner } from "../types/facility.types";
 import type { CourtBasicForOwner } from "../types/court.types";
@@ -10,23 +10,24 @@ export default function useCourtForOwner() {
     const [facilities, setFacilities] = useState<FacilityBasicForOwner[]>([]);
     const [courts, setCourts] = useState<CourtBasicForOwner[]>([]);
 
-    useEffect(() => {
-        const fetchFacilities = async () => {
-            const result = await execute(() => courtServiceForOwner.getFacilitiesWithCourts());
-            if (result && Array.isArray(result)) {
-                setFacilities(result);
-                // Enrich courts with facility information when flattening
-                const enrichedCourts = result.flatMap(facility => 
-                    facility.courts.map(court => ({
-                        ...court,
-                        facilityName: facility.name
-                    }))
-                );
-                setCourts(enrichedCourts);
-            }
-        };
-        fetchFacilities();
+    const fetchFacilities = useCallback(async () => {
+        const result = await execute(() => courtServiceForOwner.getFacilitiesWithCourts());
+        if (result && Array.isArray(result)) {
+            setFacilities(result);
+            // Enrich courts with facility information when flattening
+            const enrichedCourts = result.flatMap(facility => 
+                facility.courts.map(court => ({
+                    ...court,
+                    facilityName: facility.name
+                }))
+            );
+            setCourts(enrichedCourts);
+        }
     }, [execute]);
 
-    return { facilities, courts, isLoading };
+    useEffect(() => {
+        fetchFacilities();
+    }, [fetchFacilities]);
+
+    return { facilities, courts, isLoading, refetch: fetchFacilities };
 }

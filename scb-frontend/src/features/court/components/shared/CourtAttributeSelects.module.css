@@ -1,0 +1,58 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    align-items: start;
+}
+
+/* Individual field width classes */
+.facilityField {
+    grid-column: 1;
+}
+
+.sportField {
+    grid-column: 2;
+}
+
+.courtTypeField {
+    grid-column: 3;
+}
+
+.surfaceTypeField {
+    grid-column: 4;
+}
+
+.verticalContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+    .gridContainer {
+        grid-template-columns: 2fr 1.5fr 1fr 1fr;
+        gap: 12px;
+    }
+}
+
+/* Responsive: mobile */
+@media (max-width: 768px) {
+    .gridContainer {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .facilityField,
+    .sportField,
+    .courtTypeField,
+    .surfaceTypeField {
+        grid-column: 1;
+    }
+
+    .verticalContainer {
+        gap: 16px;
+    }
+}
