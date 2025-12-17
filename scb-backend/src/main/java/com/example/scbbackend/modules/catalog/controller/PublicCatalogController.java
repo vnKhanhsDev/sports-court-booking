@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/public/catalog")
 @RequiredArgsConstructor
-public class PublicCatalog {
+public class PublicCatalogController {
 
     private final CatalogService catalogService;
 

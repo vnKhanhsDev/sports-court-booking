@@ -13,7 +13,7 @@ const LoginPage = lazy(() => import('@features/auth/pages/LoginPage'));
 
 const OwnerHomePage = lazy(() => import('@features/owner/home/OwnerHomePage'));
 const CourtPageForOwner = lazy(() => import('@features/court/pages/CourtPageForOwner'));
-const PriceTemplatePageForOwner = lazy(() => import('@features/court/pages/PriceTemplatePageForOwner'));
+const PriceTemplatePage = lazy(() => import('@/features/court/pages/PriceTemplatePage'));
 const OwnerBookingPage = lazy(() => import('@features/owner/booking/OwnerBookingPage'));
 
 const AppRoutes = () => {
@@ -36,7 +36,7 @@ const AppRoutes = () => {
           <Route element={<DashboardLayout role={USER_ROLES.OWNER} />}>
             <Route path={ROUTES.OWNER.HOME} element={<OwnerHomePage />} />
             <Route path={ROUTES.OWNER.COURT} element={<CourtPageForOwner />} />
-            <Route path={ROUTES.OWNER.PRICE_TEMPLATE} element={<PriceTemplatePageForOwner />} />
+            <Route path={ROUTES.OWNER.PRICE_TEMPLATE} element={<PriceTemplatePage />} />
             <Route path={ROUTES.OWNER.BOOKING} element={<OwnerBookingPage />} />
           </Route>
         </Route>

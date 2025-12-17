@@ -3,12 +3,15 @@ package com.example.scbbackend.modules.catalog.service;
 import com.example.scbbackend.modules.catalog.dto.response.CourtTypePublicResponse;
 import com.example.scbbackend.modules.catalog.dto.response.SportPublicResponse;
 import com.example.scbbackend.modules.catalog.dto.response.SurfaceTypePublicResponse;
+import com.example.scbbackend.modules.catalog.entity.CourtType;
 import com.example.scbbackend.modules.catalog.entity.Sport;
+import com.example.scbbackend.modules.catalog.entity.SurfaceType;
 import com.example.scbbackend.modules.catalog.repository.CourtTypeRepository;
 import com.example.scbbackend.modules.catalog.repository.SportRepository;
 import com.example.scbbackend.modules.catalog.repository.SurfaceTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +24,7 @@ public class CatalogService {
     private final CourtTypeRepository courtTypeRepository;
     private final SurfaceTypeRepository surfaceTypeRepository;
 
+    @Transactional(readOnly = true)
     public List<SportPublicResponse> getCatalog() {
         List<Sport> sports = sportRepository.findAll();
         
@@ -56,6 +60,18 @@ public class CatalogService {
                     );
                 })
                 .collect(Collectors.toList());
+    }
+
+    public Sport getSportById(Long id) {
+        return sportRepository.findById(id).orElse(null);
+    }
+
+    public CourtType getCourtTypeById(Long id) {
+        return courtTypeRepository.findById(id).orElse(null);
+    }
+
+    public SurfaceType getSurfaceTypeById(Long id) {
+        return surfaceTypeRepository.findById(id).orElse(null);
     }
 
 }

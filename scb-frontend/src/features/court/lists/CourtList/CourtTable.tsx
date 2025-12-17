@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
-import DataTable, { type Column } from '@/components/ui/DataTable/DataTable';
-import Badge from '@/components/ui/badge/Badge';
-import type { CourtBasicForOwner } from '../../types/court.types';
-import styles from './CourtListTable.module.css';
+import { useMemo } from "react";
+import DataTable, { type Column } from "@/components/ui/DataTable/DataTable";
+import Badge from "@/components/ui/badge/Badge";
+import type { CourtBasicForOwner } from "../../types/court.types";
+import styles from "./CourtTable.module.css";
 
-interface CourtListTableProps {
+interface CourtTableProps {
     courts: CourtBasicForOwner[];
     isLoading: boolean;
     title?: string;
@@ -14,60 +14,60 @@ interface CourtListTableProps {
     selectedId?: number;
 }
 
-export default function CourtListTable({
+export default function CourtTable({
     courts,
     isLoading,
-    title = 'Sân',
+    title = "Sân",
     onRowClick,
     onEdit,
     onDelete,
     selectedId,
-}: CourtListTableProps) {
+}: CourtTableProps) {
     const columns: Column<CourtBasicForOwner>[] = useMemo(
         () => [
             {
-                header: 'Tên sân',
-                accessor: 'name',
-                width: '18%',
+                header: "Tên sân",
+                accessor: "name",
+                width: "18%",
             },
             {
-                header: 'Cơ sở',
-                accessor: 'facilityName',
-                width: '18%',
+                header: "Cơ sở",
+                accessor: "facilityName",
+                width: "18%",
             },
             {
-                header: 'Môn thể thao',
-                accessor: 'sportName',
-                width: '15%',
+                header: "Môn thể thao",
+                accessor: "sportName",
+                width: "15%",
             },
             {
-                header: 'Loại sân',
-                accessor: 'courtTypeName',
-                width: '15%',
+                header: "Loại sân",
+                accessor: "courtTypeName",
+                width: "15%",
             },
             {
-                header: 'Trạng thái',
-                accessor: 'status',
-                width: '14%',
+                header: "Trạng thái",
+                accessor: "status",
+                width: "14%",
                 render: (value: string) => {
                     const variant =
-                        value === 'APPROVED'
-                            ? 'success'
-                            : value === 'REJECTED'
-                            ? 'danger'
-                            : 'warning';
+                        value === "APPROVED"
+                            ? "success"
+                            : value === "REJECTED"
+                            ? "danger"
+                            : "warning";
                     return <Badge label={value} variant={variant} />;
                 },
             },
             {
-                header: 'Đã đặt',
-                accessor: 'isBooked',
-                width: '10%',
+                header: "Đã đặt",
+                accessor: "isBooked",
+                width: "10%",
                 render: (value: boolean) => {
                     return (
                         <Badge
-                            label={value ? 'Đã đặt' : 'Trống'}
-                            variant={value ? 'warning' : 'success'}
+                            label={value ? "Đã đặt" : "Trống"}
+                            variant={value ? "warning" : "success"}
                         />
                     );
                 },
@@ -88,7 +88,7 @@ export default function CourtListTable({
         <section className={styles.wrapper}>
             <div className={styles.header}>
                 <h1 className={styles.title}>
-                    {title} <span>({isLoading ? '...' : courts.length})</span>
+                    {title} <span>({isLoading ? "..." : courts.length})</span>
                 </h1>
             </div>
             <div className={styles.tableContainer}>

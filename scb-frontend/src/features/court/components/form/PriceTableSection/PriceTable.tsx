@@ -1,176 +1,92 @@
-import { useState, useMemo, Fragment, useEffect } from "react";
+import { Fragment, useMemo } from "react";
 import { Delete } from "@/components/ui/icons";
 import styles from "./PriceTable.module.css";
-
-export interface TimeSlot {
-    id: string;
-    startTime: string;
-    endTime: string;
-    price: string;
-}
-
-interface SlotError {
-    invalidTimeRange: boolean;
-    overlaps: boolean;
-}
+import {
+    formatTime,
+    generateTimeOptions,
+    parseTimeToHour,
+    normalizeTimeString,
+    type TimeSlot,
+    validateSlots,
+} from "./priceTable.utils";
 
 interface PriceTableProps {
     minTime: number;
     maxTime: number;
-    initialSlots?: Array<{ startTime: string; endTime: string; price: number }>;
-    onChange?: (slots: TimeSlot[]) => void;
-}
-
-function formatTime(hour: number): string {
-    return `${hour.toString().padStart(2, '0')}:00`;
-}
-
-function parseTimeToHour(timeString: string): number {
-    if (!timeString) return 0;
-    const [hours] = timeString.split(':');
-    return parseInt(hours, 10);
-}
-
-function generateTimeOptions(minTime: number, maxTime: number): string[] {
-    const options: string[] = [];
-    for (let hour = minTime; hour <= maxTime; hour++) {
-        options.push(formatTime(hour));
-    }
-    return options;
-}
-
-function doIntervalsOverlap(
-    start1: number,
-    end1: number,
-    start2: number,
-    end2: number
-): boolean {
-    // Two intervals overlap if one starts before the other ends
-    return start1 < end2 && start2 < end1;
-}
-
-function validateSlots(slots: TimeSlot[]): Map<string, SlotError> {
-    const errors = new Map<string, SlotError>();
-    
-    slots.forEach((slot, index) => {
-        const startHour = parseTimeToHour(slot.startTime);
-        const endHour = parseTimeToHour(slot.endTime);
-        
-        const slotError: SlotError = {
-            invalidTimeRange: endHour <= startHour,
-            overlaps: false,
-        };
-        
-        // Check for overlaps with other slots
-        for (let i = 0; i < slots.length; i++) {
-            if (i === index) continue;
-            
-            const otherStart = parseTimeToHour(slots[i].startTime);
-            const otherEnd = parseTimeToHour(slots[i].endTime);
-            
-            if (doIntervalsOverlap(startHour, endHour, otherStart, otherEnd)) {
-                slotError.overlaps = true;
-                break;
-            }
-        }
-        
-        if (slotError.invalidTimeRange || slotError.overlaps) {
-            errors.set(slot.id, slotError);
-        }
-    });
-    
-    return errors;
+    slots: TimeSlot[];
+    onChange: (slots: TimeSlot[]) => void;
+    disabled?: boolean;
 }
 
 export default function PriceTable({
     minTime,
     maxTime,
-    initialSlots,
+    slots,
     onChange,
+    disabled = false,
 }: PriceTableProps) {
-    const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+    const timeOptions = useMemo(
+        () => generateTimeOptions(minTime, maxTime),
+        [minTime, maxTime]
+    );
 
-    const timeOptions = generateTimeOptions(minTime, maxTime);
-    
-    // Sort slots by start time in ascending order
-    const sortedTimeSlots = useMemo(() => {
-        return [...timeSlots].sort((a, b) => {
-            const startA = parseTimeToHour(a.startTime);
-            const startB = parseTimeToHour(b.startTime);
-            return startA - startB;
-        });
-    }, [timeSlots]);
-    
-    // Load initial slots when provided
-    useEffect(() => {
-        if (initialSlots && initialSlots.length > 0) {
-            const slots: TimeSlot[] = initialSlots.map((slot, index) => ({
-                id: `initial-${index}-${Date.now()}`,
-                startTime: slot.startTime,
-                endTime: slot.endTime,
-                price: slot.price.toString(),
-            }));
-            // Sort initial slots before setting
-            const sortedSlots = slots.sort((a, b) => {
-                const startA = parseTimeToHour(a.startTime);
-                const startB = parseTimeToHour(b.startTime);
-                return startA - startB;
-            });
-            setTimeSlots(sortedSlots);
-        } else if (initialSlots && initialSlots.length === 0) {
-            // Explicitly empty array means clear the slots
-            setTimeSlots([]);
-        }
-    }, [initialSlots]);
+    const sortedSlots = useMemo(
+        () =>
+            [...slots].sort(
+                (a, b) => parseTimeToHour(a.startTime) - parseTimeToHour(b.startTime)
+            ),
+        [slots]
+    );
 
-    // Notify parent of changes with sorted slots
-    useEffect(() => {
-        if (onChange) {
-            onChange(sortedTimeSlots);
-        }
-    }, [sortedTimeSlots, onChange]);
-    
-    // Validate slots and get errors (using sorted slots)
-    const slotErrors = useMemo(() => validateSlots(sortedTimeSlots), [sortedTimeSlots]);
+    const slotErrors = useMemo(() => validateSlots(sortedSlots), [sortedSlots]);
 
     const handleAddSlot = () => {
         let newStartTime: number;
-        
-        if (sortedTimeSlots.length > 0) {
-            // Get the end time of the last slot (after sorting)
-            const lastSlot = sortedTimeSlots[sortedTimeSlots.length - 1];
+
+        if (sortedSlots.length > 0) {
+            const lastSlot = sortedSlots[sortedSlots.length - 1];
             newStartTime = parseTimeToHour(lastSlot.endTime);
         } else {
-            // If no slots exist, start from minTime
             newStartTime = minTime;
         }
-        
-        // Ensure start time doesn't exceed maxTime
-        if (newStartTime >= maxTime) {
-            return; // Cannot add more slots
-        }
-        
-        // End time is one hour after start, but not exceeding maxTime
+
+        if (newStartTime >= maxTime) return;
+
         const newEndTime = Math.min(newStartTime + 1, maxTime);
-        
+
         const newSlot: TimeSlot = {
-            id: `new-${Date.now()}`,
+            id: `new-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
             startTime: formatTime(newStartTime),
             endTime: formatTime(newEndTime),
-            price: '',
+            price: "",
         };
-        // Add new slot and let sorting handle the order
-        setTimeSlots([...timeSlots, newSlot]);
+
+        const next = [...sortedSlots, newSlot].sort(
+            (a, b) => parseTimeToHour(a.startTime) - parseTimeToHour(b.startTime)
+        );
+        onChange(next);
     };
 
     const handleDelete = (id: string) => {
-        setTimeSlots(timeSlots.filter(slot => slot.id !== id));
+        const next = slots
+            .filter((slot) => slot.id !== id)
+            .sort((a, b) => parseTimeToHour(a.startTime) - parseTimeToHour(b.startTime));
+        onChange(next);
     };
 
     const handleUpdateSlot = (id: string, field: keyof TimeSlot, value: string) => {
-        setTimeSlots(timeSlots.map(slot =>
-            slot.id === id ? { ...slot, [field]: value } : slot
-        ));
+        // Guard price input to numeric only
+        if (field === "price" && !/^\d*$/.test(value)) {
+            return;
+        }
+
+        const normalizedValue =
+            field === "startTime" || field === "endTime" ? normalizeTimeString(value) : value;
+
+        const updated = slots
+            .map((slot) => (slot.id === id ? { ...slot, [field]: normalizedValue } : slot))
+            .sort((a, b) => parseTimeToHour(a.startTime) - parseTimeToHour(b.startTime));
+        onChange(updated);
     };
 
     return (
@@ -185,19 +101,26 @@ export default function PriceTable({
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedTimeSlots.map((slot) => {
+                    {sortedSlots.map((slot) => {
                         const error = slotErrors.get(slot.id);
-                        const hasError = error !== undefined;
-                        
+                        const hasError = Boolean(error);
+
                         return (
                             <Fragment key={slot.id}>
-                                <tr className={`${styles.row} ${hasError ? styles.rowError : ''}`}>
+                                <tr className={`${styles.row} ${hasError ? styles.rowError : ""}`}>
                                     <td className={styles.cell}>
                                         <div className={styles.inputWrapper}>
                                             <select
-                                                className={`${styles.select} ${error?.invalidTimeRange || error?.overlaps ? styles.selectError : ''}`}
+                                                className={`${styles.select} ${
+                                                    error?.invalidTimeRange || error?.overlaps
+                                                        ? styles.selectError
+                                                        : ""
+                                                }`}
                                                 value={slot.startTime}
-                                                onChange={(e) => handleUpdateSlot(slot.id, 'startTime', e.target.value)}
+                                                onChange={(e) =>
+                                                    handleUpdateSlot(slot.id, "startTime", e.target.value)
+                                                }
+                                                disabled={disabled}
                                             >
                                                 {timeOptions.map((time) => (
                                                     <option key={time} value={time}>
@@ -210,9 +133,16 @@ export default function PriceTable({
                                     <td className={styles.cell}>
                                         <div className={styles.inputWrapper}>
                                             <select
-                                                className={`${styles.select} ${error?.invalidTimeRange || error?.overlaps ? styles.selectError : ''}`}
+                                                className={`${styles.select} ${
+                                                    error?.invalidTimeRange || error?.overlaps
+                                                        ? styles.selectError
+                                                        : ""
+                                                }`}
                                                 value={slot.endTime}
-                                                onChange={(e) => handleUpdateSlot(slot.id, 'endTime', e.target.value)}
+                                                onChange={(e) =>
+                                                    handleUpdateSlot(slot.id, "endTime", e.target.value)
+                                                }
+                                                disabled={disabled}
                                             >
                                                 {timeOptions.map((time) => (
                                                     <option key={time} value={time}>
@@ -228,8 +158,11 @@ export default function PriceTable({
                                                 type="text"
                                                 className={styles.priceInput}
                                                 value={slot.price}
-                                                onChange={(e) => handleUpdateSlot(slot.id, 'price', e.target.value)}
+                                                onChange={(e) =>
+                                                    handleUpdateSlot(slot.id, "price", e.target.value)
+                                                }
                                                 placeholder="0"
+                                                disabled={disabled}
                                             />
                                         </div>
                                     </td>
@@ -239,6 +172,7 @@ export default function PriceTable({
                                             className={styles.deleteButton}
                                             onClick={() => handleDelete(slot.id)}
                                             aria-label="Xóa khung giờ"
+                                            disabled={disabled}
                                         >
                                             <Delete />
                                         </button>
@@ -247,12 +181,12 @@ export default function PriceTable({
                                 {hasError && (
                                     <tr className={styles.errorRow}>
                                         <td colSpan={4} className={styles.errorCell}>
-                                            {error.invalidTimeRange && (
+                                            {error?.invalidTimeRange && (
                                                 <span className={styles.errorMessage}>
                                                     Thời gian kết thúc phải lớn hơn thời gian bắt đầu
                                                 </span>
                                             )}
-                                            {error.overlaps && (
+                                            {error?.overlaps && (
                                                 <span className={styles.errorMessage}>
                                                     Khung giờ này trùng với khung giờ khác
                                                 </span>
@@ -269,6 +203,7 @@ export default function PriceTable({
                                 type="button"
                                 className={styles.addButton}
                                 onClick={handleAddSlot}
+                                disabled={disabled}
                             >
                                 + Thêm khung giờ
                             </button>

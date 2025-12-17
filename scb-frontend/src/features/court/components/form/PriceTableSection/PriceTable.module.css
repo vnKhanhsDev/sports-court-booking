@@ -31,25 +31,24 @@
     border-top-right-radius: 8px;
 }
 
-/* Column widths */
 .headerCell:nth-child(1),
 .cell:nth-child(1) {
-    width: 25%; /* Start time - wider */
+    width: 25%;
 }
 
 .headerCell:nth-child(2),
 .cell:nth-child(2) {
-    width: 25%; /* End time - wider */
+    width: 25%;
 }
 
 .headerCell:nth-child(3),
 .cell:nth-child(3) {
-    width: 35%; /* Price - smaller */
+    width: 35%;
 }
 
 .headerCell:nth-child(4),
 .cell:nth-child(4) {
-    width: 15%; /* Action column */
+    width: 15%;
 }
 
 .row {
@@ -205,7 +204,6 @@
     line-height: 1.4;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .table {
         font-size: 0.875rem;

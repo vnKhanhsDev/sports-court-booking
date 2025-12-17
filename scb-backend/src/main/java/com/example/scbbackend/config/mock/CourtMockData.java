@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -66,19 +67,19 @@ public class CourtMockData {
     private record PriceTemplateItemData(
             LocalTime startTime,
             LocalTime endTime,
-            double price
+            BigDecimal price
     ) {}
 
     private static final List<PriceTemplateItemData> PRICE_TEMPLATE_ITEM_DATA = List.of(
-            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), 200000),  // 0
-            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), 230000),  // 1
-            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), 300000),  // 2
-            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), 250000),  // 3
-            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), 300000),  // 4
-            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), 350000),  // 5
-            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), 350000),  // 6
-            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), 400000),  // 7
-            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), 450000)   // 8
+            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), BigDecimal.valueOf(200_000)),
+            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), BigDecimal.valueOf(230_000)),
+            new PriceTemplateItemData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), BigDecimal.valueOf(300_000)),
+            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), BigDecimal.valueOf(250_000)),
+            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), BigDecimal.valueOf(300_000)),
+            new PriceTemplateItemData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), BigDecimal.valueOf(350_000)),
+            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), BigDecimal.valueOf(350_000)),
+            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), BigDecimal.valueOf(400_000)),
+            new PriceTemplateItemData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), BigDecimal.valueOf(450_000))
     );
 
     private record CourtData(

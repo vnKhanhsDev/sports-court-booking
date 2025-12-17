@@ -17,9 +17,15 @@ public enum ApiCode {
     GET_FACILITIES_WITH_COURTS_SUCCESS(2003, "Get facilities with courts successfully", HttpStatus.OK),
     GET_CATALOG_SUCCESS(2004, "Get catalog successfully", HttpStatus.OK),
     UPLOAD_MEDIA_SUCCESS(2005, "Upload media successfully", HttpStatus.OK),
-    GET_PRICE_TEMPLATES_SUCCESS(2006, "Get price templates successfully", HttpStatus.OK),
+    GET_ALL_PRICE_TEMPLATES_SUCCESS(2006, "Get all price templates successfully", HttpStatus.OK),
     GET_PRICE_TEMPLATE_SUCCESS(2007, "Get price template successfully", HttpStatus.OK),
     CREATE_COURT_SUCCESS(2008, "Create court successfully", HttpStatus.CREATED),
+    GET_PRICE_TEMPLATE_ITEMS_SUCCESS(2009, "Get price template items successfully", HttpStatus.OK),
+    CREATE_PRICE_TEMPLATE_SUCCESS(2010, "Create price template successfully", HttpStatus.OK),
+    UPDATE_PRICE_TEMPLATE_SUCCESS(2011, "Update price template successfully", HttpStatus.OK),
+    DELETE_PRICE_TEMPLATE_SUCCESS(2012, "Delete price template successfully", HttpStatus.OK),
+    GET_FACILITIES_SUCCESS(2013, "Get facilities successfully", HttpStatus.OK),
+    GET_ALL_PRICE_TEMPLATE_OPTIONS_SUCCESS(2014, "Get price template options successfully", HttpStatus.OK),
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
@@ -42,6 +48,7 @@ public enum ApiCode {
     UNAUTHENTICATED(1005, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     USER_NOT_FOUND(1006, "User not found", HttpStatus.NOT_FOUND),
     PRICE_TEMPLATE_NOT_FOUND(1007, "Price template not found", HttpStatus.NOT_FOUND),
+    PRICE_TEMPLATE_IN_USE(1008, "Price template is being used by a court and cannot be deleted", HttpStatus.BAD_REQUEST),
 
     /* SYSTEM ERRORS */
 

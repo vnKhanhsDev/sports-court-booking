@@ -1,7 +1,8 @@
 import { privateClient, type ApiResponse } from "@/lib/axios";
 import { ENDPOINTS } from "@/constants/endpoint";
 import type { FacilityBasicForOwner } from "../types/facility.types";
-import type { PriceTemplateBasic, PriceTemplateDetail } from "../types/price.types";
+import type { BasicPriceTemplate, PriceTemplateDetail } from "../types/price.types";
+import type { FacilityOption } from "../types/court.types";
 
 export const courtServiceForOwner = {
     getFacilitiesWithCourts: async (): Promise<FacilityBasicForOwner[]> => {
@@ -11,9 +12,16 @@ export const courtServiceForOwner = {
         return response.data.data || [];
     },
 
-    getPriceTemplates: async (): Promise<PriceTemplateBasic[]> => {
-        const response = await privateClient.get<ApiResponse<PriceTemplateBasic[]>>(
-            ENDPOINTS.OWNER.PRICE_TEMPLATES
+    getFacilityOptions: async (): Promise<FacilityOption[]> => {
+        const response = await privateClient.get<ApiResponse<FacilityOption[]>>(
+            ENDPOINTS.OWNER.FACILITIES.OPTIONS
+        );
+        return response.data.data || [];
+    },
+
+    getBasicPriceTemplates: async (): Promise<BasicPriceTemplate[]> => {
+        const response = await privateClient.get<ApiResponse<BasicPriceTemplate[]>>(
+            ENDPOINTS.OWNER.PRICE_TEMPLATES.OPTIONS
         );
         return response.data.data || [];
     },

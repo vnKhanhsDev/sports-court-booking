@@ -1,6 +1,7 @@
 package com.example.scbbackend.modules.court.service;
 
 import com.example.scbbackend.modules.court.dto.response.FacilityBasicForOwner;
+import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.repository.FacilityRepository;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
@@ -22,6 +23,16 @@ public class FacilityService {
     private final CourtService courtService;
 
     @Transactional(readOnly = true)
+    public List<FacilityOptionResponse> getFacilityOptions(OwnerInfo ownerInfo) {
+        return facilityRepository.findByOwnerInfo(ownerInfo).stream()
+                .map(f -> new FacilityOptionResponse(
+                        f.getId(),
+                        f.getName()
+                ))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<FacilityBasicForOwner> getFacilitiesWithCourtsByOwner(OwnerInfo ownerInfo) {
         List<Facility> facilities = facilityRepository.findByOwnerInfo(ownerInfo);
 
@@ -36,6 +47,10 @@ public class FacilityService {
                         .courts(courtService.getCourtBasicForOwnerByFacility(facility))
                         .build()
                 ).collect(Collectors.toList());
+    }
+
+    public Facility getFacilityById(Long id) {
+        return facilityRepository.findById(id).orElse(null);
     }
 
 }

@@ -68,9 +68,4 @@ public class PriceTemplate {
     @OneToMany(mappedBy = "priceTemplate", fetch = FetchType.LAZY)
     Set<PriceTemplateItem> priceTemplateItems;
 
-    @PrePersist
-    public void prePersist() {
-        this.isActive = true;
-    }
-
 }

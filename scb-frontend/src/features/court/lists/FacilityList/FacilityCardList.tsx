@@ -1,5 +1,5 @@
 import type { FacilityBasicForOwner } from "../../types/facility.types";
-import FacilityCard from "../ui/FacilityCard";
+import FacilityCard from "./FacilityCard";
 import { LocationOutlined } from "@/components/ui/icons";
 import styles from "./FacilityCardList.module.css";
 

@@ -16,8 +16,19 @@ export const ENDPOINTS = {
         CATALOG: '/public/catalog',
     },
     OWNER: {
+        FACILITIES: {
+            OPTIONS: '/owner/facilities/options',
+        },
         COURTS: '/owner/courts',
-        PRICE_TEMPLATES: '/owner/courts/price-templates'
+        
+        PRICE_TEMPLATES: {
+            ROOT: '/owner/price-templates',
+
+            OPTIONS: '/owner/price-templates/options',
+
+            BY_ID: (id: number | string) => `/owner/price-templates/${id}`,
+            ITEMS: (id: number | string) => `/owner/price-templates/${id}/items`
+        }
     },
     MEDIA: {
         UPLOAD: '/media'

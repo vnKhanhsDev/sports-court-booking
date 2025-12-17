@@ -1,0 +1,75 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.description {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.content {
+    width: 100%;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 16px;
+    /* width: 100%;
+    align-items: start; */
+}
+
+.facilityField {
+    grid-column: span 10;
+}
+
+.sportField {
+    grid-column: span 4;
+}
+
+.courtTypeField {
+    grid-column: span 3;
+}
+
+.surfaceTypeField {
+    grid-column: span 3;
+}
+
+@media (max-width: 1024px) {
+    .gridContainer {
+        grid-template-columns: 2fr 1.5fr 1fr 1fr;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gridContainer {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .facilityField,
+    .sportField,
+    .courtTypeField,
+    .surfaceTypeField {
+        grid-column: 1;
+    }
+}
+

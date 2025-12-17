@@ -1,18 +1,17 @@
-package com.example.scbbackend.modules.court.dto.response;
+package com.example.scbbackend.modules.court.dto.request;
 
 import com.example.scbbackend.modules.court.dto.shared.PriceTemplateItemDto;
+import lombok.NonNull;
 
 import java.util.List;
 
-public record PriceTemplateDetailResponse(
-        Long id,
+public record PriceTemplateUpsertRequest(
         Long facilityId,
         Long sportId,
         Long courtTypeId,
         Long surfaceTypeId,
-        String name,
+        @NonNull String name,
         String description,
-        int version,
         boolean isActive,
-        List<PriceTemplateItemDto> items
+        @NonNull List<PriceTemplateItemDto> items
 ) {}

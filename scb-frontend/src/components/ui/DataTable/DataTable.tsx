@@ -83,7 +83,7 @@ function DataTable<T extends Record<string, any>>({
             return [
                 ...baseColumns,
                 {
-                    header: 'Actions',
+                    header: 'Hành động',
                     accessor: '__actions__',
                     align: 'center' as ColumnAlign,
                     width: '120px',
@@ -94,7 +94,7 @@ function DataTable<T extends Record<string, any>>({
     }, [columns, actions]);
 
     // Get cell value from row
-    const getCellValue = (column: Column<T>, row: T, index: number, actualIndex: number): React.ReactNode => {
+    const getCellValue = (column: Column<T>, row: T, _index: number, actualIndex: number): React.ReactNode => {
         if (column.accessor === '__sequence__') {
             return actualIndex + 1;
         }
@@ -220,13 +220,14 @@ function DataTable<T extends Record<string, any>>({
                                     onClick={() => onRowClick?.(row, actualIndex)}
                                 >
                                     {allColumns.map((column, colIndex) => (
-                                        <td
-                                            key={colIndex}
-                                            className={styles.td}
-                                            style={{
-                                                textAlign: column.align || 'left',
-                                            }}
-                                        >
+                                    <td
+                                        key={colIndex}
+                                        className={styles.td}
+                                        style={{
+                                            width: column.width,
+                                            textAlign: column.align || 'left',
+                                        }}
+                                    >
                                             {getCellValue(column, row, rowIndex, actualIndex)}
                                         </td>
                                     ))}

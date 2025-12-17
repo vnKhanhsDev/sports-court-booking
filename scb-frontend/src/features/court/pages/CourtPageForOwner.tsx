@@ -1,17 +1,19 @@
 import { useState } from "react";
 import useCourtForOwner from "../hooks/useCourtForOwner";
-import FacilityCardList from "../components/layout/FacilityCardList";
-import CourtListTable from "../components/layout/CourtListTable";
+import FacilityCardList from "../lists/FacilityList/FacilityCardList";
+import CourtListTable from "../lists/CourtList/CourtTable";
 import TableToolbar from "@/components/common/TableToolbar/TableToolbar";
 import Modal from "@/components/ui/modal/Modal";
 import Button from "@/components/ui/button/Button";
-import FacilityForm, { type FacilityFormData } from "../components/form/FacilityForm";
-import CourtForm from "../components/form/CourtForm";
+import FacilityForm, { type FacilityFormData } from "../forms/FacilityForm/FacilityForm";
+import CourtForm from "../forms/CourtForm/CourtForm";
 import type { CourtBasicForOwner } from "../types/court.types";
 import styles from "./CourtPageForOwner.module.css";
+import usePriceTemplate from "../hooks/usePriceTemplate";
 
 export default function CourtPageForOwner() {
     const { facilities, courts, isLoading, refetch } = useCourtForOwner();
+    const { basicPriceTemplates, isTemplatesLoading } = usePriceTemplate();
     
     const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
     const [isCourtModalOpen, setIsCourtModalOpen] = useState(false);
@@ -108,6 +110,7 @@ export default function CourtPageForOwner() {
             >
                 <CourtForm 
                     facilities={facilities}
+                    priceTemplates={basicPriceTemplates}
                     onSubmit={handleCourtSubmit}
                     onCancel={() => setIsCourtModalOpen(false)}
                 />

@@ -1,3 +1,8 @@
+export interface FacilityOption {
+    id: number;
+    name: string;
+}
+
 export interface CourtBasicForOwner {
     id: number;
     facilityName: string;
