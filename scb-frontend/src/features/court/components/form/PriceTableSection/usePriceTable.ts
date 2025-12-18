@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { priceTemplateService } from "../../../services/priceTemplateService";
 import useApi from "@/hooks/useApi";
-import type { BasicPriceTemplate, PriceTemplateItem } from "../../../types/price.types";
+import type { PriceTemplateOption, PriceTemplateItem } from "../../../types/price.types";
 import { normalizeTimeString, type TimeSlot } from "./priceTable.utils";
 
 export interface UsePriceTableProps {
-    priceTemplates: BasicPriceTemplate[];
+    priceTemplates?: PriceTemplateOption[];
     facilityId?: string;
     sportId?: string;
     initialTemplateId?: number | null;
@@ -18,13 +18,13 @@ export interface UsePriceTableReturn {
     selectedTemplateId: string;
     slots: TimeSlot[];
     isLoadingTemplate: boolean;
-    filteredTemplates: BasicPriceTemplate[];
+    filteredTemplates: PriceTemplateOption[];
     handleTemplateChange: (templateId: string) => void;
     handleSlotsChange: (newSlots: TimeSlot[]) => void;
 }
 
 export default function usePriceTable({
-    priceTemplates,
+    priceTemplates = [],
     facilityId,
     sportId,
     initialTemplateId,

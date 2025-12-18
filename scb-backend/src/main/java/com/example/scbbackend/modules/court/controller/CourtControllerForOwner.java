@@ -9,7 +9,6 @@ import com.example.scbbackend.modules.court.service.FacilityService;
 import com.example.scbbackend.modules.court.service.PriceTemplateService;
 import com.example.scbbackend.modules.user.entity.Account;
 import com.example.scbbackend.security.annotation.CurrentAccount;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

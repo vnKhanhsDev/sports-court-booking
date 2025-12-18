@@ -1,20 +1,20 @@
 import { useState } from "react";
-import type { FacilityBasicForOwner } from "../../types/facility.types";
+import type { OwnerFacilitySummary } from "../../types/facility.types";
 import useCatalog from "@/hooks/useCatalog";
 import ImageUpload from "@/components/form/ImageUpload/ImageUpload";
 import { TextField } from "@/components/form";
 import { uploadImage } from "@/services/uploadService";
 import { courtServiceForOwner } from "../../services/courtService";
 import useApi from "@/hooks/useApi";
-import PriceTableSection from "./PriceTableSection/PriceTableSection";
-import type { TimeSlot } from "./PriceTableSection/priceTable.utils";
-import CourtAttributeSection, { type CourtAttributeValues } from "./CourtAttributeSection/CourtAttributeSection";
+import PriceTableSection from "../../components/form/PriceTableSection/PriceTableSection";
+import type { TimeSlot } from "../../components/form/PriceTableSection/priceTable.utils";
+import CourtAttributeSection, { type CourtAttributeValues } from "../../components/form/CourtAttributeSection/CourtAttributeSection";
 import styles from "./CourtForm.module.css";
-import type { BasicPriceTemplate } from "../../types/price.types";
+import type { PriceTemplateOption } from "../../types/price.types";
 
 interface CourtFormProps {
-    facilities: FacilityBasicForOwner[];
-    priceTemplates: BasicPriceTemplate[];
+    facilities: OwnerFacilitySummary[];
+    priceTemplates: PriceTemplateOption[];
     onSubmit?: (courtId: number) => void;
     onCancel?: () => void;
 }

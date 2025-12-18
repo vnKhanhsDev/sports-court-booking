@@ -26,6 +26,13 @@ public enum ApiCode {
     DELETE_PRICE_TEMPLATE_SUCCESS(2012, "Delete price template successfully", HttpStatus.OK),
     GET_FACILITIES_SUCCESS(2013, "Get facilities successfully", HttpStatus.OK),
     GET_ALL_PRICE_TEMPLATE_OPTIONS_SUCCESS(2014, "Get price template options successfully", HttpStatus.OK),
+    GET_ALL_PROVINCES_SUCCESS(2015, "Get all provinces successfully", HttpStatus.OK),
+    GET_DISTRICTS_SUCCESS(2016, "Get districts successfully", HttpStatus.OK),
+    GET_WARDS_SUCCESS(2017, "Get wards successfully", HttpStatus.OK),
+    CREATE_FACILITY_SUCCESS(2018, "Create facility successfully", HttpStatus.OK),
+    UPDATE_FACILITY_SUCCESS(2019, "Update facility successfully", HttpStatus.OK),
+    DELETE_FACILITY_SUCCESS(2019, "Delete facility successfully", HttpStatus.OK),
+    GET_FACILITY_SUCCESS(2019, "Get facility successfully", HttpStatus.OK),
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
@@ -49,6 +56,10 @@ public enum ApiCode {
     USER_NOT_FOUND(1006, "User not found", HttpStatus.NOT_FOUND),
     PRICE_TEMPLATE_NOT_FOUND(1007, "Price template not found", HttpStatus.NOT_FOUND),
     PRICE_TEMPLATE_IN_USE(1008, "Price template is being used by a court and cannot be deleted", HttpStatus.BAD_REQUEST),
+    PROVINCE_NOT_FOUND(1009, "Province not found", HttpStatus.NOT_FOUND),
+    DISTRICT_NOT_FOUND(10010, "District not found", HttpStatus.NOT_FOUND),
+    WARD_NOT_FOUND(10011, "Ward not found", HttpStatus.NOT_FOUND),
+    FACILITY_NOT_FOUND(10012, "Facility not found", HttpStatus.NOT_FOUND),
 
     /* SYSTEM ERRORS */
 

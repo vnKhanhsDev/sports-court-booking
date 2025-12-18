@@ -14,9 +14,20 @@ export const ENDPOINTS = {
     },
     PUBLIC: {
         CATALOG: '/public/catalog',
+
+        ADDRESS: {
+            PROVINCES: '/public/address/provinces',
+            DISTRICTS: (provinceCode: string) => `/public/address/districts/${provinceCode}`,
+            WARDS: (districtCode: string) => `/public/address/wards/${districtCode}`,
+        }
     },
     OWNER: {
         FACILITIES: {
+            ROOT: '/owner/facilities',
+
+            BY_ID: (id: number | string) => `/owner/facilities/${id}`,
+            
+            
             OPTIONS: '/owner/facilities/options',
         },
         COURTS: '/owner/courts',

@@ -1,14 +1,17 @@
-import type { FacilityBasicForOwner } from "../../types/facility.types";
+import type { OwnerFacilitySummary } from "../../types/facility.types";
 import FacilityCard from "./FacilityCard";
 import { LocationOutlined } from "@/components/ui/icons";
 import styles from "./FacilityCardList.module.css";
 
 interface FacilityCardListProps {
-    facilities: FacilityBasicForOwner[];
+    facilities: OwnerFacilitySummary[];
     isLoading: boolean;
+    onFacilityClick?: (facilityId: number) => void;       // view
+    onFacilityEditClick?: (facilityId: number) => void;   // edit
+    onFacilityDeleteClick?: (facilityId: number) => void; // delete
 }
 
-export default function FacilityCardList({ facilities, isLoading }: FacilityCardListProps) {
+export default function FacilityCardList({ facilities, isLoading, onFacilityClick, onFacilityEditClick, onFacilityDeleteClick }: FacilityCardListProps) {
     if (isLoading) {
         return (
             <section className={styles.wrapper}>
@@ -36,7 +39,13 @@ export default function FacilityCardList({ facilities, isLoading }: FacilityCard
                         </div>
                     ) : (
                         facilities.map((facility) => (
-                            <FacilityCard key={facility.id} facility={facility} />
+                            <FacilityCard
+                                key={facility.id}
+                                facility={facility}
+                                onClick={onFacilityClick}
+                                onEditClick={onFacilityEditClick}
+                                onDeleteClick={onFacilityDeleteClick}
+                            />
                         ))
                     )}
                 </div>

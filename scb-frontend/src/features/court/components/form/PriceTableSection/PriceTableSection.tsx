@@ -2,11 +2,11 @@ import { Select } from "@/components/form";
 import usePriceTable from "./usePriceTable";
 import PriceTable from "./PriceTable";
 import styles from "./PriceTableSection.module.css";
-import type { BasicPriceTemplate } from "@/features/court/types/price.types";
+import type { PriceTemplateOption } from "@/features/court/types/price.types";
 import type { TimeSlot } from "./priceTable.utils";
 
 export interface PriceTableSectionProps {
-    priceTemplates: BasicPriceTemplate[];
+    priceTemplates: PriceTemplateOption[];
     facilityId?: string;
     sportId?: string;
     minTime: number;

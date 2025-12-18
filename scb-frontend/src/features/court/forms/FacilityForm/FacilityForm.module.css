@@ -16,6 +16,12 @@
     gap: 16px;
 }
 
+.addressRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
 .label {
     font-size: 0.9375rem;
     font-weight: 500;
@@ -127,6 +133,11 @@
     }
 
     .timeRow {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .addressRow {
         grid-template-columns: 1fr;
         gap: 16px;
     }

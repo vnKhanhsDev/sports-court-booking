@@ -1,5 +1,8 @@
 package com.example.scbbackend.modules.court.entity;
 
+import com.example.scbbackend.modules.address.entity.District;
+import com.example.scbbackend.modules.address.entity.Province;
+import com.example.scbbackend.modules.address.entity.Ward;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import jakarta.persistence.*;
@@ -33,17 +36,32 @@ public class Facility {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "geo_latitude")
-    private float geoLatitude;
-
-    @Column(name = "geo_longitude")
-    private float geoLongitude;
-
     @Column(name = "opening_time", nullable = false)
     private LocalTime openingTime;
 
     @Column(name = "closing_time", nullable = false)
     private LocalTime closingTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "province_code")
+    private Province province;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "district_code")
+    private District district;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ward_code")
+    private Ward ward;
+
+    @Column(name = "address_detail")
+    private String addressDetail;
+
+    @Column(name = "geo_latitude")
+    private Double geoLatitude;
+
+    @Column(name = "geo_longitude")
+    private Double geoLongitude;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 15, nullable = false)
@@ -63,5 +81,14 @@ public class Facility {
     @PrePersist
     public void prePersist() {
         if (status == null) status = FacilityStatus.PENDING;
+    }
+
+    public String getFullAddress() {
+        StringBuilder sb = new StringBuilder();
+        if (addressDetail != null) sb.append(addressDetail);
+        if (ward != null) sb.append(", ").append(ward.getName());
+        if (district != null) sb.append(", ").append(district.getName());
+        if (province != null) sb.append(", ").append(province.getName());
+        return sb.toString();
     }
 }

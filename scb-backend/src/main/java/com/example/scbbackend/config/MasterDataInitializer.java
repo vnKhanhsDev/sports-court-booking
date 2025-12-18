@@ -1,5 +1,6 @@
 package com.example.scbbackend.config;
 
+import com.example.scbbackend.modules.address.service.AddressSeederService;
 import com.example.scbbackend.modules.catalog.entity.CourtType;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.catalog.entity.SurfaceType;
@@ -24,6 +25,8 @@ public class MasterDataInitializer implements ApplicationRunner {
     private final CourtTypeRepository courtTypeRepository;
     private final SurfaceTypeRepository surfaceTypeRepository;
 
+    private final AddressSeederService addressSeederService;
+
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
@@ -32,6 +35,8 @@ public class MasterDataInitializer implements ApplicationRunner {
 
         if (sportRepository.count() == 0) createCatalog();
         else log.info("Catalog already exists. Skipping...");
+
+        addressSeederService.seedAddressData();
 
         log.info(">>> MASTER DATA INITIALIZED SUCCESSFULLY <<<");
 
