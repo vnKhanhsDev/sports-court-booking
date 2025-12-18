@@ -24,13 +24,16 @@ export const ENDPOINTS = {
     OWNER: {
         FACILITIES: {
             ROOT: '/owner/facilities',
-
             BY_ID: (id: number | string) => `/owner/facilities/${id}`,
             
             
             OPTIONS: '/owner/facilities/options',
         },
-        COURTS: '/owner/courts',
+
+        COURTS: {
+            ROOT: '/owner/courts',
+            BY_ID: (id: number | string) => `/owner/courts/${id}`
+        },
         
         PRICE_TEMPLATES: {
             ROOT: '/owner/price-templates',

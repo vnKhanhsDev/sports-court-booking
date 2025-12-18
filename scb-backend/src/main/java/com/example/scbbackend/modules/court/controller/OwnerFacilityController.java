@@ -6,6 +6,7 @@ import com.example.scbbackend.common.exception.AppException;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
+import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.service.FacilityService;
 import com.example.scbbackend.modules.user.entity.Account;
@@ -54,7 +55,7 @@ public class OwnerFacilityController {
 
         return ApiResponse.success(
                 ApiCode.GET_FACILITY_SUCCESS,
-                facilityService.getFacilityByIdAndOwnerInfo(id, account.getOwnerInfo())
+                facilityService.getFacilityDetail(id, account.getOwnerInfo())
         );
     }
 
@@ -79,6 +80,16 @@ public class OwnerFacilityController {
         return ApiResponse.success(
                 ApiCode.DELETE_FACILITY_SUCCESS,
                 facilityService.deleteFacility(id, account.getOwnerInfo())
+        );
+    }
+
+    @GetMapping("/options")
+    public ApiResponse<List<FacilityOptionResponse>> getFacilityOptions(@CurrentAccount Account account) {
+        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+
+        return ApiResponse.success(
+                ApiCode.GET_FACILITIES_SUCCESS,
+                facilityService.getFacilityOptions(account.getOwnerInfo())
         );
     }
 

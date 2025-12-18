@@ -35,7 +35,7 @@ public class BookingService {
                 BookingStatus.CONFIRMED
         );
 
-        return bookingRepository.existsByCourtAndBookingStatusIn(court, ACTIVE_STATUSES);
+        return bookingRepository.existsByCourtAndStatusIn(court, ACTIVE_STATUSES);
     }
 
 }

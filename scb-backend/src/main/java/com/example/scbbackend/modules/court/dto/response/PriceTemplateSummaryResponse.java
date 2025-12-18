@@ -4,6 +4,6 @@ public record PriceTemplateSummaryResponse(
         Long id,
         String name,
         int version,
-        int appliedCourtCount,
+        long appliedCourtCount,
         boolean isActive
 ) {}

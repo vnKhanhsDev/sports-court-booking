@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { OwnerFacilitySummary } from "../../types/facility.types";
 import useCatalog from "@/hooks/useCatalog";
 import ImageUpload from "@/components/form/ImageUpload/ImageUpload";
@@ -11,18 +11,32 @@ import type { TimeSlot } from "../../components/form/PriceTableSection/priceTabl
 import CourtAttributeSection, { type CourtAttributeValues } from "../../components/form/CourtAttributeSection/CourtAttributeSection";
 import styles from "./CourtForm.module.css";
 import type { PriceTemplateOption } from "../../types/price.types";
+import type { PriceItem, CourtImage, OwnerCourtDetail } from "../../types/court.types";
+import { normalizeTimeString } from "../../components/form/PriceTableSection/priceTable.utils";
 
 interface CourtFormProps {
     facilities: OwnerFacilitySummary[];
     priceTemplates: PriceTemplateOption[];
-    onSubmit?: (courtId: number) => void;
+    onSubmit?: () => void;
     onCancel?: () => void;
+    readOnly?: boolean;
+    initialData?: OwnerCourtDetail;
+    mode?: "create" | "edit";
+    courtId?: number;
 }
 
-export default function CourtForm({ facilities, priceTemplates, onSubmit, onCancel }: CourtFormProps) {
+export default function CourtForm({ 
+    facilities, 
+    priceTemplates, 
+    onSubmit, 
+    onCancel,
+    readOnly = false,
+    initialData,
+    mode = "create",
+    courtId
+}: CourtFormProps) {
     const { catalog, isLoading: isCatalogLoading } = useCatalog();
-    // const { priceTemplates } = usePriceTemplateForOwner();
-    const { execute: executeCreateCourt, isLoading: isSubmitting } = useApi();
+    const { execute: executeCourtOperation, isLoading: isSubmitting } = useApi();
     
     const [attributeValues, setAttributeValues] = useState<CourtAttributeValues>({
         facilityId: "",
@@ -34,6 +48,55 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
     const [selectedPriceTemplateId, setSelectedPriceTemplateId] = useState<number | null>(null);
     const [currentPriceSlots, setCurrentPriceSlots] = useState<TimeSlot[]>([]);
     const [images, setImages] = useState<string[]>([]);
+
+    // Initialize form with initialData if provided, or reset if not provided
+    useEffect(() => {
+        if (initialData) {
+            setAttributeValues({
+                facilityId: initialData.facilityId.toString(),
+                sportId: initialData.sportId.toString(),
+                courtTypeId: initialData.courtTypeId.toString(),
+                surfaceTypeId: initialData.surfaceTypeId.toString(),
+            });
+            setCourtName(initialData.name);
+            setSelectedPriceTemplateId(initialData.priceTemplateId);
+
+            // Convert PriceItem[] to TimeSlot[]
+            if (initialData.items && initialData.items.length > 0) {
+                const slots: TimeSlot[] = initialData.items.map((item, index) => ({
+                    id: `initial-${index}-${Date.now()}`,
+                    startTime: normalizeTimeString(item.startTime),
+                    endTime: normalizeTimeString(item.endTime),
+                    price: item.price.toString(),
+                }));
+                setCurrentPriceSlots(slots);
+            } else {
+                setCurrentPriceSlots([]);
+            }
+
+            // Convert CourtImage[] to string[] (for ImageUpload component)
+            if (initialData.imageUrls && initialData.imageUrls.length > 0) {
+                const imageUrls = initialData.imageUrls
+                    .sort((a, b) => a.displayOrder - b.displayOrder)
+                    .map(img => img.imageUrl);
+                setImages(imageUrls);
+            } else {
+                setImages([]);
+            }
+        } else {
+            // Reset form when initialData is cleared (e.g., when closing modal)
+            setAttributeValues({
+                facilityId: "",
+                sportId: "",
+                courtTypeId: "",
+                surfaceTypeId: "",
+            });
+            setCourtName("");
+            setSelectedPriceTemplateId(null);
+            setCurrentPriceSlots([]);
+            setImages([]);
+        }
+    }, [initialData]);
 
     const selectedFacility = facilities.find(facility => facility.id.toString() === attributeValues.facilityId);
 
@@ -48,6 +111,8 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
     const maxTime = selectedFacility ? parseTimeToHour(selectedFacility.closingTime) : 24;
 
     const handleAttributeChange = (field: keyof CourtAttributeValues, value: string) => {
+        if (readOnly) return; // Prevent changes in read-only mode
+        
         setAttributeValues(prev => {
             const newValues = { ...prev, [field]: value };
             
@@ -100,56 +165,97 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
         }
 
         try {
-            const priceItems = selectedPriceTemplateId ? undefined : currentPriceSlots
-                .filter(slot => slot.startTime && slot.endTime && slot.price && parseFloat(slot.price) > 0)
-                .map(slot => ({
-                    startTime: slot.startTime,
-                    endTime: slot.endTime,
-                    price: parseFloat(slot.price),
-                }));
+            // Convert TimeSlot[] to PriceItem[]
+            // If price template is selected, items should be undefined
+            // If no template is selected, items must be provided (validated above)
+            const priceItems: PriceItem[] | undefined = selectedPriceTemplateId 
+                ? undefined 
+                : currentPriceSlots
+                    .filter(slot => slot.startTime && slot.endTime && slot.price && parseFloat(slot.price) > 0)
+                    .map(slot => ({
+                        startTime: slot.startTime,
+                        endTime: slot.endTime,
+                        price: parseFloat(slot.price),
+                    }));
 
-            const courtId = await executeCreateCourt(() =>
-                courtServiceForOwner.createCourt({
-                    facilityId: parseInt(attributeValues.facilityId!),
-                    sportId: parseInt(attributeValues.sportId!),
-                    courtTypeId: parseInt(attributeValues.courtTypeId!),
-                    surfaceTypeId: parseInt(attributeValues.surfaceTypeId!),
-                    name: courtName.trim(),
-                    priceTemplateId: selectedPriceTemplateId || undefined,
-                    priceItems: priceItems && priceItems.length > 0 ? priceItems : undefined,
-                    imageUrls: images.length > 0 ? images : undefined,
-                })
-            ) as number;
+            // Convert string[] to CourtImage[] with displayOrder
+            const courtImages: CourtImage[] | undefined = images.length > 0
+                ? images.map((imageUrl, index) => ({
+                    imageUrl,
+                    displayOrder: index,
+                }))
+                : undefined;
 
-            // Reset form after successful submission
-            setAttributeValues({
-                facilityId: "",
-                sportId: "",
-                courtTypeId: "",
-                surfaceTypeId: "",
-            });
-            setCourtName("");
-            setSelectedPriceTemplateId(null);
-            setImages([]);
-            setCurrentPriceSlots([]);
+            // Call create or update based on mode
+            if (mode === "edit" && courtId) {
+                // Update existing court
+                await executeCourtOperation(() =>
+                    courtServiceForOwner.updateCourt(courtId, {
+                        facilityId: parseInt(attributeValues.facilityId!),
+                        sportId: parseInt(attributeValues.sportId!),
+                        courtTypeId: parseInt(attributeValues.courtTypeId!),
+                        surfaceTypeId: parseInt(attributeValues.surfaceTypeId!),
+                        name: courtName.trim(),
+                        priceTemplateId: selectedPriceTemplateId || undefined,
+                        items: priceItems && priceItems.length > 0 ? priceItems : undefined,
+                        images: courtImages,
+                        status: initialData?.status || "PENDING", // Preserve existing status or default
+                    })
+                );
+            } else {
+                // Create new court
+                await executeCourtOperation(() =>
+                    courtServiceForOwner.createCourt({
+                        facilityId: parseInt(attributeValues.facilityId!),
+                        sportId: parseInt(attributeValues.sportId!),
+                        courtTypeId: parseInt(attributeValues.courtTypeId!),
+                        surfaceTypeId: parseInt(attributeValues.surfaceTypeId!),
+                        name: courtName.trim(),
+                        priceTemplateId: selectedPriceTemplateId || undefined,
+                        items: priceItems && priceItems.length > 0 ? priceItems : undefined,
+                        images: courtImages,
+                    })
+                );
+            }
 
+            // Reset form after successful submission (only in create mode)
+            if (mode === "create") {
+                setAttributeValues({
+                    facilityId: "",
+                    sportId: "",
+                    courtTypeId: "",
+                    surfaceTypeId: "",
+                });
+                setCourtName("");
+                setSelectedPriceTemplateId(null);
+                setImages([]);
+                setCurrentPriceSlots([]);
+            }
+
+            // Call onSubmit callback to trigger list refresh
             if (onSubmit) {
-                onSubmit(courtId);
+                onSubmit();
             }
         } catch (error: any) {
-            console.error("Failed to create court:", error);
-            alert(error?.message || "Có lỗi xảy ra khi tạo sân. Vui lòng thử lại.");
+            console.error(`Failed to ${mode === "edit" ? "update" : "create"} court:`, error);
+            alert(error?.message || `Có lỗi xảy ra khi ${mode === "edit" ? "cập nhật" : "tạo"} sân. Vui lòng thử lại.`);
         }
     };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={readOnly ? (e) => e.preventDefault() : handleSubmit}>
             <CourtAttributeSection
                 facilities={facilities}
                 catalog={catalog}
                 values={attributeValues}
                 onChange={handleAttributeChange}
                 isLoading={{ catalog: isCatalogLoading }}
+                disabled={readOnly ? {
+                    facility: true,
+                    sport: true,
+                    courtType: true,
+                    surfaceType: true,
+                } : undefined}
             />
 
             <div className={styles.secondRow}>
@@ -161,7 +267,8 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
                         name="courtName"
                         placeholder="Nhập tên sân"
                         value={courtName}
-                        onChange={setCourtName}
+                        onChange={readOnly ? () => {} : setCourtName}
+                        disabled={readOnly}
                     />
                 </div>
             </div>
@@ -173,9 +280,15 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
                     sportId={attributeValues.sportId}
                     minTime={minTime}
                     maxTime={maxTime}
-                    onTemplateChange={setSelectedPriceTemplateId}
-                    onSlotsChange={setCurrentPriceSlots}
-                    disabled={false}
+                    initialTemplateId={selectedPriceTemplateId}
+                    initialSlots={currentPriceSlots.map(slot => ({
+                        startTime: slot.startTime,
+                        endTime: slot.endTime,
+                        price: parseFloat(slot.price),
+                    }))}
+                    onTemplateChange={readOnly ? undefined : setSelectedPriceTemplateId}
+                    onSlotsChange={readOnly ? undefined : setCurrentPriceSlots}
+                    disabled={readOnly}
                 />
             </div>
 
@@ -183,33 +296,56 @@ export default function CourtForm({ facilities, priceTemplates, onSubmit, onCanc
                 <label className={styles.label}>
                     Hình ảnh sân
                 </label>
-                <ImageUpload
-                    multiple
-                    value={images}
-                    onChange={(newValue) => setImages(newValue as string[])}
-                    onUpload={handleUpload}
-                />
+                {readOnly ? (
+                    <div className={styles.imagePreview}>
+                        {images.length > 0 ? (
+                            <div className={styles.imageGrid}>
+                                {images.map((imageUrl, index) => (
+                                    <img
+                                        key={index}
+                                        src={imageUrl}
+                                        alt={`Court image ${index + 1}`}
+                                        className={styles.previewImage}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <p className={styles.noImages}>Không có hình ảnh</p>
+                        )}
+                    </div>
+                ) : (
+                    <ImageUpload
+                        multiple
+                        value={images}
+                        onChange={(newValue) => setImages(newValue as string[])}
+                        onUpload={handleUpload}
+                    />
+                )}
             </div>
 
-            <div className={styles.formActions}>
-                {onCancel && (
+            {!readOnly && (
+                <div className={styles.formActions}>
+                    {onCancel && (
+                        <button
+                            type="button"
+                            onClick={onCancel}
+                            className={styles.cancelButton}
+                            disabled={isSubmitting}
+                        >
+                            Hủy
+                        </button>
+                    )}
                     <button
-                        type="button"
-                        onClick={onCancel}
-                        className={styles.cancelButton}
+                        type="submit"
+                        className={styles.submitButton}
                         disabled={isSubmitting}
                     >
-                        Hủy
+                        {isSubmitting 
+                        ? (mode === "edit" ? "Đang cập nhật..." : "Đang tạo...") 
+                        : (mode === "edit" ? "Cập nhật sân" : "Tạo sân")}
                     </button>
-                )}
-                <button
-                    type="submit"
-                    className={styles.submitButton}
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? "Đang tạo..." : "Tạo sân"}
-                </button>
-            </div>
+                </div>
+            )}
         </form>
     );
 }

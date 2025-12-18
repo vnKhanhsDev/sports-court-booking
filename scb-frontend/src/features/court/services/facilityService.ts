@@ -1,6 +1,7 @@
 import { privateClient, type ApiResponse } from "@/lib/axios";
 import { ENDPOINTS } from "@/constants/endpoint";
 import type { FacilityCreation, FacilityDetail, FacilityUpdation, OwnerFacilitySummary } from "../types/facility.types";
+import type { FacilityOption } from "../types/court.types";
 
 export const facilityService = {
 
@@ -37,6 +38,13 @@ export const facilityService = {
     deleteFacility: async (id: number | string): Promise<OwnerFacilitySummary[]> => {
         const response = await privateClient.delete<ApiResponse<OwnerFacilitySummary[]>>(
             ENDPOINTS.OWNER.FACILITIES.BY_ID(id)
+        );
+        return response.data.data || [];
+    },
+
+    getFacilityOptions: async (): Promise<FacilityOption[]> => {
+        const response = await privateClient.get<ApiResponse<FacilityOption[]>>(
+            ENDPOINTS.OWNER.FACILITIES.OPTIONS
         );
         return response.data.data || [];
     }

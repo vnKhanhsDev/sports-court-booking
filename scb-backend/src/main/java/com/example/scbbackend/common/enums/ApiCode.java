@@ -19,7 +19,6 @@ public enum ApiCode {
     UPLOAD_MEDIA_SUCCESS(2005, "Upload media successfully", HttpStatus.OK),
     GET_ALL_PRICE_TEMPLATES_SUCCESS(2006, "Get all price templates successfully", HttpStatus.OK),
     GET_PRICE_TEMPLATE_SUCCESS(2007, "Get price template successfully", HttpStatus.OK),
-    CREATE_COURT_SUCCESS(2008, "Create court successfully", HttpStatus.CREATED),
     GET_PRICE_TEMPLATE_ITEMS_SUCCESS(2009, "Get price template items successfully", HttpStatus.OK),
     CREATE_PRICE_TEMPLATE_SUCCESS(2010, "Create price template successfully", HttpStatus.OK),
     UPDATE_PRICE_TEMPLATE_SUCCESS(2011, "Update price template successfully", HttpStatus.OK),
@@ -33,6 +32,12 @@ public enum ApiCode {
     UPDATE_FACILITY_SUCCESS(2019, "Update facility successfully", HttpStatus.OK),
     DELETE_FACILITY_SUCCESS(2019, "Delete facility successfully", HttpStatus.OK),
     GET_FACILITY_SUCCESS(2019, "Get facility successfully", HttpStatus.OK),
+    GET_ALL_COURTS_SUCCESS(2019, "Get all courts successfully", HttpStatus.OK),
+    GET_COURT_SUCCESS(2019, "Get court successfully", HttpStatus.OK),
+    CREATE_COURT_SUCCESS(2020, "Create court successfully", HttpStatus.OK),
+    UPDATE_COURT_SUCCESS(2021, "Update court successfully", HttpStatus.OK),
+    DELETE_COURT_SUCCESS(2022, "Delete court successfully", HttpStatus.OK),
+
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
@@ -60,6 +65,11 @@ public enum ApiCode {
     DISTRICT_NOT_FOUND(10010, "District not found", HttpStatus.NOT_FOUND),
     WARD_NOT_FOUND(10011, "Ward not found", HttpStatus.NOT_FOUND),
     FACILITY_NOT_FOUND(10012, "Facility not found", HttpStatus.NOT_FOUND),
+    COURT_PRICE_INPUT_INVALID(10013, "Court price input invalid", HttpStatus.BAD_REQUEST),
+    SPORT_NOT_FOUND(10014, "Sport not found", HttpStatus.NOT_FOUND),
+    COURT_TYPE_NOT_FOUND(10015, "Court type not found", HttpStatus.NOT_FOUND),
+    SURFACE_TYPE_NOT_FOUND(10016, "Surface type not found", HttpStatus.NOT_FOUND),
+    COURT_NOT_FOUND(10017, "Court not found", HttpStatus.NOT_FOUND),
 
     /* SYSTEM ERRORS */
 

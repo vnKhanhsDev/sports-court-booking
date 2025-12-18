@@ -141,6 +141,7 @@ public class CourtMockData {
                                     .ownerInfo(owner)
                                     .name(template.name)
                                     .version(template.version)
+                                    .isActive(true) // Set as active so it appears in options
                                     .build()
                     );
 

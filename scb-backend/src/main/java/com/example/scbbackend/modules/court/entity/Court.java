@@ -44,15 +44,15 @@ public class Court {
     @JoinColumn(name = "price_template_id")
     private PriceTemplate priceTemplate;
 
+    @OneToOne(mappedBy = "court")
+    private CourtPrice courtPrice;
+
     @Column(nullable = false, length = 100)
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private CourtStatus status;
-
-    @Column(nullable = false, length = 10)
-    private boolean isOverridePrice;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -63,11 +63,10 @@ public class Court {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "court", fetch = FetchType.LAZY)
-    Set<CourtImage> images;
+    private Set<CourtImage> images;
 
     @PrePersist
     public void prePersist() {
         this.status = CourtStatus.PENDING;
-        this.isOverridePrice = this.priceTemplate == null;
     }
 }

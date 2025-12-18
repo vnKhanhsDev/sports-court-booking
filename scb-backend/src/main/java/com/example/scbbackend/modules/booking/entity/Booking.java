@@ -51,8 +51,8 @@ public class Booking {
     private double depositAmount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "booking_status", nullable = false)
-    private BookingStatus bookingStatus;
+    @Column(nullable = false)
+    private BookingStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -64,7 +64,7 @@ public class Booking {
 
     @PrePersist
     public void prePersist() {
-        this.bookingStatus = BookingStatus.PENDING;
+        this.status = BookingStatus.PENDING;
     }
 
 }

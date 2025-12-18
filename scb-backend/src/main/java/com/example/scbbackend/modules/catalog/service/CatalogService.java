@@ -1,5 +1,7 @@
 package com.example.scbbackend.modules.catalog.service;
 
+import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.exception.AppException;
 import com.example.scbbackend.modules.catalog.dto.response.CourtTypePublicResponse;
 import com.example.scbbackend.modules.catalog.dto.response.SportPublicResponse;
 import com.example.scbbackend.modules.catalog.dto.response.SurfaceTypePublicResponse;
@@ -62,16 +64,37 @@ public class CatalogService {
                 .collect(Collectors.toList());
     }
 
-    public Sport getSportById(Long id) {
+    @Transactional(readOnly = true)
+    public Sport findSportById(Long id) {
         return sportRepository.findById(id).orElse(null);
     }
 
-    public CourtType getCourtTypeById(Long id) {
+    @Transactional(readOnly = true)
+    public Sport getSportById(Long id) {
+        return sportRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.SPORT_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public CourtType findCourtTypeById(Long id) {
         return courtTypeRepository.findById(id).orElse(null);
     }
 
-    public SurfaceType getSurfaceTypeById(Long id) {
+    @Transactional(readOnly = true)
+    public CourtType getCourtTypeById(Long id) {
+        return courtTypeRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public SurfaceType findSurfaceTypeById(Long id) {
         return surfaceTypeRepository.findById(id).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public SurfaceType getSurfaceTypeById(Long id) {
+        return surfaceTypeRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
     }
 
 }

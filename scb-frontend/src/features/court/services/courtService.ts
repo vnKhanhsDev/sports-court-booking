@@ -1,80 +1,86 @@
 import { privateClient, type ApiResponse } from "@/lib/axios";
 import { ENDPOINTS } from "@/constants/endpoint";
-import type { FacilityBasicForOwner } from "../types/facility.types";
-import type { BasicPriceTemplate, PriceTemplateDetail } from "../types/price.types";
-import type { FacilityOption } from "../types/court.types";
+import type {
+    OwnerCourtSummary,
+    OwnerCourtDetail,
+    CourtCreationRequest,
+    CourtUpdationRequest,
+} from "../types/court.types";
 
+/**
+ * Court service for owner operations
+ */
 export const courtServiceForOwner = {
-    getFacilitiesWithCourts: async (): Promise<FacilityBasicForOwner[]> => {
-        const response = await privateClient.get<ApiResponse<FacilityBasicForOwner[]>>(
-            ENDPOINTS.OWNER.COURTS
+    /**
+     * Get all courts for the authenticated owner
+     * @returns List of court summaries
+     */
+    getAllCourts: async (): Promise<OwnerCourtSummary[]> => {
+        const response = await privateClient.get<ApiResponse<OwnerCourtSummary[]>>(
+            ENDPOINTS.OWNER.COURTS.ROOT
         );
         return response.data.data || [];
     },
-
-    getFacilityOptions: async (): Promise<FacilityOption[]> => {
-        const response = await privateClient.get<ApiResponse<FacilityOption[]>>(
-            ENDPOINTS.OWNER.FACILITIES.OPTIONS
-        );
-        return response.data.data || [];
-    },
-
-    getBasicPriceTemplates: async (): Promise<BasicPriceTemplate[]> => {
-        const response = await privateClient.get<ApiResponse<BasicPriceTemplate[]>>(
-            ENDPOINTS.OWNER.PRICE_TEMPLATES.OPTIONS
-        );
-        return response.data.data || [];
-    },
-
-    getPriceTemplateById: async (id: number): Promise<PriceTemplateDetail> => {
-        const response = await privateClient.get<ApiResponse<PriceTemplateDetail>>(
-            `${ENDPOINTS.OWNER.PRICE_TEMPLATES}/${id}`
-        );
-        return response.data.data!;
-    },
-
-    createCourt: async (data: {
-        facilityId: number;
-        sportId: number;
-        courtTypeId: number;
-        surfaceTypeId: number;
-        name: string;
-        priceTemplateId?: number;
-        priceItems?: Array<{ startTime: string; endTime: string; price: number }>;
-        imageUrls?: string[];
-    }): Promise<number> => {
-        const requestBody: any = {
-            facilityId: data.facilityId,
-            sportId: data.sportId,
-            courtTypeId: data.courtTypeId,
-            surfaceTypeId: data.surfaceTypeId,
-            name: data.name,
-        };
-        
-        // Only include priceTemplateId if it's a valid number
-        if (data.priceTemplateId !== undefined && data.priceTemplateId !== null && !isNaN(data.priceTemplateId)) {
-            requestBody.priceTemplateId = data.priceTemplateId;
-        }
-        
-        // Only include priceItems if provided and not empty
-        if (data.priceItems && data.priceItems.length > 0) {
-            requestBody.priceItems = data.priceItems;
-        }
-        
-        // Only include imageUrls if provided and not empty
-        if (data.imageUrls && data.imageUrls.length > 0) {
-            requestBody.imageUrls = data.imageUrls;
-        }
-        
-        const response = await privateClient.post<ApiResponse<number>>(
-            ENDPOINTS.OWNER.COURTS,
-            requestBody
-        );
-        return response.data.data!;
-    }
-}
-
-
-export const courtServiceForAdmin = {
     
-}
+    /**
+     * Get court detail by ID
+     * @param id - Court ID
+     * @returns Court detail
+     */
+    getCourtById: async (id: number): Promise<OwnerCourtDetail> => {
+        const response = await privateClient.get<ApiResponse<OwnerCourtDetail>>(
+            ENDPOINTS.OWNER.COURTS.BY_ID(id)
+        );
+        return response.data.data!;
+    },
+
+    /**
+     * Create a new court
+     * @param data - Court creation request data
+     * @returns List of updated court summaries
+     */
+    createCourt: async (data: CourtCreationRequest): Promise<OwnerCourtSummary[]> => {
+        const response = await privateClient.post<ApiResponse<OwnerCourtSummary[]>>(
+            ENDPOINTS.OWNER.COURTS.ROOT,
+            data
+        );
+        return response.data.data || [];
+    },
+
+    /**
+     * Update an existing court
+     * @param id - Court ID
+     * @param data - Court updation request data
+     * @returns List of updated court summaries
+     */
+    updateCourt: async (
+        id: number,
+        data: CourtUpdationRequest
+    ): Promise<OwnerCourtSummary[]> => {
+        const response = await privateClient.put<ApiResponse<OwnerCourtSummary[]>>(
+            ENDPOINTS.OWNER.COURTS.BY_ID(id),
+            data
+        );
+        return response.data.data || [];
+    },
+
+    /**
+     * Delete a court
+     * @param id - Court ID
+     * @returns List of updated court summaries
+     */
+    deleteCourt: async (id: number): Promise<OwnerCourtSummary[]> => {
+        const response = await privateClient.delete<ApiResponse<OwnerCourtSummary[]>>(
+            ENDPOINTS.OWNER.COURTS.BY_ID(id)
+        );
+        return response.data.data || [];
+    },
+};
+
+/**
+ * Court service for admin operations
+ * (Reserved for future admin functionality)
+ */
+export const courtServiceForAdmin = {
+    // Admin-specific court operations can be added here
+};

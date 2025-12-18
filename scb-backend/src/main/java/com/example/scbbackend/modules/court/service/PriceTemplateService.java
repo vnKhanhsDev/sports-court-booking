@@ -11,6 +11,7 @@ import com.example.scbbackend.modules.court.dto.response.PriceTemplateSummaryRes
 import com.example.scbbackend.modules.court.dto.shared.PriceTemplateItemDto;
 import com.example.scbbackend.modules.court.entity.PriceTemplate;
 import com.example.scbbackend.modules.court.entity.PriceTemplateItem;
+import com.example.scbbackend.modules.court.repository.CourtRepository;
 import com.example.scbbackend.modules.court.repository.PriceTemplateItemRepository;
 import com.example.scbbackend.modules.court.repository.PriceTemplateRepository;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
@@ -27,10 +28,10 @@ public class PriceTemplateService {
 
     private final PriceTemplateRepository priceTemplateRepository;
     private final PriceTemplateItemRepository priceTemplateItemRepository;
+    private final CourtRepository courtRepository;
 
     private final FacilityService facilityService;
     private final CatalogService catalogService;
-    private final CourtService courtService;
 
     /**
      * Get all price templates for management
@@ -45,7 +46,7 @@ public class PriceTemplateService {
                                 t.getId(),
                                 t.getName(),
                                 t.getVersion(),
-                                courtService.getAllCourtsByPriceTemplate(t).size(),
+                                courtRepository.countByPriceTemplate(t),
                                 t.isActive()
                         )
                 )
@@ -125,10 +126,10 @@ public class PriceTemplateService {
             int version = existingTemplate.getVersion() + 1;
             createNewVersion(ownerInfo, request, version);
         } else {
-            existingTemplate.setFacility(request.facilityId() != null ? facilityService.getFacilityById(request.facilityId()) : null);
-            existingTemplate.setSport(request.sportId() != null ? catalogService.getSportById(request.sportId()) : null);
-            existingTemplate.setCourtType(request.courtTypeId() != null ? catalogService.getCourtTypeById(request.courtTypeId()) : null);
-            existingTemplate.setSurfaceType(request.surfaceTypeId() != null ? catalogService.getSurfaceTypeById(request.surfaceTypeId()) : null);
+            existingTemplate.setFacility(request.facilityId() != null ? facilityService.findFacilityById(request.facilityId()) : null);
+            existingTemplate.setSport(request.sportId() != null ? catalogService.findSportById(request.sportId()) : null);
+            existingTemplate.setCourtType(request.courtTypeId() != null ? catalogService.findCourtTypeById(request.courtTypeId()) : null);
+            existingTemplate.setSurfaceType(request.surfaceTypeId() != null ? catalogService.findSurfaceTypeById(request.surfaceTypeId()) : null);
             existingTemplate.setName(request.name());
             existingTemplate.setDescription(request.description());
             existingTemplate.setActive(request.isActive());
@@ -167,9 +168,7 @@ public class PriceTemplateService {
     public List<PriceTemplateSummaryResponse> deletePriceTemplate(Long id, OwnerInfo ownerInfo) {
         PriceTemplate template = getPriceTemplateByIdAndOwnerInfo(id, ownerInfo);
 
-        int appliedCourtCount = courtService.getAllCourtsByPriceTemplate(template).size();
-
-        if (appliedCourtCount > 0) {
+        if (courtRepository.countByPriceTemplate(template) > 0) {
             throw new AppException(ApiCode.PRICE_TEMPLATE_IN_USE);
         }
 
@@ -199,7 +198,7 @@ public class PriceTemplateService {
                 .toList();
     }
 
-    private PriceTemplate getPriceTemplateByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo) {
+    protected PriceTemplate getPriceTemplateByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo) {
         PriceTemplate template = priceTemplateRepository
                 .findByIdAndOwnerInfo(id, ownerInfo).orElse(null);
 
@@ -216,10 +215,10 @@ public class PriceTemplateService {
         PriceTemplate template = priceTemplateRepository.save(
                 PriceTemplate.builder()
                         .ownerInfo(ownerInfo)
-                        .facility(request.facilityId() != null ? facilityService.getFacilityById(request.facilityId()) : null)
-                        .sport(request.sportId() != null ? catalogService.getSportById(request.sportId()) : null)
-                        .courtType(request.courtTypeId() != null ? catalogService.getCourtTypeById(request.courtTypeId()) : null)
-                        .surfaceType(request.surfaceTypeId() != null ? catalogService.getSurfaceTypeById(request.surfaceTypeId()) : null)
+                        .facility(request.facilityId() != null ? facilityService.findFacilityById(request.facilityId()) : null)
+                        .sport(request.sportId() != null ? catalogService.findSportById(request.sportId()) : null)
+                        .courtType(request.courtTypeId() != null ? catalogService.findCourtTypeById(request.courtTypeId()) : null)
+                        .surfaceType(request.surfaceTypeId() != null ? catalogService.findSurfaceTypeById(request.surfaceTypeId()) : null)
                         .name(request.name())
                         .description(request.description())
                         .version(version)

@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import DataTable, { type Column } from "@/components/ui/DataTable/DataTable";
 import Badge from "@/components/ui/badge/Badge";
-import type { CourtBasicForOwner } from "../../types/court.types";
+import type { OwnerCourtSummary } from "../../types/court.types";
 import styles from "./CourtTable.module.css";
 
 interface CourtTableProps {
-    courts: CourtBasicForOwner[];
+    courts: OwnerCourtSummary[];
     isLoading: boolean;
     title?: string;
-    onRowClick?: (court: CourtBasicForOwner) => void;
-    onEdit?: (court: CourtBasicForOwner) => void;
-    onDelete?: (court: CourtBasicForOwner) => void;
+    onRowClick?: (court: OwnerCourtSummary) => void;
+    onEdit?: (court: OwnerCourtSummary) => void;
+    onDelete?: (court: OwnerCourtSummary) => void;
     selectedId?: number;
 }
 
@@ -23,7 +23,7 @@ export default function CourtTable({
     onDelete,
     selectedId,
 }: CourtTableProps) {
-    const columns: Column<CourtBasicForOwner>[] = useMemo(
+    const columns: Column<OwnerCourtSummary>[] = useMemo(
         () => [
             {
                 header: "Tên sân",
@@ -34,16 +34,6 @@ export default function CourtTable({
                 header: "Cơ sở",
                 accessor: "facilityName",
                 width: "18%",
-            },
-            {
-                header: "Môn thể thao",
-                accessor: "sportName",
-                width: "15%",
-            },
-            {
-                header: "Loại sân",
-                accessor: "courtTypeName",
-                width: "15%",
             },
             {
                 header: "Trạng thái",
@@ -79,8 +69,8 @@ export default function CourtTable({
     const actions = useMemo(() => {
         if (!onEdit && !onDelete) return undefined;
         return {
-            onEdit: onEdit ? (court: CourtBasicForOwner) => onEdit(court) : undefined,
-            onDelete: onDelete ? (court: CourtBasicForOwner) => onDelete(court) : undefined,
+            onEdit: onEdit ? (court: OwnerCourtSummary) => onEdit(court) : undefined,
+            onDelete: onDelete ? (court: OwnerCourtSummary) => onDelete(court) : undefined,
         };
     }, [onEdit, onDelete]);
 
@@ -92,7 +82,7 @@ export default function CourtTable({
                 </h1>
             </div>
             <div className={styles.tableContainer}>
-                <DataTable<CourtBasicForOwner>
+                <DataTable<OwnerCourtSummary>
                     data={courts}
                     columns={columns}
                     isLoading={isLoading}

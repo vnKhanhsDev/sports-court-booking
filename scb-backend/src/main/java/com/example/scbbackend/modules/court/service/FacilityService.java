@@ -5,7 +5,6 @@ import com.example.scbbackend.common.exception.AppException;
 import com.example.scbbackend.modules.address.service.AddressService;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
-import com.example.scbbackend.modules.court.dto.response.FacilityBasicForOwner;
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,7 +26,6 @@ public class FacilityService {
 
     private final FacilityRepository facilityRepository;
 
-    private final CourtService courtService;
     private final AddressService addressService;
 
     @Transactional(readOnly = true)
@@ -58,9 +55,8 @@ public class FacilityService {
     }
 
     @Transactional(readOnly = true)
-    public FacilityDetailResponse getFacilityByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo) {
-        Facility facility = facilityRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+    public FacilityDetailResponse getFacilityDetail(Long id, OwnerInfo ownerInfo) {
+        Facility facility = getFacilityByIdAndOwnerInfo(id, ownerInfo);
 
         return new FacilityDetailResponse(
                 facility.getName(),
@@ -79,8 +75,7 @@ public class FacilityService {
 
     @Transactional
     public List<OwnerFacilitySummaryResponse> updateFacility(Long id, OwnerInfo ownerInfo, FacilityUpdationRequest request) {
-        Facility facility = facilityRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+        Facility facility = getFacilityByIdAndOwnerInfo(id, ownerInfo);
 
         facility.setName(request.name());
         facility.setDescription(request.description());
@@ -99,8 +94,7 @@ public class FacilityService {
 
     @Transactional
     public List<OwnerFacilitySummaryResponse> deleteFacility(Long id, OwnerInfo ownerInfo) {
-        Facility facility = facilityRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+        Facility facility = getFacilityByIdAndOwnerInfo(id, ownerInfo);
 
         facilityRepository.delete(facility);
 
@@ -117,25 +111,16 @@ public class FacilityService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<FacilityBasicForOwner> getFacilitiesWithCourtsByOwner(OwnerInfo ownerInfo) {
-        List<Facility> facilities = facilityRepository.findByOwnerInfo(ownerInfo);
 
-        return facilities.stream()
-                .map(facility -> FacilityBasicForOwner.builder()
-                        .id(facility.getId())
-                        .name(facility.getName())
-                        .openingTime(facility.getOpeningTime())
-                        .closingTime(facility.getClosingTime())
-                        .status(facility.getStatus())
-                        .address("123, Cau Giay, Ha Noi")
-                        .courts(courtService.getCourtBasicForOwnerByFacility(facility))
-                        .build()
-                ).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    protected Facility findFacilityById(Long id) {
+        return facilityRepository.findById(id).orElse(null);
     }
 
-    public Facility getFacilityById(Long id) {
-        return facilityRepository.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    protected Facility getFacilityByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo) {
+        return facilityRepository.findByIdAndOwnerInfo(id, ownerInfo)
+                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
     }
 
 }

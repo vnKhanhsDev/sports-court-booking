@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useCourtForOwner from "../hooks/useCourtForOwner";
 import FacilityCardList from "../lists/FacilityList/FacilityCardList";
 import CourtListTable from "../lists/CourtList/CourtTable";
 import TableToolbar from "@/components/common/TableToolbar/TableToolbar";
@@ -7,28 +6,34 @@ import Modal from "@/components/ui/modal/Modal";
 import Button from "@/components/ui/button/Button";
 import FacilityForm, { type FacilityFormData } from "../forms/FacilityForm/FacilityForm";
 import CourtForm from "../forms/CourtForm/CourtForm";
-import type { CourtBasicForOwner } from "../types/court.types";
+import type { OwnerCourtSummary, OwnerCourtDetail } from "../types/court.types";
 import styles from "./OwnerCourtPage.module.css";
 import usePriceTemplate from "../hooks/usePriceTemplate";
 import useFacility from "../hooks/useFacility";
 import { facilityService } from "../services/facilityService";
+import { courtServiceForOwner } from "../services/courtService";
 import type { FacilityCreation, FacilityDetail, FacilityUpdation } from "../types/facility.types";
 import useApi from "@/hooks/useApi";
+import useCourt from "../hooks/useCourt";
 
 type FacilityModalMode = "create" | "view" | "edit";
+type CourtModalMode = "create" | "view" | "edit";
 
 export default function OwnerCourtPage() {
     const { facilities, isFacilitiesLoading, refetchFacilities } = useFacility();
 
-    const { courts, isLoading, refetch } = useCourtForOwner();
-    const { priceTemplateOptions, isTemplatesLoading } = usePriceTemplate();
+    const { ownerCourts, isCourtsLoading, refetchCourts } = useCourt();
+    const { priceTemplateOptions } = usePriceTemplate();
     const { execute } = useApi();
     
     const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
     const [isCourtModalOpen, setIsCourtModalOpen] = useState(false);
     const [facilityModalMode, setFacilityModalMode] = useState<FacilityModalMode>("create");
+    const [courtModalMode, setCourtModalMode] = useState<CourtModalMode>("create");
     const [selectedFacilityDetail, setSelectedFacilityDetail] = useState<FacilityDetail | null>(null);
     const [selectedFacilityId, setSelectedFacilityId] = useState<number | null>(null);
+    const [selectedCourtDetail, setSelectedCourtDetail] = useState<OwnerCourtDetail | null>(null);
+    const [selectedCourtId, setSelectedCourtId] = useState<number | null>(null);
 
     const handleFacilitySubmit = async (data: FacilityFormData) => {
         // Map form data to API payload
@@ -110,23 +115,52 @@ export default function OwnerCourtPage() {
         await refetchFacilities();
     };
 
-    const handleCourtSubmit = async (courtId: number) => {
-        console.log("Court created with ID:", courtId);
+    const handleCourtSubmit = async () => {
         // Refresh the courts list to show the newly added court
-        await refetch();
+        await refetchCourts();
         setIsCourtModalOpen(false);
     };
 
-    const handleEditCourt = (court: CourtBasicForOwner) => {
-        console.log("Edit court:", court);
-        // TODO: Implement edit court functionality
-        // Open modal with court data pre-filled
+    const handleCourtRowClick = async (court: OwnerCourtSummary) => {
+        try {
+            const detail = await execute(() => courtServiceForOwner.getCourtById(court.id));
+            if (!detail) return;
+
+            setSelectedCourtDetail(detail);
+            setCourtModalMode("view");
+            setIsCourtModalOpen(true);
+        } catch (error: any) {
+            console.error("Failed to fetch court details:", error);
+            alert(error?.message || "Không thể tải thông tin sân. Vui lòng thử lại.");
+        }
     };
 
-    const handleDeleteCourt = (court: CourtBasicForOwner) => {
-        console.log("Delete court:", court);
-        // TODO: Implement delete court functionality
-        // Show confirmation dialog and delete
+    const handleEditCourt = async (court: OwnerCourtSummary) => {
+        try {
+            const detail = await execute(() => courtServiceForOwner.getCourtById(court.id));
+            if (!detail) return;
+
+            setSelectedCourtDetail(detail);
+            setSelectedCourtId(court.id);
+            setCourtModalMode("edit");
+            setIsCourtModalOpen(true);
+        } catch (error: any) {
+            console.error("Failed to fetch court details:", error);
+            alert(error?.message || "Không thể tải thông tin sân. Vui lòng thử lại.");
+        }
+    };
+
+    const handleDeleteCourt = async (court: OwnerCourtSummary) => {
+        const confirmed = window.confirm("Bạn có chắc chắn muốn xóa sân này không?");
+        if (!confirmed) return;
+
+        try {
+            await execute(() => courtServiceForOwner.deleteCourt(court.id));
+            await refetchCourts();
+        } catch (error: any) {
+            console.error("Failed to delete court:", error);
+            alert(error?.message || "Không thể xóa sân. Vui lòng thử lại.");
+        }
     };
 
     return (
@@ -146,7 +180,12 @@ export default function OwnerCourtPage() {
                         />
                         <Button
                             label="Thêm sân"
-                            onClick={() => setIsCourtModalOpen(true)}
+                            onClick={() => {
+                                setCourtModalMode("create");
+                                setSelectedCourtDetail(null);
+                                setSelectedCourtId(null);
+                                setIsCourtModalOpen(true);
+                            }}
                             disabled={facilities.length === 0}
                             className={styles.toolbarButton}
                         />
@@ -163,8 +202,9 @@ export default function OwnerCourtPage() {
             />
 
             <CourtListTable 
-                courts={courts} 
-                isLoading={isLoading}
+                courts={ownerCourts} 
+                isLoading={isCourtsLoading}
+                onRowClick={handleCourtRowClick}
                 onEdit={handleEditCourt}
                 onDelete={handleDeleteCourt}
             />
@@ -223,16 +263,47 @@ export default function OwnerCourtPage() {
 
             <Modal
                 isOpen={isCourtModalOpen}
-                onClose={() => setIsCourtModalOpen(false)}
-                title="Thêm sân mới"
+                onClose={() => {
+                    setIsCourtModalOpen(false);
+                    setSelectedCourtDetail(null);
+                    setSelectedCourtId(null);
+                }}
+                title={
+                    courtModalMode === "create"
+                        ? "Thêm sân mới"
+                        : courtModalMode === "edit"
+                        ? "Chỉnh sửa sân"
+                        : "Chi tiết sân"
+                }
                 size="large"
             >
                 <CourtForm 
                     facilities={facilities}
                     priceTemplates={priceTemplateOptions}
-                    onSubmit={handleCourtSubmit}
-                    onCancel={() => setIsCourtModalOpen(false)}
+                    onSubmit={courtModalMode === "view" ? undefined : handleCourtSubmit}
+                    onCancel={() => {
+                        setIsCourtModalOpen(false);
+                        setSelectedCourtDetail(null);
+                        setSelectedCourtId(null);
+                    }}
+                    readOnly={courtModalMode === "view"}
+                    initialData={selectedCourtDetail || undefined}
+                    mode={courtModalMode === "edit" ? "edit" : "create"}
+                    courtId={courtModalMode === "edit" && selectedCourtId ? selectedCourtId : undefined}
                 />
+                {courtModalMode === "view" && (
+                    <div className={styles.modalActions}>
+                        <Button
+                            type="button"
+                            label="Đóng"
+                            onClick={() => {
+                                setIsCourtModalOpen(false);
+                                setSelectedCourtDetail(null);
+                            }}
+                            className={styles.cancelButton}
+                        />
+                    </div>
+                )}
             </Modal>
         </>
     );

@@ -1,7 +1,6 @@
 import useApi from "@/hooks/useApi";
 import { useCallback, useEffect, useState } from "react";
 import type { FacilityOption } from "../types/court.types";
-import { courtServiceForOwner } from "../services/courtService";
 import type { OwnerFacilitySummary } from "../types/facility.types";
 import { facilityService } from "../services/facilityService";
 
@@ -12,7 +11,7 @@ export default function useFacility() {
     const [facilityOptions, setFacilityOptions] = useState<FacilityOption[]>([]);
 
     const fetchFacilityOptions = useCallback(async () => {
-        const result = await execute(() => courtServiceForOwner.getFacilityOptions());
+        const result = await execute(() => facilityService.getFacilityOptions());
         if (result && Array.isArray(result)) {
             setFacilityOptions(result);
         }

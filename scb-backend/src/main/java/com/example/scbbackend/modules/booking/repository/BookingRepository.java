@@ -11,12 +11,12 @@ import java.util.UUID;
 
 public interface BookingRepository extends JpaRepository<@NonNull Booking, @NonNull UUID> {
 
-    boolean existsByCourtAndBookingStatusIn(@NonNull Court court, @NonNull List<BookingStatus> bookingStatuses);
+    boolean existsByCourtAndStatusIn(@NonNull Court court, @NonNull List<BookingStatus> statuses);
     
     /**
      * Finds all bookings for a given court with active statuses (PENDING or CONFIRMED)
      * @param court The court to check bookings for
      * @return List of active bookings for the court
      */
-    List<Booking> findByCourtAndBookingStatusIn(Court court, List<BookingStatus> statuses);
+    List<Booking> findByCourtAndStatusIn(Court court, List<BookingStatus> statuses);
 }
