@@ -41,6 +41,20 @@ export const ENDPOINTS = {
             BY_ID: (id: number | string) => `/owner/price-lists/${id}`
         }
     },
+
+    ADMIN: {
+        FACILITIES: {
+            ROOT: '/admin/facilities',
+            APPROVE: (id: number | string) => `/admin/facilities/${id}/approve`,
+            REJECT: (id: number | string) => `/admin/facilities/${id}/reject`,
+            APPROVE_ALL: '/admin/facilities/approve-all'
+        },
+        COURTS: {
+            ROOT: '/admin/courts',
+            BY_ID: (id: number | string) => `/admin/courts/${id}`
+        }
+    },
+    
     MEDIA: {
         UPLOAD: '/media'
     }

@@ -47,7 +47,7 @@ export default function LoginPage() {
         }
 
         if (role === USER_ROLES.ADMIN) {
-            navigate(ROUTES.DASHBOARD.ADMIN.HOME, { replace: true });
+            navigate(ROUTES.ADMIN.HOME, { replace: true });
             return;
         }
 

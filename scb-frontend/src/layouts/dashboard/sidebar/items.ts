@@ -13,7 +13,11 @@ export const SIDEBAR_ITEMS: SidebarItemsByRole = {
     [USER_ROLES.ADMIN]: [
         {
             label: 'Trang chủ',
-            path: ROUTES.DASHBOARD.ADMIN.HOME
+            path: ROUTES.ADMIN.HOME
+        },
+        {
+            label: 'Quản lý cơ sở',
+            path: ROUTES.ADMIN.COURTS
         }
     ],
 

@@ -1,5 +1,6 @@
 package com.example.scbbackend.modules.court.repository;
 
+import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
@@ -36,6 +37,22 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
         GROUP BY f.id, f.name, f.openingTime, f.closingTime, f.status, f.addressDetail, w.name, d.name, p.name
     """)
     List<OwnerFacilitySummaryResponse> findSummaryByOwnerInfo(@Param("ownerInfo") OwnerInfo ownerInfo);
+
+    @Query("""
+        SELECT new com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse(
+            f.id,
+            f.name,
+            a.email,
+            f.status,
+            COUNT(c)
+        )
+        FROM Facility f
+        JOIN f.ownerInfo o
+        JOIN o.account a
+        LEFT JOIN Court c ON c.facility = f
+        GROUP BY f.id, f.name, a.email, f.status
+    """)
+    List<AdminFacilitySummaryResponse> findAllAdminFacilities();
 
     Optional<Facility> findByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo);
 }

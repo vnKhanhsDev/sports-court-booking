@@ -27,15 +27,8 @@ export const ROUTES = {
         BOOKING: '/owner/dashboard/bookings'
     },
 
-    DASHBOARD: {
-        OWNER: {
-            HOME: '/dashboard/owner',
-            COURTS: '/dashboard/owner/courts',
-            BOOKINGS: '/dashboard/owner/bookings',
-        },
-        ADMIN: {
-            HOME: '/dashboard/admin',
-            COURTS: '/dashboard/admin/courts'
-        }
+    ADMIN: {
+        HOME: '/admin/dashboard',
+        COURTS: '/admin/courts',
     }
 } as const;

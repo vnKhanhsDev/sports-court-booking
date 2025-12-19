@@ -16,6 +16,9 @@ const OwnerCourtPage = lazy(() => import('@/features/court/pages/OwnerCourtPage'
 const PriceListPage = lazy(() => import('@/features/court/pages/PriceListPage'));
 const OwnerBookingPage = lazy(() => import('@features/owner/booking/OwnerBookingPage'));
 
+const AdminHomePage = lazy(() => import('@features/admin/home/AdminHomePage'));
+const AdminCourtPage = lazy(() => import('@/features/court/pages/AdminCourtPage'));
+
 const AppRoutes = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -38,6 +41,13 @@ const AppRoutes = () => {
             <Route path={ROUTES.OWNER.COURT} element={<OwnerCourtPage />} />
             <Route path={ROUTES.OWNER.PRICE_LIST} element={<PriceListPage />} />
             <Route path={ROUTES.OWNER.BOOKING} element={<OwnerBookingPage />} />
+          </Route>
+        </Route>
+
+        <Route element={<RoleBasedGuard requiredRole={USER_ROLES.ADMIN} />}>
+          <Route element={<DashboardLayout role={USER_ROLES.ADMIN} />}>
+            <Route path={ROUTES.ADMIN.HOME} element={<AdminHomePage />} />
+            <Route path={ROUTES.ADMIN.COURTS} element={<AdminCourtPage />} />
           </Route>
         </Route>
       </Routes>

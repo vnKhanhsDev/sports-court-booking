@@ -5,6 +5,7 @@ import com.example.scbbackend.common.exception.AppException;
 import com.example.scbbackend.modules.address.service.AddressService;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
+import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
@@ -125,6 +126,58 @@ public class FacilityService {
                         f.getName()
                 ))
                 .toList();
+    }
+
+    /**
+     * ADMIN: GET ALL FACILITIES
+     * */
+    @Transactional(readOnly = true)
+    public List<AdminFacilitySummaryResponse> getAllAdminFacilities() {
+        return facilityRepository.findAllAdminFacilities();
+    }
+
+    /**
+     * ADMIN: APPROVE FACILITY
+     * */
+    @Transactional
+    public List<AdminFacilitySummaryResponse> approveFacility(Long id) {
+        Facility facility = findFacilityById(id);
+        if (facility == null) {
+            throw new AppException(ApiCode.FACILITY_NOT_FOUND);
+        }
+        facility.setStatus(FacilityStatus.APPROVED);
+        facilityRepository.save(facility);
+        return getAllAdminFacilities();
+    }
+
+    /**
+     * ADMIN: REJECT FACILITY
+     * */
+    @Transactional
+    public List<AdminFacilitySummaryResponse> rejectFacility(Long id) {
+        Facility facility = findFacilityById(id);
+        if (facility == null) {
+            throw new AppException(ApiCode.FACILITY_NOT_FOUND);
+        }
+        facility.setStatus(FacilityStatus.REJECTED);
+        facilityRepository.save(facility);
+        return getAllAdminFacilities();
+    }
+
+    /**
+     * ADMIN: APPROVE ALL PENDING FACILITIES
+     * */
+    @Transactional
+    public List<AdminFacilitySummaryResponse> approveAllFacilities() {
+        List<Facility> pendingFacilities = facilityRepository.findAll().stream()
+                .filter(f -> f.getStatus() == FacilityStatus.PENDING)
+                .toList();
+        
+        for (Facility facility : pendingFacilities) {
+            facility.setStatus(FacilityStatus.APPROVED);
+        }
+        facilityRepository.saveAll(pendingFacilities);
+        return getAllAdminFacilities();
     }
 
 

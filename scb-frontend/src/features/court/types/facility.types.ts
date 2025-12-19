@@ -1,6 +1,6 @@
 import type { CourtBasicForOwner } from "./court.types";
 
-export type FacilityStatus = 'PENDING' | 'REJECTED' | 'LOCKED' | 'ACTIVE' | 'MAINTENANCE' | 'CLOSED';
+export type FacilityStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'LOCKED';
 
 export interface FacilityBasicForOwner {
     id: number;
@@ -19,6 +19,14 @@ export interface OwnerFacilitySummary {
     closingTime: string;
     status: string;
     address: string;
+    totalCourts: number;
+}
+
+export interface AdminFacilitySummary {
+    id: number;
+    name: string;
+    ownerEmail: string;
+    status: FacilityStatus;
     totalCourts: number;
 }
 

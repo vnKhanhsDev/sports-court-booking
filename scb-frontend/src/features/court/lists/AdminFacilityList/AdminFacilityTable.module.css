@@ -1,0 +1,121 @@
+.wrapper {
+    width: 100%;
+    margin-bottom: 32px;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.title span {
+    color: #64748b;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-left: 8px;
+}
+
+.tableContainer {
+    width: 100%;
+}
+
+.actionsCell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.approveButton {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.approveButton:hover {
+    background-color: #059669;
+}
+
+.rejectButton {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.rejectButton:hover {
+    background-color: #dc2626;
+}
+
+.noAction {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .wrapper {
+        margin-bottom: 24px;
+    }
+
+    .header {
+        margin-bottom: 16px;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .title span {
+        font-size: 0.9375rem;
+        margin-left: 6px;
+    }
+
+    .actionsCell {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .approveButton,
+    .rejectButton {
+        width: 100%;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        margin-bottom: 20px;
+    }
+
+    .header {
+        margin-bottom: 12px;
+    }
+
+    .title {
+        font-size: 1.125rem;
+    }
+}

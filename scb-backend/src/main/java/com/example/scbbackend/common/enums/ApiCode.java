@@ -45,6 +45,11 @@ public enum ApiCode {
     UPDATE_PRICE_LIST_SUCCESS(2026, "Update price list successfully", HttpStatus.OK),
     DELETE_PRICE_LIST_SUCCESS(2027, "Delete price list successfully", HttpStatus.OK),
 
+    GET_ALL_ADMIN_FACILITIES_SUCCESS(2028, "Get all admin facilities successfully", HttpStatus.OK),
+    APPROVE_FACILITY_SUCCESS(2029, "Approve facility successfully", HttpStatus.OK),
+    REJECT_FACILITY_SUCCESS(2030, "Reject facility successfully", HttpStatus.OK),
+    APPROVE_ALL_FACILITIES_SUCCESS(2031, "Approve all facilities successfully", HttpStatus.OK),
+
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
