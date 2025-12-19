@@ -1,29 +1,29 @@
 import { useMemo } from "react";
 import DataTable, { type Column } from "@/components/ui/DataTable/DataTable";
 import Badge from "@/components/ui/badge/Badge";
-import type { PriceTemplateSummary } from "../../types/price.types";
-import styles from "./PriceTemplateTable.module.css";
+import type { PriceListSummary } from "../../types/price.types";
+import styles from "./PriceListTable.module.css";
 
-interface PriceTemplateTableProps {
-    priceTemplates: PriceTemplateSummary[];
+interface PriceListTableProps {
+    priceLists: PriceListSummary[];
     isLoading: boolean;
     title?: string;
-    onRowClick?: (priceTemplate: PriceTemplateSummary) => void;
-    onEdit?: (priceTemplate: PriceTemplateSummary) => void;
-    onDelete?: (priceTemplate: PriceTemplateSummary) => void;
+    onRowClick?: (priceList: PriceListSummary) => void;
+    onEdit?: (priceList: PriceListSummary) => void;
+    onDelete?: (priceList: PriceListSummary) => void;
     selectedId?: number;
 }
 
-export default function PriceTemplateTable({
-    priceTemplates,
+export default function PriceListTable({
+    priceLists,
     isLoading,
     title = "Bảng giá",
     onRowClick,
     onEdit,
     onDelete,
     selectedId,
-}: PriceTemplateTableProps) {
-    const columns: Column<PriceTemplateSummary>[] = useMemo(
+}: PriceListTableProps) {
+    const columns: Column<PriceListSummary>[] = useMemo(
         () => [
             {
                 header: "Tên bảng giá",
@@ -65,8 +65,8 @@ export default function PriceTemplateTable({
     const actions = useMemo(() => {
         if (!onEdit && !onDelete) return undefined;
         return {
-            onEdit: onEdit ? (priceTemplate: PriceTemplateSummary) => onEdit(priceTemplate) : undefined,
-            onDelete: onDelete ? (priceTemplate: PriceTemplateSummary) => onDelete(priceTemplate) : undefined,
+            onEdit: onEdit ? (priceList: PriceListSummary) => onEdit(priceList) : undefined,
+            onDelete: onDelete ? (priceList: PriceListSummary) => onDelete(priceList) : undefined,
         };
     }, [onEdit, onDelete]);
 
@@ -74,17 +74,17 @@ export default function PriceTemplateTable({
         <section className={styles.wrapper}>
             <div className={styles.header}>
                 <h1 className={styles.title}>
-                    {title} <span>({isLoading ? "..." : priceTemplates.length})</span>
+                    {title} <span>({isLoading ? "..." : priceLists.length})</span>
                 </h1>
             </div>
             <div className={styles.tableContainer}>
-                <DataTable<PriceTemplateSummary>
-                    data={priceTemplates}
+                <DataTable<PriceListSummary>
+                    data={priceLists}
                     columns={columns}
                     isLoading={isLoading}
                     emptyMessage="Không có bảng giá nào"
-                    keyExtractor={(priceTemplate) => priceTemplate.id}
-                    onRowClick={onRowClick ? (priceTemplate) => onRowClick(priceTemplate) : undefined}
+                    keyExtractor={(priceList) => priceList.id}
+                    onRowClick={onRowClick ? (priceList) => onRowClick(priceList) : undefined}
                     selectedId={selectedId}
                     actions={actions}
                 />

@@ -1,61 +1,61 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { priceTemplateService } from "../../../services/priceTemplateService";
-import type { PriceTemplateOption, PriceTemplateItem } from "../../../types/price.types";
+import { priceListService } from "../../../services/priceListService";
+import type { PriceListOption, PriceSlot } from "../../../types/price.types";
 import { normalizeTimeString, type TimeSlot } from "./priceTable.utils";
 
 export interface UsePriceTableProps {
-    priceTemplates?: PriceTemplateOption[];
+    priceLists?: PriceListOption[];
     facilityId?: string;
     sportId?: string;
-    initialTemplateId?: number | null;
+    initialPriceListId?: number | null;
     initialSlots?: Array<{ startTime: string; endTime: string; price: number }>;
-    onTemplateChange?: (templateId: number | null) => void;
+    onPriceListChange?: (priceListId: number | null) => void;
     onSlotsChange?: (slots: TimeSlot[]) => void;
 }
 
 export interface UsePriceTableReturn {
-    selectedTemplateId: string;
+    selectedPriceListId: string;
     slots: TimeSlot[];
-    isLoadingTemplate: boolean;
-    filteredTemplates: PriceTemplateOption[];
-    handleTemplateChange: (templateId: string) => void;
+    isLoadingPriceList: boolean;
+    filteredPriceLists: PriceListOption[];
+    handlePriceListChange: (priceListId: string) => void;
     handleSlotsChange: (newSlots: TimeSlot[]) => void;
 }
 
 export default function usePriceTable({
-    priceTemplates = [],
+    priceLists = [],
     facilityId,
     sportId,
-    initialTemplateId,
+    initialPriceListId,
     initialSlots,
-    onTemplateChange,
+    onPriceListChange,
     onSlotsChange,
 }: UsePriceTableProps): UsePriceTableReturn {
     
-    const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
-        initialTemplateId ? initialTemplateId.toString() : ""
+    const [selectedPriceListId, setSelectedPriceListId] = useState<string>(
+        initialPriceListId ? initialPriceListId.toString() : ""
     );
     
     const [currentSlots, setCurrentSlots] = useState<TimeSlot[]>([]);
-    const [isLoadingTemplate, setIsLoadingTemplate] = useState(false);
-    const previousInitialTemplateId = useRef<number | null | undefined>(undefined);
+    const [isLoadingPriceList, setIsLoadingPriceList] = useState(false);
+    const previousInitialPriceListId = useRef<number | null | undefined>(undefined);
     const previousInitialSlots = useRef<Array<{ startTime: string; endTime: string; price: number }> | undefined>(undefined);
-    const isManualTemplateChange = useRef(false);
+    const isManualPriceListChange = useRef(false);
 
-    const filteredTemplates = useMemo(() => {
+    const filteredPriceLists = useMemo(() => {
         const facilityIdNum = facilityId ? parseInt(facilityId) : null;
         const sportIdNum = sportId ? parseInt(sportId) : null;
 
-        return priceTemplates.filter((template) => {
+        return priceLists.filter((priceList) => {
             const facilityOk =
-                template.facilityId === null ||
+                priceList.facilityId === null ||
                 facilityIdNum === null ||
-                template.facilityId === facilityIdNum;
+                priceList.facilityId === facilityIdNum;
 
             const sportOk =
-                template.sportId === null ||
+                priceList.sportId === null ||
                 sportIdNum === null ||
-                template.sportId === sportIdNum;
+                priceList.sportId === sportIdNum;
 
             // No court type / surface type filters provided from caller, so keep null-friendly pass-through
             const courtTypeOk = true;
@@ -63,87 +63,87 @@ export default function usePriceTable({
 
             return facilityOk && sportOk && courtTypeOk && surfaceTypeOk;
         });
-    }, [priceTemplates, facilityId, sportId]);
+    }, [priceLists, facilityId, sportId]);
 
-    // Function to load template items
-    const loadTemplateItems = useCallback(async (templateId: number, isManual = false) => {
-        setIsLoadingTemplate(true);
+    // Function to load price list slots
+    const loadPriceListSlots = useCallback(async (priceListId: number, isManual = false) => {
+        setIsLoadingPriceList(true);
         try {
-            // Call the service directly instead of using useApi's execute
-            const items = await priceTemplateService.getPriceTemplateItemsById(templateId);
+            // Call the service to get price list detail which includes slots
+            const priceListDetail = await priceListService.getPriceListById(priceListId);
 
-            console.log("Loaded template items:", items, "for template ID:", templateId);
+            console.log("Loaded price list detail:", priceListDetail, "for price list ID:", priceListId);
 
-            if (items && items.length > 0) {
-                const newSlots: TimeSlot[] = items.map((item, index) => ({
-                    id: `template-${templateId}-${index}-${Math.random().toString(36).slice(2, 9)}`,
-                    startTime: normalizeTimeString(item.startTime),
-                    endTime: normalizeTimeString(item.endTime),
-                    price: item.price.toString(),
+            if (priceListDetail && priceListDetail.slots && priceListDetail.slots.length > 0) {
+                const newSlots: TimeSlot[] = priceListDetail.slots.map((slot, index) => ({
+                    id: `priceList-${priceListId}-${index}-${Math.random().toString(36).slice(2, 9)}`,
+                    startTime: normalizeTimeString(slot.fromTime),
+                    endTime: normalizeTimeString(slot.toTime),
+                    price: slot.price.toString(),
                 }));
-                console.log("Created slots from template items:", newSlots);
+                console.log("Created slots from price list slots:", newSlots);
                 setCurrentSlots(newSlots);
                 if (onSlotsChange) {
                     onSlotsChange(newSlots);
                 }
             } else {
-                console.warn("No items found for template ID:", templateId);
+                console.warn("No slots found for price list ID:", priceListId);
                 setCurrentSlots([]);
                 if (onSlotsChange) {
                     onSlotsChange([]);
                 }
             }
         } catch (error) {
-            console.error("Failed to load price template items:", error);
+            console.error("Failed to load price list slots:", error);
             setCurrentSlots([]);
             if (onSlotsChange) {
                 onSlotsChange([]);
             }
         } finally {
-            setIsLoadingTemplate(false);
+            setIsLoadingPriceList(false);
             // Reset manual flag after loading completes
             if (isManual) {
                 // Use setTimeout to ensure state updates are processed first
                 setTimeout(() => {
-                    isManualTemplateChange.current = false;
+                    isManualPriceListChange.current = false;
                 }, 0);
             }
         }
     }, [onSlotsChange]);
 
-    // Sync selectedTemplateId with initialTemplateId prop changes
+    // Sync selectedPriceListId with initialPriceListId prop changes
     useEffect(() => {
-        const newTemplateId = initialTemplateId ? initialTemplateId.toString() : "";
-        if (newTemplateId !== selectedTemplateId) {
-            setSelectedTemplateId(newTemplateId);
+        const newPriceListId = initialPriceListId ? initialPriceListId.toString() : "";
+        if (newPriceListId !== selectedPriceListId) {
+            setSelectedPriceListId(newPriceListId);
         }
-    }, [initialTemplateId, selectedTemplateId]);
+    }, [initialPriceListId, selectedPriceListId]);
 
-    // Handle initial template loading or initial slots
+    // Handle initial price list loading or initial slots
     useEffect(() => {
-        // Don't interfere with manual template changes - let the async operation complete first
-        if (isManualTemplateChange.current) {
+        // Don't interfere with manual price list changes - let the async operation complete first
+        if (isManualPriceListChange.current) {
             return;
         }
 
-        const templateIdChanged = previousInitialTemplateId.current !== initialTemplateId;
+        const priceListIdChanged = previousInitialPriceListId.current !== initialPriceListId;
         // Compare slots properly - handle undefined/null cases
         const previousSlotsStr = previousInitialSlots.current ? JSON.stringify(previousInitialSlots.current) : null;
         const currentSlotsStr = initialSlots ? JSON.stringify(initialSlots) : null;
         const slotsChanged = previousSlotsStr !== currentSlotsStr;
         
         console.log("usePriceTable useEffect:", {
-            initialTemplateId,
+            initialPriceListId,
             initialSlots,
             slotsChanged,
-            templateIdChanged,
-            previousInitialTemplateId: previousInitialTemplateId.current,
+            priceListIdChanged,
+            previousInitialPriceListId: previousInitialPriceListId.current,
             previousInitialSlots: previousInitialSlots.current,
         });
         
-        // Priority 1: If we have both template and slots (backend returned both), use slots directly
-        // This is the most common case when viewing a court with a price template
-        if (initialTemplateId && initialSlots && initialSlots.length > 0 && slotsChanged) {
+        // Priority 1: If we have both price list and slots (backend returned both), use slots directly
+        // This is the most common case when viewing a court with a price list
+        if (initialPriceListId && initialSlots && initialSlots.length > 0 && slotsChanged) {
             const slots: TimeSlot[] = initialSlots.map((slot, index) => ({
                 id: `initial-${index}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 startTime: normalizeTimeString(slot.startTime),
@@ -155,17 +155,17 @@ export default function usePriceTable({
                 onSlotsChange(slots);
             }
             previousInitialSlots.current = initialSlots;
-            previousInitialTemplateId.current = initialTemplateId;
+            previousInitialPriceListId.current = initialPriceListId;
         }
-        // Priority 2: If template ID changed and we have a template (but no slots), load it
-        else if (templateIdChanged && initialTemplateId && !initialSlots) {
-            loadTemplateItems(initialTemplateId, false);
-            previousInitialTemplateId.current = initialTemplateId;
+        // Priority 2: If price list ID changed and we have a price list (but no slots), load it
+        else if (priceListIdChanged && initialPriceListId && !initialSlots) {
+            loadPriceListSlots(initialPriceListId, false);
+            previousInitialPriceListId.current = initialPriceListId;
         }
-        // Priority 3: If no template but slots are provided, use the slots directly
-        // This is the case when viewing a price template detail (no template ID, just items)
-        else if (!initialTemplateId && initialSlots && initialSlots.length > 0) {
-            // Always set slots if they're provided and we don't have a template
+        // Priority 3: If no price list but slots are provided, use the slots directly
+        // This is the case when viewing a price list detail (no price list ID, just slots)
+        else if (!initialPriceListId && initialSlots && initialSlots.length > 0) {
+            // Always set slots if they're provided and we don't have a price list
             // Check if slots actually changed or if this is the first render
             if (slotsChanged || previousInitialSlots.current === undefined) {
                 console.log("Setting slots from initialSlots (Priority 3):", initialSlots);
@@ -183,65 +183,65 @@ export default function usePriceTable({
                 previousInitialSlots.current = initialSlots;
             }
         }
-        // Priority 4: If template was cleared, clear slots too
-        else if (templateIdChanged && !initialTemplateId && !initialSlots) {
+        // Priority 4: If price list was cleared, clear slots too
+        else if (priceListIdChanged && !initialPriceListId && !initialSlots) {
             setCurrentSlots([]);
             if (onSlotsChange) {
                 onSlotsChange([]);
             }
-            previousInitialTemplateId.current = initialTemplateId;
+            previousInitialPriceListId.current = initialPriceListId;
         }
-    }, [initialTemplateId, initialSlots, onSlotsChange, loadTemplateItems]);
+    }, [initialPriceListId, initialSlots, onSlotsChange, loadPriceListSlots]);
 
-    const handleTemplateChange = useCallback(async (templateId: string) => {
-        console.log("handleTemplateChange called with:", templateId);
+    const handlePriceListChange = useCallback(async (priceListId: string) => {
+        console.log("handlePriceListChange called with:", priceListId);
         
         // Mark this as a manual change to prevent useEffect from interfering
-        isManualTemplateChange.current = true;
+        isManualPriceListChange.current = true;
         
-        setSelectedTemplateId(templateId);
-        if (onTemplateChange) {
-            onTemplateChange(templateId ? parseInt(templateId) : null);
+        setSelectedPriceListId(priceListId);
+        if (onPriceListChange) {
+            onPriceListChange(priceListId ? parseInt(priceListId) : null);
         }
 
-        if (!templateId) {
+        if (!priceListId) {
             setCurrentSlots([]);
             if (onSlotsChange) {
                 onSlotsChange([]);
             }
             // Update refs to prevent useEffect from running
-            previousInitialTemplateId.current = null;
+            previousInitialPriceListId.current = null;
             previousInitialSlots.current = undefined;
-            isManualTemplateChange.current = false;
+            isManualPriceListChange.current = false;
             return;
         }
 
-        const templateIdNum = parseInt(templateId);
-        console.log("Loading template items for ID:", templateIdNum);
+        const priceListIdNum = parseInt(priceListId);
+        console.log("Loading price list slots for ID:", priceListIdNum);
         // Update ref to prevent useEffect from running again
-        previousInitialTemplateId.current = templateIdNum;
-        await loadTemplateItems(templateIdNum, true);
-    }, [onSlotsChange, onTemplateChange, loadTemplateItems]);
+        previousInitialPriceListId.current = priceListIdNum;
+        await loadPriceListSlots(priceListIdNum, true);
+    }, [onSlotsChange, onPriceListChange, loadPriceListSlots]);
 
     const handleSlotsChange = useCallback((newSlots: TimeSlot[]) => {
         setCurrentSlots(newSlots);
-        if (selectedTemplateId) {
-            setSelectedTemplateId("");
-            if (onTemplateChange) {
-                onTemplateChange(null);
+        if (selectedPriceListId) {
+            setSelectedPriceListId("");
+            if (onPriceListChange) {
+                onPriceListChange(null);
             }
         }
         if (onSlotsChange) {
             onSlotsChange(newSlots);
         }
-    }, [onSlotsChange, onTemplateChange, selectedTemplateId]);
+    }, [onSlotsChange, onPriceListChange, selectedPriceListId]);
 
     return {
-        selectedTemplateId,
+        selectedPriceListId,
         slots: currentSlots,
-        isLoadingTemplate,
-        filteredTemplates,
-        handleTemplateChange,
+        isLoadingPriceList,
+        filteredPriceLists,
+        handlePriceListChange,
         handleSlotsChange,
     };
 }

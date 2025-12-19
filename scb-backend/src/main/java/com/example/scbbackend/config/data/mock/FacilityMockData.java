@@ -4,11 +4,13 @@ import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.repository.FacilityRepository;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FacilityMockData {
@@ -30,6 +32,11 @@ public class FacilityMockData {
     );
 
     public void mock(OwnerInfo ownerInfo) {
+        if (facilityRepository.count() > 0) {
+            log.info("Facility already exists. Skipping...");
+            return;
+        }
+
         List<Facility> facilities = FACILITY_DATA.stream()
                 .map(d -> Facility.builder()
                         .ownerInfo(ownerInfo)

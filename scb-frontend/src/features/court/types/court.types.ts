@@ -13,14 +13,7 @@ export const CourtStatusValues = {
     CLOSED: "CLOSED" as const,
 } as const;
 
-/**
- * Price Item DTO - matches backend PriceItemDto
- */
-export interface PriceItem {
-    startTime: string; // LocalTime format: "HH:mm:ss" or "HH:mm"
-    endTime: string;   // LocalTime format: "HH:mm:ss" or "HH:mm"
-    price: number;      // BigDecimal converted to number
-}
+import type { PriceSlot } from "./price.types";
 
 /**
  * Court Image DTO - matches backend CourtImageDto
@@ -58,8 +51,8 @@ export interface OwnerCourtDetail {
     courtTypeId: number;
     surfaceTypeId: number;
     name: string;
-    priceTemplateId: number | null;
-    items: PriceItem[];
+    priceListId: number | null;
+    slots: PriceSlot[];
     imageUrls: CourtImage[]; // Note: backend uses 'imageUrls' but contains CourtImageDto[]
     status: CourtStatus;
 }
@@ -73,8 +66,8 @@ export interface CourtCreationRequest {
     courtTypeId: number;
     surfaceTypeId: number;
     name: string;
-    priceTemplateId?: number | null;
-    items?: PriceItem[];
+    priceListId?: number | null;
+    slots?: PriceSlot[];
     images?: CourtImage[];
 }
 
@@ -87,8 +80,8 @@ export interface CourtUpdationRequest {
     courtTypeId: number;
     surfaceTypeId: number;
     name: string;
-    priceTemplateId?: number | null;
-    items?: PriceItem[];
+    priceListId?: number | null;
+    slots?: PriceSlot[];
     images?: CourtImage[];
     status?: string; // CourtStatus as string
 }

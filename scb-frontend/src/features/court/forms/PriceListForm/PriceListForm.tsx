@@ -3,38 +3,39 @@ import { TextField } from "@/components/form";
 import PriceTableSection from "../../components/form/PriceTableSection/PriceTableSection";
 import type { TimeSlot } from "../../components/form/PriceTableSection/priceTable.utils";
 import { normalizeTimeString } from "../../components/form/PriceTableSection/priceTable.utils";
-import styles from "./PriceTemplateForm.module.css";
+import styles from "./PriceListForm.module.css";
 import CourtAttributeSection, {
     type CourtAttributeErrors,
     type CourtAttributeValues,
 } from "../../components/form/CourtAttributeSection/CourtAttributeSection";
 import useFacility from "../../hooks/useFacility";
 import useCatalog from "@/hooks/useCatalog";
+import type { PriceSlot } from "../../types/price.types";
 
-export interface PriceTemplateFormValues {
+export interface PriceListFormValues {
     facilityId: number | null;
     sportId: number | null;
     courtTypeId: number | null;
     surfaceTypeId: number | null;
     name: string;
-    description?: string;
+    note?: string;
     isActive: boolean;
-    items: Array<{ startTime: string; endTime: string; price: number }>;
+    slots: PriceSlot[];
 }
 
-interface PriceTemplateFormProps {
-    onSubmit?: (values: PriceTemplateFormValues) => void;
+interface PriceListFormProps {
+    onSubmit?: (values: PriceListFormValues) => void;
     onCancel?: () => void;
     mode?: "create" | "view" | "edit";
-    initialValues?: PriceTemplateFormValues;
+    initialValues?: PriceListFormValues;
 }
 
-export default function PriceTemplateForm({
+export default function PriceListForm({
     onSubmit,
     onCancel,
     mode = "create",
     initialValues,
-}: PriceTemplateFormProps) {
+}: PriceListFormProps) {
     const { facilityOptions } = useFacility();
     const { catalog, isLoading: isCatalogLoading } = useCatalog();
 
@@ -48,13 +49,13 @@ export default function PriceTemplateForm({
     const [attributeErrors, setAttributeErrors] = useState<CourtAttributeErrors>({});
 
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
+    const [note, setNote] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [slots, setSlots] = useState<TimeSlot[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Store initial snapshot for comparison in edit mode
-    const initialSnapshotRef = useRef<PriceTemplateFormValues | null>(null);
+    const initialSnapshotRef = useRef<PriceListFormValues | null>(null);
 
     const isViewMode = mode === "view";
     const isEditMode = mode === "edit";
@@ -75,9 +76,9 @@ export default function PriceTemplateForm({
             courtTypeId: initialValues.courtTypeId,
             surfaceTypeId: initialValues.surfaceTypeId,
             name: initialValues.name,
-            description: initialValues.description ?? undefined,
+            note: initialValues.note ?? undefined,
             isActive: initialValues.isActive,
-            items: [...initialValues.items], // Deep copy for comparison
+            slots: [...initialValues.slots], // Deep copy for comparison
         };
 
         setAttributeValues({
@@ -89,16 +90,16 @@ export default function PriceTemplateForm({
         });
 
         setName(initialValues.name);
-        setDescription(initialValues.description ?? "");
+        setNote(initialValues.note ?? "");
         setIsActive(initialValues.isActive);
 
-        // Initialize slots from initial values items
-        if (initialValues.items && initialValues.items.length > 0) {
-            const initialSlots: TimeSlot[] = initialValues.items.map((item, index) => ({
+        // Initialize slots from initial values slots
+        if (initialValues.slots && initialValues.slots.length > 0) {
+            const initialSlots: TimeSlot[] = initialValues.slots.map((slot, index) => ({
                 id: `initial-${index}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-                startTime: normalizeTimeString(item.startTime),
-                endTime: normalizeTimeString(item.endTime),
-                price: item.price.toString(),
+                startTime: normalizeTimeString(slot.fromTime),
+                endTime: normalizeTimeString(slot.toTime),
+                price: slot.price.toString(),
             }));
             setSlots(initialSlots);
         } else {
@@ -119,7 +120,7 @@ export default function PriceTemplateForm({
     };
 
     // Compare current values with initial snapshot to detect changes
-    const hasChanges = (current: PriceTemplateFormValues, initial: PriceTemplateFormValues | null): boolean => {
+    const hasChanges = (current: PriceListFormValues, initial: PriceListFormValues | null): boolean => {
         if (!initial) return true; // No initial snapshot means create mode, always has "changes"
 
         // Compare basic fields
@@ -129,29 +130,29 @@ export default function PriceTemplateForm({
             current.courtTypeId !== initial.courtTypeId ||
             current.surfaceTypeId !== initial.surfaceTypeId ||
             current.name !== initial.name ||
-            (current.description ?? null) !== (initial.description ?? null) ||
+            (current.note ?? null) !== (initial.note ?? null) ||
             current.isActive !== initial.isActive
         ) {
             return true;
         }
 
-        // Compare items array
-        if (current.items.length !== initial.items.length) {
+        // Compare slots array
+        if (current.slots.length !== initial.slots.length) {
             return true;
         }
 
-        // Deep compare items (sort by startTime for consistent comparison)
-        const currentItems = [...current.items].sort((a, b) => a.startTime.localeCompare(b.startTime));
-        const initialItems = [...initial.items].sort((a, b) => a.startTime.localeCompare(b.startTime));
+        // Deep compare slots (sort by fromTime for consistent comparison)
+        const currentSlots = [...current.slots].sort((a, b) => a.fromTime.localeCompare(b.fromTime));
+        const initialSlots = [...initial.slots].sort((a, b) => a.fromTime.localeCompare(b.fromTime));
 
-        for (let i = 0; i < currentItems.length; i++) {
-            const currentItem = currentItems[i];
-            const initialItem = initialItems[i];
+        for (let i = 0; i < currentSlots.length; i++) {
+            const currentSlot = currentSlots[i];
+            const initialSlot = initialSlots[i];
 
             if (
-                currentItem.startTime !== initialItem.startTime ||
-                currentItem.endTime !== initialItem.endTime ||
-                currentItem.price !== initialItem.price
+                currentSlot.fromTime !== initialSlot.fromTime ||
+                currentSlot.toTime !== initialSlot.toTime ||
+                currentSlot.price !== initialSlot.price
             ) {
                 return true;
             }
@@ -189,17 +190,17 @@ export default function PriceTemplateForm({
         try {
             setIsSubmitting(true);
 
-            const payload: PriceTemplateFormValues = {
+            const payload: PriceListFormValues = {
                 facilityId: attributeValues.facilityId ? Number(attributeValues.facilityId) : null,
                 sportId: attributeValues.sportId ? Number(attributeValues.sportId) : null,
                 courtTypeId: attributeValues.courtTypeId ? Number(attributeValues.courtTypeId) : null,
                 surfaceTypeId: attributeValues.surfaceTypeId ? Number(attributeValues.surfaceTypeId) : null,
                 name: name.trim(),
-                description: description.trim() || undefined,
+                note: note.trim() || undefined,
                 isActive,
-                items: validSlots.map((slot) => ({
-                    startTime: slot.startTime,
-                    endTime: slot.endTime,
+                slots: validSlots.map((slot) => ({
+                    fromTime: slot.startTime,
+                    toTime: slot.endTime,
                     price: Number(slot.price),
                 })),
             };
@@ -218,7 +219,7 @@ export default function PriceTemplateForm({
                 onSubmit(payload);
             } else {
                 // Fallback debug log
-                console.log("PriceTemplateForm submit payload:", payload);
+                console.log("PriceListForm submit payload:", payload);
             }
         } finally {
             setIsSubmitting(false);
@@ -262,11 +263,11 @@ export default function PriceTemplateForm({
             />
 
             <div className={styles.formGroup}>
-                <label htmlFor="templateName" className={styles.label}>
+                <label htmlFor="priceListName" className={styles.label}>
                     Tên bảng giá <span className={styles.required}>*</span>
                 </label>
                 <TextField
-                    name="templateName"
+                    name="priceListName"
                     placeholder="Nhập tên bảng giá"
                     value={name}
                     onChange={setName}
@@ -275,15 +276,15 @@ export default function PriceTemplateForm({
             </div>
 
             <div className={styles.formGroup}>
-                <label htmlFor="templateDescription" className={styles.label}>
-                    Mô tả
+                <label htmlFor="priceListNote" className={styles.label}>
+                    Ghi chú
                 </label>
                 <textarea
-                    id="templateDescription"
-                    name="templateDescription"
-                    placeholder="Nhập mô tả bảng giá (tùy chọn)"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    id="priceListNote"
+                    name="priceListNote"
+                    placeholder="Nhập ghi chú bảng giá (tùy chọn)"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
                     className={styles.textarea}
                     rows={4}
                     disabled={isViewMode}
@@ -292,20 +293,20 @@ export default function PriceTemplateForm({
 
             <div className={styles.formGroup}>
                 <div className={styles.toggleGroup}>
-                    <label htmlFor="templateIsActive" className={styles.toggleLabel}>
+                    <label htmlFor="priceListIsActive" className={styles.toggleLabel}>
                         Kích hoạt bảng giá
                     </label>
                     <div className={styles.toggleWrapper}>
                         <input
                             type="checkbox"
-                            id="templateIsActive"
-                            name="templateIsActive"
+                            id="priceListIsActive"
+                            name="priceListIsActive"
                             checked={isActive}
                             onChange={(e) => setIsActive(e.target.checked)}
                             className={styles.toggleCheckbox}
                             disabled={isViewMode}
                         />
-                        <label htmlFor="templateIsActive" className={styles.toggleSwitch}>
+                        <label htmlFor="priceListIsActive" className={styles.toggleSwitch}>
                             <span className={styles.toggleSlider}></span>
                         </label>
                     </div>
@@ -319,13 +320,17 @@ export default function PriceTemplateForm({
 
             <div className={styles.formGroup}>
                 <PriceTableSection
-                    priceTemplates={[]}
+                    priceLists={[]}
                     minTime={0}
                     maxTime={24}
                     hideTemplateSelect
                     onSlotsChange={isViewMode ? undefined : setSlots}
                     disabled={isViewMode}
-                    initialSlots={initialValues?.items}
+                    initialSlots={initialValues?.slots?.map(slot => ({
+                        startTime: slot.fromTime,
+                        endTime: slot.toTime,
+                        price: slot.price
+                    }))}
                 />
             </div>
 

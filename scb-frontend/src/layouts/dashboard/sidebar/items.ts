@@ -28,7 +28,7 @@ export const SIDEBAR_ITEMS: SidebarItemsByRole = {
         },
         {
             label: 'Quản lý bảng giá',
-            path: ROUTES.OWNER.PRICE_TEMPLATE
+            path: ROUTES.OWNER.PRICE_LIST
         },
         {
             label: 'Quản lý lịch đặt sân',

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/owner/price-list")
+@RequestMapping("/api/v1/owner/price-lists")
 @RequiredArgsConstructor
 public class PriceListController {
 
@@ -27,9 +27,11 @@ public class PriceListController {
     public ApiResponse<List<PriceListSummaryResponse>> getAllPriceLists(
             @CurrentAccount Account account
     ) {
+        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+
         return ApiResponse.success(
                 ApiCode.GET_ALL_PRICE_LISTS_SUCCESS,
-                priceListService.getAllPriceLists(getOwnerInfo(account))
+                priceListService.getAllPriceLists(account.getOwnerInfo())
         );
     }
 

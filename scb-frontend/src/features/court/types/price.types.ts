@@ -1,4 +1,4 @@
-export interface PriceTemplateSummary {
+export interface PriceListSummary {
     id: number;
     name: string;
     version: number;
@@ -6,7 +6,7 @@ export interface PriceTemplateSummary {
     isActive: boolean;
 }
 
-export interface PriceTemplateOption {
+export interface PriceListOption {
     id: number;
     facilityId: number | null;
     sportId: number | null;
@@ -15,32 +15,32 @@ export interface PriceTemplateOption {
     name: string;
 }
 
-export interface PriceTemplateDetail {
+export interface PriceListDetail {
     id: number;
     facilityId: number | null;
     sportId: number | null;
     courtTypeId: number | null;
     surfaceTypeId: number | null;
     name: string;
-    description: string | null;
+    note: string | null;
     version: number;
     isActive: boolean;
-    items: PriceTemplateItem[];
+    slots: PriceSlot[];
 }
 
-export interface PriceTemplateUpsert {
+export interface PriceListUpsert {
     facilityId: number | null;
     sportId: number | null;
     courtTypeId: number | null;
     surfaceTypeId: number | null;
     name: string;
-    description: string | null;
+    note: string | null;
     isActive: boolean;
-    items: PriceTemplateItem[];
+    slots: PriceSlot[];
 }
 
-export interface PriceTemplateItem {
-    startTime: string;
-    endTime: string;
+export interface PriceSlot {
+    fromTime: string;
+    toTime: string;
     price: number;
 }

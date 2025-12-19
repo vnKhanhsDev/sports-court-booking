@@ -1,27 +1,27 @@
 import { useState } from "react";
-import usePriceTemplate from "../hooks/usePriceTemplate";
-import PriceTemplateTable from "../lists/PriceTemplateList/PriceTemplateTable";
+import usePriceList from "../hooks/usePriceList";
+import PriceListTable from "../lists/PriceList/PriceListTable";
 import TableToolbar from "@/components/common/TableToolbar/TableToolbar";
 import Button from "@/components/ui/button/Button";
 import Modal from "@/components/ui/modal/Modal";
-import PriceTemplateForm, { type PriceTemplateFormValues } from "../forms/PriceTemplateForm/PriceTemplateForm";
-import type { PriceTemplateUpsert, PriceTemplateDetail, PriceTemplateSummary } from "../types/price.types";
-import styles from "./PriceTemplatePage.module.css";
+import PriceListForm, { type PriceListFormValues } from "../forms/PriceListForm/PriceListForm";
+import type { PriceListUpsert, PriceListDetail, PriceListSummary } from "../types/price.types";
+import styles from "./PriceListPage.module.css";
 import useApi from "@/hooks/useApi";
-import { priceTemplateService } from "../services/priceTemplateService";
+import { priceListService } from "../services/priceListService";
 
-export default function PriceTemplatePage() {
-    const { priceTemplates, isTemplatesLoading, createPriceTemplate, updatePriceTemplate, deletePriceTemplate } = usePriceTemplate();
+export default function PriceListPage() {
+    const { priceLists, isPriceListsLoading, createPriceList, updatePriceList, deletePriceList } = usePriceList();
     const { execute, isLoading: isDetailLoading } = useApi();
 
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [selectedTemplateDetail, setSelectedTemplateDetail] = useState<PriceTemplateDetail | null>(null);
+    const [selectedPriceListDetail, setSelectedPriceListDetail] = useState<PriceListDetail | null>(null);
     const [formMode, setFormMode] = useState<"create" | "view" | "edit">("create");
 
-    const handleDeletePriceTemplate = async (priceTemplate: PriceTemplateSummary) => {
+    const handleDeletePriceList = async (priceList: PriceListSummary) => {
         // Show confirmation dialog
         const confirmed = window.confirm(
-            `Bạn có chắc chắn muốn xóa bảng giá "${priceTemplate.name}"?`
+            `Bạn có chắc chắn muốn xóa bảng giá "${priceList.name}"?`
         );
 
         if (!confirmed) {
@@ -29,9 +29,9 @@ export default function PriceTemplatePage() {
         }
 
         try {
-            await deletePriceTemplate(priceTemplate.id);
+            await deletePriceList(priceList.id);
         } catch (error: any) {
-            // Check if error is about template being in use
+            // Check if error is about price list being in use
             const errorMessage = error?.message || error?.error || "Có lỗi xảy ra khi xóa bảng giá";
             
             if (errorMessage.includes("being used") || errorMessage.includes("đang được sử dụng") || errorMessage.includes("cannot be deleted")) {
@@ -42,69 +42,69 @@ export default function PriceTemplatePage() {
         }
     };
 
-    const handleRowClick = async (priceTemplate: PriceTemplateSummary) => {
-        const detail = await execute(() => priceTemplateService.getPriceTemplateById(priceTemplate.id));
+    const handleRowClick = async (priceList: PriceListSummary) => {
+        const detail = await execute(() => priceListService.getPriceListById(priceList.id));
         if (!detail) {
             alert("Không tìm thấy thông tin bảng giá");
             return;
         }
 
-        setSelectedTemplateDetail(detail);
+        setSelectedPriceListDetail(detail);
         setFormMode("view");
         setIsFormOpen(true);
     };
 
-    const handleEditPriceTemplate = async (priceTemplate: PriceTemplateSummary) => {
-        const detail = await execute(() => priceTemplateService.getPriceTemplateById(priceTemplate.id));
+    const handleEditPriceList = async (priceList: PriceListSummary) => {
+        const detail = await execute(() => priceListService.getPriceListById(priceList.id));
         if (!detail) {
             alert("Không tìm thấy thông tin bảng giá");
             return;
         }
 
-        setSelectedTemplateDetail(detail);
+        setSelectedPriceListDetail(detail);
         setFormMode("edit");
         setIsFormOpen(true);
     };
 
-    const handleCreateTemplate = async (values: PriceTemplateFormValues) => {
-        const payload: PriceTemplateUpsert = {
+    const handleCreatePriceList = async (values: PriceListFormValues) => {
+        const payload: PriceListUpsert = {
             facilityId: values.facilityId,
             sportId: values.sportId,
             courtTypeId: values.courtTypeId,
             surfaceTypeId: values.surfaceTypeId,
             name: values.name,
-            description: values.description ?? null,
+            note: values.note ?? null,
             isActive: values.isActive,
-            items: values.items,
+            slots: values.slots,
         };
 
-        await createPriceTemplate(payload);
+        await createPriceList(payload);
         setIsFormOpen(false);
     };
 
-    const handleUpdateTemplate = async (values: PriceTemplateFormValues) => {
-        if (!selectedTemplateDetail) {
+    const handleUpdatePriceList = async (values: PriceListFormValues) => {
+        if (!selectedPriceListDetail) {
             alert("Không tìm thấy thông tin bảng giá để cập nhật");
             return;
         }
 
-        const payload: PriceTemplateUpsert = {
+        const payload: PriceListUpsert = {
             facilityId: values.facilityId,
             sportId: values.sportId,
             courtTypeId: values.courtTypeId,
             surfaceTypeId: values.surfaceTypeId,
             name: values.name,
-            description: values.description ?? null,
+            note: values.note ?? null,
             isActive: values.isActive,
-            items: values.items,
+            slots: values.slots,
         };
 
-        await updatePriceTemplate(selectedTemplateDetail.id, payload);
+        await updatePriceList(selectedPriceListDetail.id, payload);
         setIsFormOpen(false);
     };
 
     const handleOpenCreateForm = () => {
-        setSelectedTemplateDetail(null);
+        setSelectedPriceListDetail(null);
         setFormMode("create");
         setIsFormOpen(true);
     };
@@ -121,19 +121,19 @@ export default function PriceTemplatePage() {
                 }
             />
 
-            <PriceTemplateTable
-                priceTemplates={priceTemplates}
-                isLoading={isTemplatesLoading}
+            <PriceListTable
+                priceLists={priceLists}
+                isLoading={isPriceListsLoading}
                 onRowClick={handleRowClick}
-                onEdit={handleEditPriceTemplate}
-                onDelete={handleDeletePriceTemplate}
+                onEdit={handleEditPriceList}
+                onDelete={handleDeletePriceList}
             />
 
             <Modal
                 isOpen={isFormOpen}
                 onClose={() => {
                     setIsFormOpen(false);
-                    setSelectedTemplateDetail(null);
+                    setSelectedPriceListDetail(null);
                 }}
                 title={
                     formMode === "view"
@@ -145,27 +145,27 @@ export default function PriceTemplatePage() {
                 size="large"
             >
                 {!isDetailLoading && (
-                    <PriceTemplateForm
+                    <PriceListForm
                         mode={formMode}
                         initialValues={
-                            selectedTemplateDetail
+                            selectedPriceListDetail
                                 ? {
-                                      facilityId: selectedTemplateDetail.facilityId,
-                                      sportId: selectedTemplateDetail.sportId,
-                                      courtTypeId: selectedTemplateDetail.courtTypeId,
-                                      surfaceTypeId: selectedTemplateDetail.surfaceTypeId,
-                                      name: selectedTemplateDetail.name,
-                                      description: selectedTemplateDetail.description ?? undefined,
-                                      isActive: selectedTemplateDetail.isActive,
-                                      items: selectedTemplateDetail.items,
+                                      facilityId: selectedPriceListDetail.facilityId,
+                                      sportId: selectedPriceListDetail.sportId,
+                                      courtTypeId: selectedPriceListDetail.courtTypeId,
+                                      surfaceTypeId: selectedPriceListDetail.surfaceTypeId,
+                                      name: selectedPriceListDetail.name,
+                                      note: selectedPriceListDetail.note ?? undefined,
+                                      isActive: selectedPriceListDetail.isActive,
+                                      slots: selectedPriceListDetail.slots,
                                   }
                                 : undefined
                         }
                         onSubmit={
                             formMode === "create"
-                                ? handleCreateTemplate
+                                ? handleCreatePriceList
                                 : formMode === "edit"
-                                ? handleUpdateTemplate
+                                ? handleUpdatePriceList
                                 : undefined
                         }
                         onCancel={() => setIsFormOpen(false)}

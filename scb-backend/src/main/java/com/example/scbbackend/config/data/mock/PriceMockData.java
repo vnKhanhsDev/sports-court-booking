@@ -6,12 +6,14 @@ import com.example.scbbackend.modules.court.repository.PriceListRepository;
 import com.example.scbbackend.modules.court.repository.PriceSlotRepository;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PriceMockData {
@@ -74,6 +76,11 @@ public class PriceMockData {
     );
 
     public void mock(OwnerInfo ownerInfo) {
+        if (priceListRepository.count() > 0) {
+            log.info("Price list already exists. Skipping...");
+            return;
+        }
+
         PRICE_LISTS.forEach(l -> {
             PriceList priceList = priceListRepository.save(
                     PriceList.builder()

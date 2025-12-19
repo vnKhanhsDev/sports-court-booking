@@ -23,7 +23,7 @@ export const ROUTES = {
     OWNER: {
         HOME: '/owner/dashboard',
         COURT: '/owner/dashboard/courts',
-        PRICE_TEMPLATE: '/owner/dashboard/courts/price-templates',
+        PRICE_LIST: '/owner/dashboard/price-lists',
         BOOKING: '/owner/dashboard/bookings'
     },
 

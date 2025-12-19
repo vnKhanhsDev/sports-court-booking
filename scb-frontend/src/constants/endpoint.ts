@@ -35,13 +35,10 @@ export const ENDPOINTS = {
             BY_ID: (id: number | string) => `/owner/courts/${id}`
         },
         
-        PRICE_TEMPLATES: {
-            ROOT: '/owner/price-templates',
-
-            OPTIONS: '/owner/price-templates/options',
-
-            BY_ID: (id: number | string) => `/owner/price-templates/${id}`,
-            ITEMS: (id: number | string) => `/owner/price-templates/${id}/items`
+        PRICE_LISTS: {
+            ROOT: '/owner/price-lists',
+            OPTIONS: '/owner/price-lists/options',
+            BY_ID: (id: number | string) => `/owner/price-lists/${id}`
         }
     },
     MEDIA: {

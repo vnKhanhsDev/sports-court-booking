@@ -10,13 +10,13 @@ import PriceTableSection from "../../components/form/PriceTableSection/PriceTabl
 import type { TimeSlot } from "../../components/form/PriceTableSection/priceTable.utils";
 import CourtAttributeSection, { type CourtAttributeValues } from "../../components/form/CourtAttributeSection/CourtAttributeSection";
 import styles from "./CourtForm.module.css";
-import type { PriceTemplateOption } from "../../types/price.types";
-import type { PriceItem, CourtImage, OwnerCourtDetail } from "../../types/court.types";
+import type { PriceListOption } from "../../types/price.types";
+import type { PriceSlot, CourtImage, OwnerCourtDetail } from "../../types/court.types";
 import { normalizeTimeString } from "../../components/form/PriceTableSection/priceTable.utils";
 
 interface CourtFormProps {
     facilities: OwnerFacilitySummary[];
-    priceTemplates: PriceTemplateOption[];
+    priceLists: PriceListOption[];
     onSubmit?: () => void;
     onCancel?: () => void;
     readOnly?: boolean;
@@ -27,7 +27,7 @@ interface CourtFormProps {
 
 export default function CourtForm({ 
     facilities, 
-    priceTemplates, 
+    priceLists, 
     onSubmit, 
     onCancel,
     readOnly = false,
@@ -45,7 +45,7 @@ export default function CourtForm({
         surfaceTypeId: "",
     });
     const [courtName, setCourtName] = useState<string>("");
-    const [selectedPriceTemplateId, setSelectedPriceTemplateId] = useState<number | null>(null);
+    const [selectedPriceListId, setSelectedPriceListId] = useState<number | null>(null);
     const [currentPriceSlots, setCurrentPriceSlots] = useState<TimeSlot[]>([]);
     const [images, setImages] = useState<string[]>([]);
 
@@ -59,15 +59,15 @@ export default function CourtForm({
                 surfaceTypeId: initialData.surfaceTypeId.toString(),
             });
             setCourtName(initialData.name);
-            setSelectedPriceTemplateId(initialData.priceTemplateId);
+            setSelectedPriceListId(initialData.priceListId);
 
-            // Convert PriceItem[] to TimeSlot[]
-            if (initialData.items && initialData.items.length > 0) {
-                const slots: TimeSlot[] = initialData.items.map((item, index) => ({
+            // Convert PriceSlot[] to TimeSlot[]
+            if (initialData.slots && initialData.slots.length > 0) {
+                const slots: TimeSlot[] = initialData.slots.map((slot, index) => ({
                     id: `initial-${index}-${Date.now()}`,
-                    startTime: normalizeTimeString(item.startTime),
-                    endTime: normalizeTimeString(item.endTime),
-                    price: item.price.toString(),
+                    startTime: normalizeTimeString(slot.fromTime),
+                    endTime: normalizeTimeString(slot.toTime),
+                    price: slot.price.toString(),
                 }));
                 setCurrentPriceSlots(slots);
             } else {
@@ -92,7 +92,7 @@ export default function CourtForm({
                 surfaceTypeId: "",
             });
             setCourtName("");
-            setSelectedPriceTemplateId(null);
+            setSelectedPriceListId(null);
             setCurrentPriceSlots([]);
             setImages([]);
         }
@@ -116,9 +116,9 @@ export default function CourtForm({
         setAttributeValues(prev => {
             const newValues = { ...prev, [field]: value };
             
-            // Reset price template when facility or sport changes
+            // Reset price list when facility or sport changes
             if (field === "facilityId" || field === "sportId") {
-                setSelectedPriceTemplateId(null);
+                setSelectedPriceListId(null);
                 setCurrentPriceSlots([]);
             }
             
@@ -145,8 +145,8 @@ export default function CourtForm({
             return;
         }
 
-        // Validate price table - must have at least one valid slot if no template
-        if (!selectedPriceTemplateId) {
+        // Validate price table - must have at least one valid slot if no price list
+        if (!selectedPriceListId) {
             if (currentPriceSlots.length === 0) {
                 alert("Vui lòng thêm ít nhất một khung giờ giá hoặc chọn bảng giá mẫu");
                 return;
@@ -165,16 +165,16 @@ export default function CourtForm({
         }
 
         try {
-            // Convert TimeSlot[] to PriceItem[]
-            // If price template is selected, items should be undefined
-            // If no template is selected, items must be provided (validated above)
-            const priceItems: PriceItem[] | undefined = selectedPriceTemplateId 
+            // Convert TimeSlot[] to PriceSlot[]
+            // If price list is selected, slots should be undefined
+            // If no price list is selected, slots must be provided (validated above)
+            const priceSlots: PriceSlot[] | undefined = selectedPriceListId 
                 ? undefined 
                 : currentPriceSlots
                     .filter(slot => slot.startTime && slot.endTime && slot.price && parseFloat(slot.price) > 0)
                     .map(slot => ({
-                        startTime: slot.startTime,
-                        endTime: slot.endTime,
+                        fromTime: slot.startTime,
+                        toTime: slot.endTime,
                         price: parseFloat(slot.price),
                     }));
 
@@ -196,8 +196,8 @@ export default function CourtForm({
                         courtTypeId: parseInt(attributeValues.courtTypeId!),
                         surfaceTypeId: parseInt(attributeValues.surfaceTypeId!),
                         name: courtName.trim(),
-                        priceTemplateId: selectedPriceTemplateId || undefined,
-                        items: priceItems && priceItems.length > 0 ? priceItems : undefined,
+                        priceListId: selectedPriceListId || undefined,
+                        slots: priceSlots && priceSlots.length > 0 ? priceSlots : undefined,
                         images: courtImages,
                         status: initialData?.status || "PENDING", // Preserve existing status or default
                     })
@@ -211,8 +211,8 @@ export default function CourtForm({
                         courtTypeId: parseInt(attributeValues.courtTypeId!),
                         surfaceTypeId: parseInt(attributeValues.surfaceTypeId!),
                         name: courtName.trim(),
-                        priceTemplateId: selectedPriceTemplateId || undefined,
-                        items: priceItems && priceItems.length > 0 ? priceItems : undefined,
+                        priceListId: selectedPriceListId || undefined,
+                        slots: priceSlots && priceSlots.length > 0 ? priceSlots : undefined,
                         images: courtImages,
                     })
                 );
@@ -227,7 +227,7 @@ export default function CourtForm({
                     surfaceTypeId: "",
                 });
                 setCourtName("");
-                setSelectedPriceTemplateId(null);
+                setSelectedPriceListId(null);
                 setImages([]);
                 setCurrentPriceSlots([]);
             }
@@ -275,18 +275,18 @@ export default function CourtForm({
 
             <div className={styles.formGroup}>
                 <PriceTableSection
-                    priceTemplates={priceTemplates}
+                    priceLists={priceLists}
                     facilityId={attributeValues.facilityId}
                     sportId={attributeValues.sportId}
                     minTime={minTime}
                     maxTime={maxTime}
-                    initialTemplateId={selectedPriceTemplateId}
+                    initialPriceListId={selectedPriceListId}
                     initialSlots={currentPriceSlots.map(slot => ({
                         startTime: slot.startTime,
                         endTime: slot.endTime,
                         price: parseFloat(slot.price),
                     }))}
-                    onTemplateChange={readOnly ? undefined : setSelectedPriceTemplateId}
+                    onPriceListChange={readOnly ? undefined : setSelectedPriceListId}
                     onSlotsChange={readOnly ? undefined : setCurrentPriceSlots}
                     disabled={readOnly}
                 />

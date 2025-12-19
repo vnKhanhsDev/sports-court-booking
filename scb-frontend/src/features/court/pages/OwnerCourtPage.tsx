@@ -8,7 +8,7 @@ import FacilityForm, { type FacilityFormData } from "../forms/FacilityForm/Facil
 import CourtForm from "../forms/CourtForm/CourtForm";
 import type { OwnerCourtSummary, OwnerCourtDetail } from "../types/court.types";
 import styles from "./OwnerCourtPage.module.css";
-import usePriceTemplate from "../hooks/usePriceTemplate";
+import usePriceList from "../hooks/usePriceList";
 import useFacility from "../hooks/useFacility";
 import { facilityService } from "../services/facilityService";
 import { courtServiceForOwner } from "../services/courtService";
@@ -23,7 +23,7 @@ export default function OwnerCourtPage() {
     const { facilities, isFacilitiesLoading, refetchFacilities } = useFacility();
 
     const { ownerCourts, isCourtsLoading, refetchCourts } = useCourt();
-    const { priceTemplateOptions } = usePriceTemplate();
+    const { priceListOptions } = usePriceList();
     const { execute } = useApi();
     
     const [isFacilityModalOpen, setIsFacilityModalOpen] = useState(false);
@@ -279,7 +279,7 @@ export default function OwnerCourtPage() {
             >
                 <CourtForm 
                     facilities={facilities}
-                    priceTemplates={priceTemplateOptions}
+                    priceLists={priceListOptions}
                     onSubmit={courtModalMode === "view" ? undefined : handleCourtSubmit}
                     onCancel={() => {
                         setIsCourtModalOpen(false);

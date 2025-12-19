@@ -2,50 +2,50 @@ import { Select } from "@/components/form";
 import usePriceTable from "./usePriceTable";
 import PriceTable from "./PriceTable";
 import styles from "./PriceTableSection.module.css";
-import type { PriceTemplateOption } from "@/features/court/types/price.types";
+import type { PriceListOption } from "@/features/court/types/price.types";
 import type { TimeSlot } from "./priceTable.utils";
 
 export interface PriceTableSectionProps {
-    priceTemplates: PriceTemplateOption[];
+    priceLists: PriceListOption[];
     facilityId?: string;
     sportId?: string;
     minTime: number;
     maxTime: number;
-    initialTemplateId?: number | null;
+    initialPriceListId?: number | null;
     initialSlots?: Array<{ startTime: string; endTime: string; price: number }>;
-    onTemplateChange?: (templateId: number | null) => void;
+    onPriceListChange?: (priceListId: number | null) => void;
     onSlotsChange?: (slots: TimeSlot[]) => void;
     disabled?: boolean;
     hideTemplateSelect?: boolean;
 }
 
 export default function PriceTableSection({
-    priceTemplates,
+    priceLists,
     facilityId,
     sportId,
     minTime,
     maxTime,
-    initialTemplateId,
+    initialPriceListId,
     initialSlots,
-    onTemplateChange,
+    onPriceListChange,
     onSlotsChange,
     disabled = false,
     hideTemplateSelect = false,
 }: PriceTableSectionProps) {
     const {
-        selectedTemplateId,
+        selectedPriceListId,
         slots,
-        isLoadingTemplate,
-        filteredTemplates,
-        handleTemplateChange,
+        isLoadingPriceList,
+        filteredPriceLists,
+        handlePriceListChange,
         handleSlotsChange,
     } = usePriceTable({
-        priceTemplates,
+        priceLists,
         facilityId,
         sportId,
-        initialTemplateId,
+        initialPriceListId,
         initialSlots,
-        onTemplateChange,
+        onPriceListChange,
         onSlotsChange,
     });
 
@@ -59,14 +59,14 @@ export default function PriceTableSection({
                 <div className={styles.selectWrapper}>
                     <Select
                         placeholder="-- Chọn bảng giá mẫu (tùy chọn) --"
-                        value={selectedTemplateId}
-                        onChange={handleTemplateChange}
-                        options={filteredTemplates.map((template) => ({
-                            value: template.id.toString(),
-                            label: template.name,
+                        value={selectedPriceListId}
+                        onChange={handlePriceListChange}
+                        options={filteredPriceLists.map((priceList) => ({
+                            value: priceList.id.toString(),
+                            label: priceList.name,
                         }))}
-                        disabled={disabled || isLoadingTemplate}
-                        name="priceTemplate"
+                        disabled={disabled || isLoadingPriceList}
+                        name="priceList"
                     />
                 </div>
             )}

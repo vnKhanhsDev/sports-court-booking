@@ -95,13 +95,13 @@ public class PriceListService {
             savePriceList(ownerInfo, request, version);
         } else {
             existingPriceList.setFacility(request.facilityId() != null ?
-                    facilityService.findFacilityById(existingPriceList.getFacility().getId()) : null);
+                    facilityService.findFacilityById(request.facilityId()) : null);
             existingPriceList.setSport(request.sportId() != null ?
-                    catalogService.findSportById(existingPriceList.getSport().getId()) : null);
+                    catalogService.findSportById(request.sportId()) : null);
             existingPriceList.setCourtType(request.courtTypeId() != null ?
-                    catalogService.findCourtTypeById(existingPriceList.getCourtType().getId()) : null);
+                    catalogService.findCourtTypeById(request.courtTypeId()) : null);
             existingPriceList.setSurfaceType(request.surfaceTypeId() != null ?
-                    catalogService.findSurfaceTypeById(existingPriceList.getSurfaceType().getId()) : null);
+                    catalogService.findSurfaceTypeById(request.surfaceTypeId()) : null);
             existingPriceList.setName(request.name());
             existingPriceList.setNote(request.note());
             existingPriceList.setActive(request.isActive());
