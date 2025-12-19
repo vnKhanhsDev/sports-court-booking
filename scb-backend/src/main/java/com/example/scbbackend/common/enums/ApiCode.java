@@ -72,6 +72,8 @@ public enum ApiCode {
     DISTRICT_NOT_FOUND(10010, "District not found", HttpStatus.NOT_FOUND),
     WARD_NOT_FOUND(10011, "Ward not found", HttpStatus.NOT_FOUND),
     FACILITY_NOT_FOUND(10012, "Facility not found", HttpStatus.NOT_FOUND),
+    FACILITY_HAS_COURTS(10020, "Facility has courts and cannot be deleted", HttpStatus.BAD_REQUEST),
+    FACILITY_HAS_PRICE_LISTS(10021, "Facility is referenced by price lists and cannot be deleted", HttpStatus.BAD_REQUEST),
     COURT_PRICE_INPUT_INVALID(10013, "Court price input invalid", HttpStatus.BAD_REQUEST),
     SPORT_NOT_FOUND(10014, "Sport not found", HttpStatus.NOT_FOUND),
     COURT_TYPE_NOT_FOUND(10015, "Court type not found", HttpStatus.NOT_FOUND),

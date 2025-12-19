@@ -44,4 +44,6 @@ public interface CourtRepository extends JpaRepository<@NonNull Court, @NonNull 
 
     long countByPriceList(PriceList priceList);
 
+    long countByFacility(@NonNull com.example.scbbackend.modules.court.entity.Facility facility);
+
 }

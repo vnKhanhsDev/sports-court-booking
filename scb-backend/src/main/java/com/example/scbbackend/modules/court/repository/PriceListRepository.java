@@ -12,4 +12,6 @@ public interface PriceListRepository extends JpaRepository<@NonNull PriceList, @
     Optional<PriceList> findByIdAndOwnerInfo(@NonNull Long id, @NonNull OwnerInfo ownerInfo);
 
     List<PriceList> findAllByOwnerInfoAndCourtIsNull(@NonNull OwnerInfo ownerInfo);
+
+    long countByFacility(@NonNull com.example.scbbackend.modules.court.entity.Facility facility);
 }

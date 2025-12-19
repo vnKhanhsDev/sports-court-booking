@@ -10,7 +10,9 @@ import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
+import com.example.scbbackend.modules.court.repository.CourtRepository;
 import com.example.scbbackend.modules.court.repository.FacilityRepository;
+import com.example.scbbackend.modules.court.repository.PriceListRepository;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ import java.util.List;
 public class FacilityService {
 
     private final FacilityRepository facilityRepository;
+    private final CourtRepository courtRepository;
+    private final PriceListRepository priceListRepository;
 
     private final AddressService addressService;
 
@@ -95,6 +99,18 @@ public class FacilityService {
     @Transactional
     public List<OwnerFacilitySummaryResponse> deleteFacility(Long id, OwnerInfo ownerInfo) {
         Facility facility = getFacilityByIdAndOwnerInfo(id, ownerInfo);
+
+        // Check if facility has any courts
+        long courtCount = courtRepository.countByFacility(facility);
+        if (courtCount > 0) {
+            throw new AppException(ApiCode.FACILITY_HAS_COURTS);
+        }
+
+        // Check if facility is referenced by any price lists
+        long priceListCount = priceListRepository.countByFacility(facility);
+        if (priceListCount > 0) {
+            throw new AppException(ApiCode.FACILITY_HAS_PRICE_LISTS);
+        }
 
         facilityRepository.delete(facility);
 
