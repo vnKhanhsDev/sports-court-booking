@@ -1,4 +1,5 @@
 import { Select } from "@/components/form";
+import { useMemo } from "react";
 import usePriceTable from "./usePriceTable";
 import PriceTable from "./PriceTable";
 import styles from "./PriceTableSection.module.css";
@@ -49,6 +50,33 @@ export default function PriceTableSection({
         onSlotsChange,
     });
 
+    // Check if the court uses custom pricing (private price list not in shared lists)
+    const hasCustomPricing = useMemo(() => {
+        if (!initialPriceListId || !initialSlots || initialSlots.length === 0) {
+            return false;
+        }
+        // If priceListId exists but is not in priceLists (shared lists), it's a private/custom price list
+        return !priceLists.some(pl => pl.id === initialPriceListId);
+    }, [initialPriceListId, initialSlots, priceLists]);
+
+    // Build options list, adding custom pricing option if needed
+    const selectOptions = useMemo(() => {
+        const options = filteredPriceLists.map((priceList) => ({
+            value: priceList.id.toString(),
+            label: priceList.name,
+        }));
+
+        // Add custom pricing option if court uses private price list
+        if (hasCustomPricing && initialPriceListId) {
+            options.unshift({
+                value: initialPriceListId.toString(),
+                label: "Bảng giá riêng",
+            });
+        }
+
+        return options;
+    }, [filteredPriceLists, hasCustomPricing, initialPriceListId]);
+
     return (
         <div className={styles.container}>
             <label className={styles.label}>
@@ -61,10 +89,7 @@ export default function PriceTableSection({
                         placeholder="-- Chọn bảng giá mẫu (tùy chọn) --"
                         value={selectedPriceListId}
                         onChange={handlePriceListChange}
-                        options={filteredPriceLists.map((priceList) => ({
-                            value: priceList.id.toString(),
-                            label: priceList.name,
-                        }))}
+                        options={selectOptions}
                         disabled={disabled || isLoadingPriceList}
                         name="priceList"
                     />

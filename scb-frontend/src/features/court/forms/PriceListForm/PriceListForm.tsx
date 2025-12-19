@@ -99,7 +99,7 @@ export default function PriceListForm({
                 id: `initial-${index}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 startTime: normalizeTimeString(slot.fromTime),
                 endTime: normalizeTimeString(slot.toTime),
-                price: slot.price.toString(),
+                price: slot.price != null && !isNaN(Number(slot.price)) ? slot.price.toString() : "",
             }));
             setSlots(initialSlots);
         } else {

@@ -41,6 +41,7 @@ export default function usePriceTable({
     const previousInitialPriceListId = useRef<number | null | undefined>(undefined);
     const previousInitialSlots = useRef<Array<{ startTime: string; endTime: string; price: number }> | undefined>(undefined);
     const isManualPriceListChange = useRef(false);
+    const hasUserEditedSlots = useRef(false);
 
     const filteredPriceLists = useMemo(() => {
         const facilityIdNum = facilityId ? parseInt(facilityId) : null;
@@ -79,7 +80,7 @@ export default function usePriceTable({
                     id: `priceList-${priceListId}-${index}-${Math.random().toString(36).slice(2, 9)}`,
                     startTime: normalizeTimeString(slot.fromTime),
                     endTime: normalizeTimeString(slot.toTime),
-                    price: slot.price.toString(),
+                    price: slot.price != null && !isNaN(Number(slot.price)) ? slot.price.toString() : "",
                 }));
                 console.log("Created slots from price list slots:", newSlots);
                 setCurrentSlots(newSlots);
@@ -131,6 +132,12 @@ export default function usePriceTable({
         const previousSlotsStr = previousInitialSlots.current ? JSON.stringify(previousInitialSlots.current) : null;
         const currentSlotsStr = initialSlots ? JSON.stringify(initialSlots) : null;
         const slotsChanged = previousSlotsStr !== currentSlotsStr;
+
+        // Don't reset slots if user has already edited them AND initialSlots hasn't actually changed
+        // (This prevents reset on every render, but allows reset when initialData actually changes)
+        if (hasUserEditedSlots.current && currentSlots.length > 0 && !slotsChanged && !priceListIdChanged) {
+            return;
+        }
         
         console.log("usePriceTable useEffect:", {
             initialPriceListId,
@@ -148,7 +155,7 @@ export default function usePriceTable({
                 id: `initial-${index}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                 startTime: normalizeTimeString(slot.startTime),
                 endTime: normalizeTimeString(slot.endTime),
-                price: slot.price.toString(),
+                price: slot.price != null && !isNaN(slot.price) ? slot.price.toString() : "",
             }));
             setCurrentSlots(slots);
             if (onSlotsChange) {
@@ -156,6 +163,7 @@ export default function usePriceTable({
             }
             previousInitialSlots.current = initialSlots;
             previousInitialPriceListId.current = initialPriceListId;
+            hasUserEditedSlots.current = false; // Reset flag when loading from backend
         }
         // Priority 2: If price list ID changed and we have a price list (but no slots), load it
         else if (priceListIdChanged && initialPriceListId && !initialSlots) {
@@ -173,7 +181,7 @@ export default function usePriceTable({
                     id: `initial-${index}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
                     startTime: normalizeTimeString(slot.startTime),
                     endTime: normalizeTimeString(slot.endTime),
-                    price: slot.price.toString(),
+                    price: slot.price != null && !isNaN(slot.price) ? slot.price.toString() : "",
                 }));
                 console.log("Created TimeSlots:", slots);
                 setCurrentSlots(slots);
@@ -181,6 +189,7 @@ export default function usePriceTable({
                     onSlotsChange(slots);
                 }
                 previousInitialSlots.current = initialSlots;
+                hasUserEditedSlots.current = false; // Reset flag when loading from initial data
             }
         }
         // Priority 4: If price list was cleared, clear slots too
@@ -190,6 +199,7 @@ export default function usePriceTable({
                 onSlotsChange([]);
             }
             previousInitialPriceListId.current = initialPriceListId;
+            hasUserEditedSlots.current = false; // Reset flag when clearing
         }
     }, [initialPriceListId, initialSlots, onSlotsChange, loadPriceListSlots]);
 
@@ -213,6 +223,7 @@ export default function usePriceTable({
             previousInitialPriceListId.current = null;
             previousInitialSlots.current = undefined;
             isManualPriceListChange.current = false;
+            hasUserEditedSlots.current = false; // Reset flag when clearing price list
             return;
         }
 
@@ -224,6 +235,7 @@ export default function usePriceTable({
     }, [onSlotsChange, onPriceListChange, loadPriceListSlots]);
 
     const handleSlotsChange = useCallback((newSlots: TimeSlot[]) => {
+        hasUserEditedSlots.current = true; // Mark that user has edited slots
         setCurrentSlots(newSlots);
         if (selectedPriceListId) {
             setSelectedPriceListId("");

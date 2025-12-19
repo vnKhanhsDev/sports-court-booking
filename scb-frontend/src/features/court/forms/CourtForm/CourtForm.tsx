@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import type { OwnerFacilitySummary } from "../../types/facility.types";
 import useCatalog from "@/hooks/useCatalog";
 import ImageUpload from "@/components/form/ImageUpload/ImageUpload";
@@ -48,6 +48,7 @@ export default function CourtForm({
     const [selectedPriceListId, setSelectedPriceListId] = useState<number | null>(null);
     const [currentPriceSlots, setCurrentPriceSlots] = useState<TimeSlot[]>([]);
     const [images, setImages] = useState<string[]>([]);
+    const initialSlotsRef = useRef<Array<{ startTime: string; endTime: string; price: number }> | undefined>(undefined);
 
     // Initialize form with initialData if provided, or reset if not provided
     useEffect(() => {
@@ -67,11 +68,18 @@ export default function CourtForm({
                     id: `initial-${index}-${Date.now()}`,
                     startTime: normalizeTimeString(slot.fromTime),
                     endTime: normalizeTimeString(slot.toTime),
-                    price: slot.price.toString(),
+                    price: slot.price != null && !isNaN(Number(slot.price)) ? slot.price.toString() : "",
                 }));
                 setCurrentPriceSlots(slots);
+                // Store initial slots for PriceTableSection (only on initial load)
+                initialSlotsRef.current = slots.map(slot => ({
+                    startTime: slot.startTime,
+                    endTime: slot.endTime,
+                    price: slot.price && !isNaN(parseFloat(slot.price)) ? parseFloat(slot.price) : 0,
+                }));
             } else {
                 setCurrentPriceSlots([]);
+                initialSlotsRef.current = undefined;
             }
 
             // Convert CourtImage[] to string[] (for ImageUpload component)
@@ -95,7 +103,13 @@ export default function CourtForm({
             setSelectedPriceListId(null);
             setCurrentPriceSlots([]);
             setImages([]);
+            initialSlotsRef.current = undefined;
         }
+    }, [initialData]);
+
+    // Memoize initialSlots to only pass them on initial load, not on every render
+    const initialSlotsForTable = useMemo(() => {
+        return initialSlotsRef.current;
     }, [initialData]);
 
     const selectedFacility = facilities.find(facility => facility.id.toString() === attributeValues.facilityId);
@@ -281,11 +295,7 @@ export default function CourtForm({
                     minTime={minTime}
                     maxTime={maxTime}
                     initialPriceListId={selectedPriceListId}
-                    initialSlots={currentPriceSlots.map(slot => ({
-                        startTime: slot.startTime,
-                        endTime: slot.endTime,
-                        price: parseFloat(slot.price),
-                    }))}
+                    initialSlots={initialSlotsForTable}
                     onPriceListChange={readOnly ? undefined : setSelectedPriceListId}
                     onSlotsChange={readOnly ? undefined : setCurrentPriceSlots}
                     disabled={readOnly}
