@@ -1,0 +1,84 @@
+.logoLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+    opacity: 0.9;
+}
+
+/* Badge only variant */
+.logoLink.badgeOnly {
+    justify-content: center;
+}
+
+/* Brand Badge */
+.badge {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    color: #0f1c38;
+    background: #f5f7fb;
+    border-radius: var(--radius-lg);
+    transition: opacity 0.2s ease;
+}
+
+.logoLink:hover .badge {
+    opacity: 0.9;
+}
+
+/* Text Container */
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Kicker/Subtitle */
+.kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.75;
+    line-height: 1.2;
+    color: inherit;
+}
+
+/* Heading */
+.heading {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .badge {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 0.75rem;
+    }
+    
+    .heading {
+        font-size: 0.95rem;
+    }
+    
+    .kicker {
+        font-size: 0.7rem;
+    }
+}

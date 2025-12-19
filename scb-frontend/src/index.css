@@ -1,18 +1,161 @@
 @import 'tailwindcss';
 
 :root {
-  --primary-color: #172a53;
+  /* ============================================
+     PRIMARY COLOR PALETTE
+     Based on main color: #172a53
+     ============================================ */
+  --primary-50: #e8ecf3;
+  --primary-100: #c5d0e1;
+  --primary-200: #9db0cc;
+  --primary-300: #7590b7;
+  --primary-400: #5778a7;
+  --primary-500: #396097;
+  --primary-600: #335588;
+  --primary-700: #2b4877;
+  --primary-800: #243b66;
+  --primary-900: #172a53; /* Main color */
+  --primary-950: #0f1c38;
+
+  /* Primary color aliases */
+  --primary-color: var(--primary-900);
+  --primary-dark: var(--primary-950);
+  --primary-light: var(--primary-600);
+
+  /* ============================================
+     SECONDARY COLOR PALETTE
+     Based on gradient color: #3b82f6
+     ============================================ */
+  --secondary-50: #eff6ff;
+  --secondary-100: #dbeafe;
+  --secondary-200: #bfdbfe;
+  --secondary-300: #93c5fd;
+  --secondary-400: #60a5fa;
+  --secondary-500: #3b82f6; /* Gradient color */
+  --secondary-600: #2563eb;
+  --secondary-700: #1d4ed8;
+  --secondary-800: #1e40af;
+  --secondary-900: #1e3a8a;
+  --secondary-950: #172554;
+
+  /* Secondary color aliases */
+  --secondary-color: var(--secondary-500);
+  --secondary-dark: var(--secondary-700);
+  --secondary-light: var(--secondary-400);
+
+  /* ============================================
+     GRADIENT DEFINITIONS
+     ============================================ */
+  --gradient-primary: linear-gradient(90deg, #172a53 0%, #3b82f6 100%);
+  --gradient-primary-vertical: linear-gradient(180deg, #172a53 0%, #3b82f6 100%);
+  --gradient-primary-diagonal: linear-gradient(135deg, #172a53 0%, #3b82f6 100%);
+  --gradient-primary-subtle: linear-gradient(90deg, rgba(23, 42, 83, 0.95) 0%, rgba(59, 130, 246, 0.95) 100%);
+  --gradient-overlay: linear-gradient(180deg, rgba(23, 42, 83, 0.9) 0%, rgba(23, 42, 83, 0.7) 100%);
+
+  /* ============================================
+     NEUTRAL COLOR PALETTE
+     ============================================ */
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #374151;
+  --neutral-800: #1f2937;
+  --neutral-900: #111827;
+  --neutral-950: #030712;
+
+  /* ============================================
+     SEMANTIC COLORS
+     ============================================ */
+  /* Success */
+  --color-success: #10b981;
+  --color-success-light: #34d399;
+  --color-success-dark: #059669;
+  --color-success-bg: #d1fae5;
+  --color-success-text: #065f46;
+
+  /* Error */
   --color-error: #ff424f;
+  --color-error-light: #ff6b77;
+  --color-error-dark: #e63946;
+  --color-error-bg: #fff6f7;
+  --color-error-text: #991b1b;
 
-  --input-border-default: rgba(0, 0, 0, 0.15);
-  --input-border-focus: rgba(0, 0, 0, 0.5);
-  --input-border-error: var(--color-error);
+  /* Warning */
+  --color-warning: #f59e0b;
+  --color-warning-light: #fbbf24;
+  --color-warning-dark: #d97706;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #92400e;
 
-  --input-bg-default: #ffffff;
-  --input-bg-hover: #f9fafb;
-  --input-bg-disabled: #f3f4f6;
-  --input-bg-error: #fff6f7;
+  /* Info */
+  --color-info: #3b82f6;
+  --color-info-light: #60a5fa;
+  --color-info-dark: #2563eb;
+  --color-info-bg: #dbeafe;
+  --color-info-text: #1e40af;
 
+  /* ============================================
+     BACKGROUND COLORS
+     ============================================ */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--neutral-50);
+  --bg-tertiary: var(--neutral-100);
+  --bg-dark: var(--primary-900);
+  --bg-dark-secondary: var(--primary-950);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-overlay-light: rgba(0, 0, 0, 0.1);
+
+  /* ============================================
+     TEXT COLORS
+     ============================================ */
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-inverse: #ffffff;
+  --text-muted: var(--neutral-500);
+  --text-disabled: var(--neutral-400);
+
+  /* ============================================
+     BORDER COLORS
+     ============================================ */
+  --border-default: rgba(0, 0, 0, 0.15);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.2);
+  --border-dark: rgba(0, 0, 0, 0.3);
+  --border-focus: var(--secondary-500);
+  --border-error: var(--color-error);
+  --border-success: var(--color-success);
+
+  /* ============================================
+     INPUT STYLES
+     ============================================ */
+  --input-border-default: var(--border-default);
+  --input-border-focus: var(--border-focus);
+  --input-border-error: var(--border-error);
+
+  --input-bg-default: var(--bg-primary);
+  --input-bg-hover: var(--bg-secondary);
+  --input-bg-disabled: var(--bg-tertiary);
+  --input-bg-error: var(--color-error-bg);
+
+  /* ============================================
+     SHADOW COLORS
+     ============================================ */
+  --shadow-sm: 0 1px 2px 0 rgba(23, 42, 83, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(23, 42, 83, 0.1), 0 2px 4px -1px rgba(23, 42, 83, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(23, 42, 83, 0.1), 0 4px 6px -2px rgba(23, 42, 83, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(23, 42, 83, 0.1), 0 10px 10px -5px rgba(23, 42, 83, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(23, 42, 83, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(23, 42, 83, 0.06);
+  --shadow-primary: 0 4px 14px 0 rgba(59, 130, 246, 0.15);
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
   --radius-none: 0;
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -30,10 +173,10 @@ body {
   font-family: "Google Sans Flex", sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  color: #000;
+  color: var(--text-primary);
   letter-spacing: 0.01em;
   line-height: 1.5;
-  background: #fff;
+  background: var(--bg-primary);
 }
 
 input,

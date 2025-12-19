@@ -1,19 +1,18 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./DashboardSidebar.module.css";
 import type { SidebarItem } from "./items";
-import { ROUTES } from "@/constants/route";
+import AppLogo from "@/layouts/shared/AppLogo";
 
 export default function DashboardSidebar({ items }: { items: SidebarItem[] }) {
     return (
         <aside className={styles.sidebar} aria-label="Dashboard navigation">
             <header className={styles.header}>
-                <Link to={ROUTES.PUBLIC.HOME} className={styles.brandLink}>
-                    <div className={styles.brandBadge}>SCB</div>
-                    <div>
-                        <p className={styles.kicker}>Sports Court Booking</p>
-                        <h2 className={styles.heading}>Bảng điều khiển</h2>
-                    </div>
-                </Link>
+                <AppLogo 
+                    variant="full"
+                    heading="Bảng điều khiển"
+                    kicker="Sports Court Booking"
+                    badgeText="SCB"
+                />
             </header>
 
             <nav className={styles.nav}>
