@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.court.dto.response;
 
 import com.example.scbbackend.modules.court.dto.shared.CourtImageDto;
-import com.example.scbbackend.modules.court.dto.shared.PriceItemDto;
+import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
 import lombok.NonNull;
 
@@ -13,8 +13,8 @@ public record OwnerCourtDetailResponse(
         @NonNull Long courtTypeId,
         @NonNull Long surfaceTypeId,
         @NonNull String name,
-        Long priceTemplateId,
-        List<PriceItemDto> items,
+        Long priceListId,
+        List<PriceSlotDto> slots,
         List<CourtImageDto> imageUrls,
         CourtStatus status
 ) {}

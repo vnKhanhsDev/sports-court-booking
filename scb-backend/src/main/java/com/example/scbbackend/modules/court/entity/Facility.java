@@ -80,7 +80,7 @@ public class Facility {
 
     @PrePersist
     public void prePersist() {
-        if (status == null) status = FacilityStatus.PENDING;
+        this.status = FacilityStatus.PENDING;
     }
 
     public String getFullAddress() {

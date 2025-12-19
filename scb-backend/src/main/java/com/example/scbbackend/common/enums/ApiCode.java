@@ -38,6 +38,13 @@ public enum ApiCode {
     UPDATE_COURT_SUCCESS(2021, "Update court successfully", HttpStatus.OK),
     DELETE_COURT_SUCCESS(2022, "Delete court successfully", HttpStatus.OK),
 
+    GET_ALL_PRICE_LISTS_SUCCESS(2023, "Get all price lists successfully", HttpStatus.OK),
+    GET_PRICE_LIST_SUCCESS(2024, "Get price list successfully", HttpStatus.OK),
+    GET_PRICE_LIST_OPTIONS_SUCCESS(2025, "Get price list options successfully", HttpStatus.OK),
+    CREATE_PRICE_LIST_SUCCESS(2025, "Create price list successfully", HttpStatus.OK),
+    UPDATE_PRICE_LIST_SUCCESS(2026, "Update price list successfully", HttpStatus.OK),
+    DELETE_PRICE_LIST_SUCCESS(2027, "Delete price list successfully", HttpStatus.OK),
+
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
@@ -70,6 +77,9 @@ public enum ApiCode {
     COURT_TYPE_NOT_FOUND(10015, "Court type not found", HttpStatus.NOT_FOUND),
     SURFACE_TYPE_NOT_FOUND(10016, "Surface type not found", HttpStatus.NOT_FOUND),
     COURT_NOT_FOUND(10017, "Court not found", HttpStatus.NOT_FOUND),
+
+    PRICE_LIST_NOT_FOUND(10018, "Price list not found", HttpStatus.NOT_FOUND),
+    PRICE_LIST_IN_USE(10019, "Price list in use", HttpStatus.BAD_REQUEST),
 
     /* SYSTEM ERRORS */
 

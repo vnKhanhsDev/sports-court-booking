@@ -1,4 +1,4 @@
-package com.example.scbbackend.modules.address.service;
+package com.example.scbbackend.config.data.initial;
 
 import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
@@ -23,14 +23,14 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AddressSeederService {
+public class AddressInitialData {
 
     private final ProvinceRepository provinceRepository;
     private final DistrictRepository districtRepository;
     private final WardRepository wardRepository;
 
     @Transactional
-    public void seedAddressData() {
+    public void initialize() {
         if (provinceRepository.count() > 0) {
             log.info("Address data already exists. Skipping...");
             return;
@@ -47,7 +47,7 @@ public class AddressSeederService {
 
             // Map JSON vào DTO tạm thời
             List<ProvinceJsonDto> provinceJsonDtos = mapper.readValue(
-                    inputStream, new TypeReference<List<ProvinceJsonDto>>() {});
+                    inputStream, new TypeReference<>() {});
 
             List<Province> provinces = new ArrayList<>();
             List<District> districts = new ArrayList<>();

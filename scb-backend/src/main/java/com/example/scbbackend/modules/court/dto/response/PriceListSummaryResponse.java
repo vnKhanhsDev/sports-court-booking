@@ -1,6 +1,6 @@
 package com.example.scbbackend.modules.court.dto.response;
 
-public record PriceTemplateSummaryResponse(
+public record PriceListSummaryResponse(
         Long id,
         String name,
         int version,

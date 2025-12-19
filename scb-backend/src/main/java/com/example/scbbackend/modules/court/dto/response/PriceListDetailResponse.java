@@ -1,18 +1,18 @@
 package com.example.scbbackend.modules.court.dto.response;
 
-import com.example.scbbackend.modules.court.dto.shared.PriceTemplateItemDto;
+import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
 
 import java.util.List;
 
-public record PriceTemplateDetailResponse(
+public record PriceListDetailResponse(
         Long id,
         Long facilityId,
         Long sportId,
         Long courtTypeId,
         Long surfaceTypeId,
         String name,
-        String description,
+        String note,
         int version,
         boolean isActive,
-        List<PriceTemplateItemDto> items
+        List<PriceSlotDto> slots
 ) {}

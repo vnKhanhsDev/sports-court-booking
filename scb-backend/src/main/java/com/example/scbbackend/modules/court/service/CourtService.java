@@ -8,7 +8,8 @@ import com.example.scbbackend.modules.court.dto.request.CourtUpdationRequest;
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtSummaryResponse;
 import com.example.scbbackend.modules.court.dto.shared.CourtImageDto;
-import com.example.scbbackend.modules.court.dto.shared.PriceItemDto;
+import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
+import com.example.scbbackend.modules.court.domain.valueobject.PriceSlotKey;
 import com.example.scbbackend.modules.court.entity.*;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.repository.*;
@@ -24,14 +25,11 @@ import java.util.List;
 public class CourtService {
 
     private final CourtRepository courtRepository;
-    private final CourtPriceRepository courtPriceRepository;
     private final CourtImageRepository courtImageRepository;
 
     private final CatalogService catalogService;
     private final FacilityService facilityService;
-    private final PriceTemplateService priceTemplateService;
-    private final CourtPriceItemRepository courtPriceItemRepository;
-    private final PriceService priceService;
+    private final PriceListService priceListService;
 
     /**
      * MAIN: GET ALL COURTS
@@ -52,11 +50,30 @@ public class CourtService {
         var courtType = catalogService.getCourtTypeById(request.courtTypeId());
         var surfaceType = catalogService.getSurfaceTypeById(request.surfaceTypeId());
 
-        // Only fetch price template if priceTemplateId is provided
-        PriceTemplate template = null;
-        if (request.priceTemplateId() != null) {
-            template = priceTemplateService
-                    .getPriceTemplateByIdAndOwnerInfo(request.priceTemplateId(), ownerInfo);
+        // Determine price list for this court:
+        // - use existing shared price list if priceListId is provided
+        // - otherwise create a new private price list with the provided slots
+        PriceList priceList;
+        if (request.priceListId() != null) {
+            priceList = priceListService.getPriceListById(request.priceListId(), ownerInfo);
+        } else if (request.slots() != null && !request.slots().isEmpty()) {
+            String privateName = String.format("PriceList %s V%d", request.name(), 1);
+
+            PriceList privatePriceList = PriceList.builder()
+                    .ownerInfo(ownerInfo)
+                    .facility(facility)
+                    .sport(sport)
+                    .courtType(courtType)
+                    .surfaceType(surfaceType)
+                    .name(privateName)
+                    .version(1)
+                    .isActive(true)
+                    .build();
+
+            priceList = priceListService.savePriceListForCourt(privatePriceList, request.slots());
+        } else {
+            // Court must always have a price list: either reuse an existing one or define slots
+            throw new AppException(ApiCode.COURT_PRICE_INPUT_INVALID);
         }
 
         Court court = courtRepository.save(
@@ -66,29 +83,9 @@ public class CourtService {
                         .courtType(courtType)
                         .surfaceType(surfaceType)
                         .name(request.name())
-                        .priceTemplate(template)
+                        .priceList(priceList)
                         .build()
         );
-
-        // Create court price and items only if no template is used and items are provided
-        if (template == null && request.items() != null && !request.items().isEmpty()) {
-            CourtPrice courtPrice = courtPriceRepository.save(
-                    CourtPrice.builder()
-                            .court(court)
-                            .build()
-            );
-
-            List<CourtPriceItem> priceItems = request.items().stream()
-                    .map(i -> CourtPriceItem.builder()
-                            .courtPrice(courtPrice)
-                            .startTime(i.startTime())
-                            .endTime(i.endTime())
-                            .price(i.price())
-                            .build()
-                    )
-                    .toList();
-            courtPriceItemRepository.saveAll(priceItems);
-        }
 
         saveCourtImages(court, request.images());
 
@@ -97,39 +94,29 @@ public class CourtService {
 
     /**
      * MAIN: GET COURT BY ID
-     * */
+     */
     public OwnerCourtDetailResponse getCourtDetail(Long id, OwnerInfo ownerInfo) {
         Court court = courtRepository.findByIdAndOwnerInfo(id, ownerInfo)
                 .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
 
-        List<PriceItemDto> items;
-        if (court.getPriceTemplate() != null) {
-            items = court.getPriceTemplate().getPriceTemplateItems().stream()
-                    .map(i -> new PriceItemDto(
-                            i.getStartTime(),
-                            i.getEndTime(),
-                            i.getPrice()
-                    ))
-                    .toList();
-        } else if (court.getCourtPrice() != null && court.getCourtPrice().getItems() != null) {
-            items = court.getCourtPrice().getItems().stream()
-                    .map(i -> new PriceItemDto(
-                            i.getStartTime(),
-                            i.getEndTime(),
-                            i.getPrice()
-                    ))
-                    .toList();
-        } else {
-            items = List.of();
-        }
+        // Build slots from the court's price list (shared or private)
+        List<PriceSlotDto> slots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
+                ? court.getPriceList().getPriceSlots().stream()
+                .map(s -> new PriceSlotDto(
+                        s.getFromTime(),
+                        s.getToTime(),
+                        s.getPrice()
+                ))
+                .toList()
+                : List.of();
 
         List<CourtImageDto> images = (court.getImages() != null)
                 ? court.getImages().stream()
-                        .map(i -> new CourtImageDto(
-                                i.getImageUrl(),
-                                i.getDisplayOrder()
-                        ))
-                        .toList()
+                .map(i -> new CourtImageDto(
+                        i.getImageUrl(),
+                        i.getDisplayOrder()
+                ))
+                .toList()
                 : List.of();
 
         return new OwnerCourtDetailResponse(
@@ -138,62 +125,102 @@ public class CourtService {
                 court.getCourtType().getId(),
                 court.getSurfaceType().getId(),
                 court.getName(),
-                court.getPriceTemplate() != null ? court.getPriceTemplate().getId() : null,
-                items,
+                court.getPriceList() != null ? court.getPriceList().getId() : null,
+                slots,
                 images,
                 court.getStatus()
         );
     }
 
+    private boolean hasSlotChanged(
+            List<PriceSlot> existingSlots, List<PriceSlotDto> newSlots
+    ) {
+        if (existingSlots.size() != newSlots.size()) return true;
+
+        return !existingSlots.stream()
+                .map(PriceSlotKey::from)
+                .collect(java.util.stream.Collectors.toSet())
+                .equals(
+                        newSlots.stream()
+                                .map(PriceSlotKey::from)
+                                .collect(java.util.stream.Collectors.toSet())
+                );
+    }
+
     /**
      * MAIN: UPDATE COURT
-     * */
+     */
     @Transactional
     public List<OwnerCourtSummaryResponse> updateCourt(Long id, OwnerInfo ownerInfo, CourtUpdationRequest request) {
         Court court = courtRepository.findByIdAndOwnerInfo(id, ownerInfo)
                 .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
 
-        // Only fetch price template if priceTemplateId is provided
-        PriceTemplate template = null;
-        if (request.priceTemplateId() != null) {
-            template = priceTemplateService
-                    .getPriceTemplateByIdAndOwnerInfo(request.priceTemplateId(), ownerInfo);
-        }
-
+        // Update basic court info
         court.setFacility(facilityService.getFacilityByIdAndOwnerInfo(request.facilityId(), ownerInfo));
         court.setSport(catalogService.getSportById(request.sportId()));
         court.setCourtType(catalogService.getCourtTypeById(request.courtTypeId()));
         court.setSurfaceType(catalogService.getSurfaceTypeById(request.surfaceTypeId()));
         court.setName(request.name());
-        court.setPriceTemplate(template);
         court.setStatus(CourtStatus.fromString(request.status()));
 
-        // Handle price template and court price updates
-        if (template != null) {
-            // If a template is selected, delete existing court price and items
-            CourtPrice existingCourtPrice = court.getCourtPrice();
-            if (existingCourtPrice != null) {
-                // Delete items first to avoid foreign key constraint violations
-                if (existingCourtPrice.getItems() != null && !existingCourtPrice.getItems().isEmpty()) {
-                    courtPriceItemRepository.deleteAll(existingCourtPrice.getItems());
+        // Handle pricing via PriceList / PriceSlot
+        PriceList currentPriceList = court.getPriceList();
+
+        if (request.priceListId() != null) {
+            // Switch to an existing shared price list
+            PriceList sharedPriceList = priceListService.getPriceListById(request.priceListId(), ownerInfo);
+            court.setPriceList(sharedPriceList);
+        } else if (request.slots() != null && !request.slots().isEmpty()) {
+            // Use / create / version a private price list for this court
+            if (currentPriceList == null || currentPriceList.getCourt() == null) {
+                // No private price list yet (or currently using a shared one) -> create V1
+                String privateName = String.format("PriceList %s V%d", court.getName(), 1);
+
+                PriceList privatePriceList = PriceList.builder()
+                        .ownerInfo(ownerInfo)
+                        .facility(court.getFacility())
+                        .sport(court.getSport())
+                        .courtType(court.getCourtType())
+                        .surfaceType(court.getSurfaceType())
+                        .court(court)
+                        .name(privateName)
+                        .version(1)
+                        .isActive(true)
+                        .build();
+
+                PriceList saved = priceListService.savePriceListForCourt(privatePriceList, request.slots());
+                court.setPriceList(saved);
+            } else {
+                // Already using a private price list -> check if slots changed
+                var existingSlots = currentPriceList.getPriceSlots().stream().toList();
+
+                boolean slotsChanged = hasSlotChanged(existingSlots, request.slots());
+
+                if (slotsChanged) {
+                    int newVersion = currentPriceList.getVersion() + 1;
+                    String privateName = String.format("PriceList %s V%d", court.getName(), newVersion);
+
+                    PriceList newPriceList = PriceList.builder()
+                            .ownerInfo(ownerInfo)
+                            .facility(court.getFacility())
+                            .sport(court.getSport())
+                            .courtType(court.getCourtType())
+                            .surfaceType(court.getSurfaceType())
+                            .court(court)
+                            .name(privateName)
+                            .version(newVersion)
+                            .isActive(true)
+                            .build();
+
+                    PriceList saved = priceListService.savePriceListForCourt(newPriceList, request.slots());
+                    court.setPriceList(saved);
+                } else {
+                    // Slots unchanged -> keep current private price list but sync meta with court
+                    currentPriceList.setFacility(court.getFacility());
+                    currentPriceList.setSport(court.getSport());
+                    currentPriceList.setCourtType(court.getCourtType());
+                    currentPriceList.setSurfaceType(court.getSurfaceType());
                 }
-                courtPriceRepository.delete(existingCourtPrice);
-                court.setCourtPrice(null);
-            }
-        } else if (request.items() != null && !request.items().isEmpty()) {
-            // If no template but items are provided, save/update court prices
-            // saveCourtPrices will handle updating existing or creating new CourtPrice
-            priceService.saveCourtPrices(court, request.items());
-        } else {
-            // If no template and no items, clear existing court price and items
-            CourtPrice existingCourtPrice = court.getCourtPrice();
-            if (existingCourtPrice != null) {
-                // Delete items first to avoid foreign key constraint violations
-                if (existingCourtPrice.getItems() != null && !existingCourtPrice.getItems().isEmpty()) {
-                    courtPriceItemRepository.deleteAll(existingCourtPrice.getItems());
-                }
-                courtPriceRepository.delete(existingCourtPrice);
-                court.setCourtPrice(null);
             }
         }
 

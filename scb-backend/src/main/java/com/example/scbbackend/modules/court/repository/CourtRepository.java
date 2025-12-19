@@ -2,8 +2,7 @@ package com.example.scbbackend.modules.court.repository;
 
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtSummaryResponse;
 import com.example.scbbackend.modules.court.entity.Court;
-import com.example.scbbackend.modules.court.entity.Facility;
-import com.example.scbbackend.modules.court.entity.PriceTemplate;
+import com.example.scbbackend.modules.court.entity.PriceList;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +16,8 @@ public interface CourtRepository extends JpaRepository<@NonNull Court, @NonNull 
 
     @Query("""
         SELECT DISTINCT c FROM Court c
-        LEFT JOIN FETCH c.priceTemplate pt
-        LEFT JOIN FETCH pt.priceTemplateItems
-        LEFT JOIN FETCH c.courtPrice cp
-        LEFT JOIN FETCH cp.items
+        LEFT JOIN FETCH c.priceList pl
+        LEFT JOIN FETCH pl.priceSlots
         LEFT JOIN FETCH c.images
         WHERE c.id = :id AND c.facility.ownerInfo = :ownerInfo
     """)
@@ -45,10 +42,6 @@ public interface CourtRepository extends JpaRepository<@NonNull Court, @NonNull 
     """)
     List<OwnerCourtSummaryResponse> getAllSummaryCourtsByOwnerInfo(@Param("ownerInfo") OwnerInfo ownerInfo);
 
-    List<Court> findByFacility(Facility facility);
-
-    List<Court> findByPriceTemplate(PriceTemplate priceTemplate);
-
-    long countByPriceTemplate(PriceTemplate priceTemplate);
+    long countByPriceList(PriceList priceList);
 
 }

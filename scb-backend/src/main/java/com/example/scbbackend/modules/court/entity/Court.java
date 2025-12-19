@@ -41,11 +41,8 @@ public class Court {
     private SurfaceType surfaceType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "price_template_id")
-    private PriceTemplate priceTemplate;
-
-    @OneToOne(mappedBy = "court")
-    private CourtPrice courtPrice;
+    @JoinColumn(name = "price_list_id", nullable = false)
+    private PriceList priceList;
 
     @Column(nullable = false, length = 100)
     private String name;

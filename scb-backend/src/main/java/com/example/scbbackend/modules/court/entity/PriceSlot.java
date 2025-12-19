@@ -10,27 +10,26 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "price_template_items")
+@Table(name = "price_slots")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
-public class PriceTemplateItem {
+public class PriceSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "price_template_id", nullable = false)
-    private PriceTemplate priceTemplate;
+    @JoinColumn(name = "price_list_id", nullable = false)
+    private PriceList priceList;
 
-    @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    @Column(name = "from_time", nullable = false)
+    private LocalTime fromTime;
 
-    @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
+    @Column(name = "to_time", nullable = false)
+    private LocalTime toTime;
 
     @Column(nullable = false)
     private BigDecimal price;

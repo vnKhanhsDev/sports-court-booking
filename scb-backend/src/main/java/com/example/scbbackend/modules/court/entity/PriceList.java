@@ -13,20 +13,19 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "price_templates")
+@Table(name = "price_lists")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
-public class PriceTemplate {
+public class PriceList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_account_id", nullable = false)
+    @JoinColumn(name = "owner_info_id", nullable = false)
     private OwnerInfo ownerInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,16 +44,19 @@ public class PriceTemplate {
     @JoinColumn(name = "surface_type_id")
     private SurfaceType surfaceType;
 
-    @Column(nullable = false, length = 150)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "court_id")
+    private Court court;
+
+    @Column(length = 100)
     private String name;
 
     @Column(columnDefinition = "TEXT")
-    private String description;
+    private String note;
 
-    @Column(nullable = false)
     private int version;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private boolean isActive;
 
     @CreationTimestamp
@@ -65,7 +67,7 @@ public class PriceTemplate {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "priceTemplate", fetch = FetchType.LAZY)
-    Set<PriceTemplateItem> priceTemplateItems;
+    @OneToMany(mappedBy = "priceList", fetch = FetchType.LAZY)
+    private Set<PriceSlot> priceSlots;
 
 }

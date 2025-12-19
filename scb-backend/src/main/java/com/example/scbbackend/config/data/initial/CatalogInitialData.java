@@ -1,6 +1,5 @@
-package com.example.scbbackend.config;
+package com.example.scbbackend.config.data.initial;
 
-import com.example.scbbackend.modules.address.service.AddressSeederService;
 import com.example.scbbackend.modules.catalog.entity.CourtType;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.catalog.entity.SurfaceType;
@@ -9,40 +8,25 @@ import com.example.scbbackend.modules.catalog.repository.SportRepository;
 import com.example.scbbackend.modules.catalog.repository.SurfaceTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@Configuration
+@Service
 @RequiredArgsConstructor
-public class MasterDataInitializer implements ApplicationRunner {
+public class CatalogInitialData {
 
     private final SportRepository sportRepository;
     private final CourtTypeRepository courtTypeRepository;
     private final SurfaceTypeRepository surfaceTypeRepository;
 
-    private final AddressSeederService addressSeederService;
+    public void initialize() {
+        if (sportRepository.count() > 0) {
+            log.info("Catalog already exists. Skipping...");
+            return;
+        }
 
-    @Override
-    @Transactional
-    public void run(ApplicationArguments args) {
-
-        log.info(">>> START MASTER DATA INITIALIZATION <<<");
-
-        if (sportRepository.count() == 0) createCatalog();
-        else log.info("Catalog already exists. Skipping...");
-
-        addressSeederService.seedAddressData();
-
-        log.info(">>> MASTER DATA INITIALIZED SUCCESSFULLY <<<");
-
-    }
-
-    private void createCatalog() {
         Sport football = createSport("Bóng đá");
         createCourtTypes(football, List.of("Sân 5", "Sân 7", "Sân 9", "Sân 11"));
         createSurfaceTypes(football, List.of("Cỏ tự nhiên", "Cỏ nhân tạo"));
@@ -57,27 +41,28 @@ public class MasterDataInitializer implements ApplicationRunner {
     }
 
     private Sport createSport(String name) {
-        return sportRepository.save(
-                Sport.builder().name(name).build());
+        return sportRepository.save(Sport.builder().name(name).build());
     }
 
     private void createCourtTypes(Sport sport, List<String> types) {
         List<CourtType> courtTypes = types.stream()
-                .map(type -> CourtType.builder()
+                .map(t -> CourtType.builder()
                         .sport(sport)
-                        .name(type)
+                        .name(t)
                         .build()
-                ).toList();
+                )
+                .toList();
         courtTypeRepository.saveAll(courtTypes);
     }
 
     private void createSurfaceTypes(Sport sport, List<String> types) {
         List<SurfaceType> surfaceTypes = types.stream()
-                .map(type -> SurfaceType.builder()
+                .map(t -> SurfaceType.builder()
                         .sport(sport)
-                        .name(type)
+                        .name(t)
                         .build()
-                ).toList();
+                )
+                .toList();
         surfaceTypeRepository.saveAll(surfaceTypes);
     }
 

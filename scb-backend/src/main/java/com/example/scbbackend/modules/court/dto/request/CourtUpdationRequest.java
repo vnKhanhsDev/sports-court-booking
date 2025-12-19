@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.court.dto.request;
 
 import com.example.scbbackend.modules.court.dto.shared.CourtImageDto;
-import com.example.scbbackend.modules.court.dto.shared.PriceItemDto;
+import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
 import lombok.NonNull;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public record CourtUpdationRequest(
         @NonNull Long courtTypeId,
         @NonNull Long surfaceTypeId,
         @NonNull String name,
-        Long priceTemplateId,
-        List<PriceItemDto> items,
+        Long priceListId,
+        List<PriceSlotDto> slots,
         List<CourtImageDto> images,
         String status
 ) {}

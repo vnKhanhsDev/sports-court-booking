@@ -1,6 +1,6 @@
 package com.example.scbbackend.modules.court.dto.response;
 
-public record PriceTemplateOptionResponse(
+public record PriceListOptionResponse(
         Long id,
         Long facilityId,
         Long sportId,
