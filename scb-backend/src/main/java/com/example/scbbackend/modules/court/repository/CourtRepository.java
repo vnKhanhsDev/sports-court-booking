@@ -2,6 +2,7 @@ package com.example.scbbackend.modules.court.repository;
 
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtSummaryResponse;
 import com.example.scbbackend.modules.court.entity.Court;
+import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.entity.PriceList;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.NonNull;
@@ -41,6 +42,8 @@ public interface CourtRepository extends JpaRepository<@NonNull Court, @NonNull 
         WHERE f.ownerInfo = :ownerInfo
     """)
     List<OwnerCourtSummaryResponse> getAllSummaryCourtsByOwnerInfo(@Param("ownerInfo") OwnerInfo ownerInfo);
+
+    List<Court> findByFacility(Facility facility);
 
     long countByPriceList(PriceList priceList);
 

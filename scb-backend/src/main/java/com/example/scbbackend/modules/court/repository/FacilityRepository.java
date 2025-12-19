@@ -3,6 +3,7 @@ package com.example.scbbackend.modules.court.repository;
 import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
+import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,6 +54,8 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
         GROUP BY f.id, f.name, a.email, f.status
     """)
     List<AdminFacilitySummaryResponse> findAllAdminFacilities();
+
+    List<Facility> findByStatus(FacilityStatus status);
 
     Optional<Facility> findByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo);
 }

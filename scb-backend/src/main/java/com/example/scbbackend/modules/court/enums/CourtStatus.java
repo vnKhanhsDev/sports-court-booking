@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 public enum CourtStatus {
     PENDING,
     ACTIVE,
+    REJECTED,
     MAINTENANCE,
     CLOSED;
 

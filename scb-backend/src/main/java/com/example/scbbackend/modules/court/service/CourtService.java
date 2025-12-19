@@ -245,6 +245,22 @@ public class CourtService {
         return getAllCourts(ownerInfo);
     }
 
+    @Transactional
+    public void syncCourtStatusOnFacilityApproved(Facility facility) {
+        List<Court> courts = courtRepository.findByFacility(facility).stream()
+                .peek(c -> c.setStatus(CourtStatus.ACTIVE))
+                .toList();
+        courtRepository.saveAll(courts);
+    }
+
+    @Transactional
+    public void syncCourtStatusOnFacilityRejected(Facility facility) {
+        List<Court> courts = courtRepository.findByFacility(facility).stream()
+                .peek(c -> c.setStatus(CourtStatus.REJECTED))
+                .toList();
+        courtRepository.saveAll(courts);
+    }
+
     /**
      * Save court images for creation & updation
      * For updates, replace old images with new ones

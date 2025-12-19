@@ -9,7 +9,9 @@ import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryRes
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
+import com.example.scbbackend.modules.court.entity.Court;
 import com.example.scbbackend.modules.court.entity.Facility;
+import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.court.repository.CourtRepository;
 import com.example.scbbackend.modules.court.repository.FacilityRepository;
@@ -138,45 +140,70 @@ public class FacilityService {
 
     /**
      * ADMIN: APPROVE FACILITY
+     * Sets facility status to APPROVED and updates all PENDING courts to ACTIVE
      * */
     @Transactional
     public List<AdminFacilitySummaryResponse> approveFacility(Long id) {
-        Facility facility = findFacilityById(id);
-        if (facility == null) {
-            throw new AppException(ApiCode.FACILITY_NOT_FOUND);
-        }
+        Facility facility = getFacilityById(id);
         facility.setStatus(FacilityStatus.APPROVED);
         facilityRepository.save(facility);
+        
+        // Update all PENDING courts of this facility to ACTIVE
+        List<Court> pendingCourts = courtRepository.findByFacility(facility).stream()
+                .filter(c -> c.getStatus() == CourtStatus.PENDING)
+                .peek(c -> c.setStatus(CourtStatus.ACTIVE))
+                .toList();
+        if (!pendingCourts.isEmpty()) {
+            courtRepository.saveAll(pendingCourts);
+        }
+        
         return getAllAdminFacilities();
     }
 
     /**
      * ADMIN: REJECT FACILITY
+     * Sets facility status to REJECTED and updates all PENDING courts to REJECTED
      * */
     @Transactional
     public List<AdminFacilitySummaryResponse> rejectFacility(Long id) {
-        Facility facility = findFacilityById(id);
-        if (facility == null) {
-            throw new AppException(ApiCode.FACILITY_NOT_FOUND);
-        }
+        Facility facility = getFacilityById(id);
         facility.setStatus(FacilityStatus.REJECTED);
         facilityRepository.save(facility);
+        
+        // Update all PENDING courts of this facility to REJECTED
+        List<Court> pendingCourts = courtRepository.findByFacility(facility).stream()
+                .filter(c -> c.getStatus() == CourtStatus.PENDING)
+                .peek(c -> c.setStatus(CourtStatus.REJECTED))
+                .toList();
+        if (!pendingCourts.isEmpty()) {
+            courtRepository.saveAll(pendingCourts);
+        }
+        
         return getAllAdminFacilities();
     }
 
     /**
      * ADMIN: APPROVE ALL PENDING FACILITIES
+     * Sets all pending facilities to APPROVED and updates their PENDING courts to ACTIVE
      * */
     @Transactional
     public List<AdminFacilitySummaryResponse> approveAllFacilities() {
-        List<Facility> pendingFacilities = facilityRepository.findAll().stream()
-                .filter(f -> f.getStatus() == FacilityStatus.PENDING)
-                .toList();
+        List<Facility> facilities = facilityRepository.findByStatus(FacilityStatus.PENDING);
         
-        for (Facility facility : pendingFacilities) {
+        for (Facility facility : facilities) {
             facility.setStatus(FacilityStatus.APPROVED);
+            
+            // Update all PENDING courts of this facility to ACTIVE
+            List<Court> pendingCourts = courtRepository.findByFacility(facility).stream()
+                    .filter(c -> c.getStatus() == CourtStatus.PENDING)
+                    .peek(c -> c.setStatus(CourtStatus.ACTIVE))
+                    .toList();
+            if (!pendingCourts.isEmpty()) {
+                courtRepository.saveAll(pendingCourts);
+            }
         }
-        facilityRepository.saveAll(pendingFacilities);
+        
+        facilityRepository.saveAll(facilities);
         return getAllAdminFacilities();
     }
 
@@ -184,6 +211,12 @@ public class FacilityService {
     @Transactional(readOnly = true)
     protected Facility findFacilityById(Long id) {
         return facilityRepository.findById(id).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    protected Facility getFacilityById(Long id) {
+        return facilityRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
