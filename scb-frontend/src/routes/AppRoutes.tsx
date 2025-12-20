@@ -6,7 +6,8 @@ import { RoleBasedGuard } from './RoleBasedGuard';
 import { USER_ROLES } from '@/constants/role';
 
 const HomePage = lazy(() => import('@features/public/home/HomePage'));
-const CourtSearchPage = lazy(() => import('@features/public/court/search/CourtSearchPage'));
+const CourtSearchPage = lazy(() => import('@features/court/public/search/CourtSearchPage'));
+const CourtDetailPage = lazy(() => import('@features/court/public/detail/CourtDetailPage'));
 
 const RegisterPage = lazy(() => import('@features/auth/pages/RegisterPage'));
 const LoginPage = lazy(() => import('@features/auth/pages/LoginPage'));
@@ -26,7 +27,8 @@ const AppRoutes = () => {
         <Route element={<MainLayout />}>
           <Route element={<RoleBasedGuard isPublic={true} />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/courts" element={<CourtSearchPage />} />
+            <Route path={ROUTES.PUBLIC.COURTS.SEARCH} element={<CourtSearchPage />} />
+            <Route path={ROUTES.PUBLIC.COURTS.DETAIL} element={<CourtDetailPage />} />
           </Route>
         </Route>
 

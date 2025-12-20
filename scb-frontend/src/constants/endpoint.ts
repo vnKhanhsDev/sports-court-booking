@@ -14,6 +14,8 @@ export const ENDPOINTS = {
     },
     PUBLIC: {
         CATALOG: '/public/catalog',
+        COURTS: '/public/courts',
+        COURT_DETAIL: (id: number | string) => `/public/courts/${id}`,
 
         ADDRESS: {
             PROVINCES: '/public/address/provinces',

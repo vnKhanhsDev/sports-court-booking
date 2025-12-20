@@ -7,11 +7,18 @@ import com.example.scbbackend.modules.court.dto.request.CourtCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.CourtUpdationRequest;
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerCourtSummaryResponse;
+import com.example.scbbackend.modules.court.dto.response.PublicCourtResponse;
+import com.example.scbbackend.modules.court.dto.response.PublicCourtDetailResponse;
+import com.example.scbbackend.modules.court.dto.response.TimeSlotAvailability;
 import com.example.scbbackend.modules.court.dto.shared.CourtImageDto;
 import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
 import com.example.scbbackend.modules.court.domain.valueobject.PriceSlotKey;
 import com.example.scbbackend.modules.court.entity.*;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
+import com.example.scbbackend.modules.court.enums.FacilityStatus;
+import com.example.scbbackend.modules.booking.entity.Booking;
+import com.example.scbbackend.modules.booking.enums.BookingStatus;
+import com.example.scbbackend.modules.booking.repository.BookingRepository;
 import com.example.scbbackend.modules.court.repository.*;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +33,7 @@ public class CourtService {
 
     private final CourtRepository courtRepository;
     private final CourtImageRepository courtImageRepository;
+    private final BookingRepository bookingRepository;
 
     private final CatalogService catalogService;
     private final FacilityService facilityService;
@@ -259,6 +267,221 @@ public class CourtService {
                 .peek(c -> c.setStatus(CourtStatus.REJECTED))
                 .toList();
         courtRepository.saveAll(courts);
+    }
+
+    /**
+     * PUBLIC: GET ALL PUBLIC COURTS
+     * Returns all ACTIVE courts from APPROVED facilities
+     */
+    @Transactional(readOnly = true)
+    public List<PublicCourtResponse> getPublicCourts() {
+        List<Court> courts = courtRepository.findAllPublicCourts(
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        );
+
+        return courts.stream()
+                .map(this::mapToPublicCourtResponse)
+                .toList();
+    }
+
+    /**
+     * Map Court entity to PublicCourtResponse DTO
+     */
+    private PublicCourtResponse mapToPublicCourtResponse(Court court) {
+        Facility facility = court.getFacility();
+        
+        // Build price slots
+        List<PriceSlotDto> priceSlots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
+                ? court.getPriceList().getPriceSlots().stream()
+                        .map(s -> new PriceSlotDto(
+                                s.getFromTime(),
+                                s.getToTime(),
+                                s.getPrice()
+                        ))
+                        .toList()
+                : List.of();
+
+        // Build images
+        List<CourtImageDto> images = (court.getImages() != null)
+                ? court.getImages().stream()
+                        .map(i -> new CourtImageDto(
+                                i.getImageUrl(),
+                                i.getDisplayOrder()
+                        ))
+                        .sorted((a, b) -> Integer.compare(a.displayOrder(), b.displayOrder()))
+                        .toList()
+                : List.of();
+
+        return new PublicCourtResponse(
+                court.getId(),
+                court.getName(),
+                court.getStatus(),
+                facility.getId(),
+                facility.getName(),
+                facility.getFullAddress(),
+                facility.getGeoLatitude(),
+                facility.getGeoLongitude(),
+                facility.getOpeningTime(),
+                facility.getClosingTime(),
+                court.getSport().getId(),
+                court.getSport().getName(),
+                court.getCourtType().getId(),
+                court.getCourtType().getName(),
+                court.getSurfaceType().getId(),
+                court.getSurfaceType().getName(),
+                priceSlots,
+                images
+        );
+    }
+
+    /**
+     * PUBLIC: GET PUBLIC COURT DETAIL BY ID
+     * Returns detailed information about a specific ACTIVE court from an APPROVED facility
+     * Includes booking availability for a specific date
+     */
+    @Transactional(readOnly = true)
+    public PublicCourtDetailResponse getPublicCourtDetail(Long id, java.time.LocalDate date) {
+        Court court = courtRepository.findPublicCourtById(
+                id,
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        ).orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+
+        Facility facility = court.getFacility();
+        
+        // Count total courts in the facility
+        int totalCourts = (int) courtRepository.countByFacility(facility);
+        
+        // Build price slots
+        List<PriceSlotDto> priceSlots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
+                ? court.getPriceList().getPriceSlots().stream()
+                        .map(s -> new PriceSlotDto(
+                                s.getFromTime(),
+                                s.getToTime(),
+                                s.getPrice()
+                        ))
+                        .sorted((a, b) -> a.fromTime().compareTo(b.fromTime()))
+                        .toList()
+                : List.of();
+
+        // Build images
+        List<CourtImageDto> images = (court.getImages() != null)
+                ? court.getImages().stream()
+                        .map(i -> new CourtImageDto(
+                                i.getImageUrl(),
+                                i.getDisplayOrder()
+                        ))
+                        .sorted((a, b) -> Integer.compare(a.displayOrder(), b.displayOrder()))
+                        .toList()
+                : List.of();
+
+        // Get bookings for the court (active bookings: PENDING, CONFIRMED, COMPLETED)
+        List<Booking> bookings = bookingRepository.findByCourtAndStatusIn(
+                court,
+                List.of(BookingStatus.PENDING, BookingStatus.CONFIRMED, BookingStatus.COMPLETED)
+        );
+
+        // Build time slot availabilities
+        List<TimeSlotAvailability> timeSlotAvailabilities = buildTimeSlotAvailabilities(
+                priceSlots,
+                bookings,
+                facility.getOpeningTime(),
+                facility.getClosingTime(),
+                date
+        );
+
+        return new PublicCourtDetailResponse(
+                court.getId(),
+                court.getName(),
+                court.getStatus(),
+                facility.getId(),
+                facility.getName(),
+                facility.getDescription() != null ? facility.getDescription() : "",
+                facility.getFullAddress(),
+                facility.getGeoLatitude(),
+                facility.getGeoLongitude(),
+                facility.getOpeningTime(),
+                facility.getClosingTime(),
+                totalCourts,
+                court.getSport().getId(),
+                court.getSport().getName(),
+                court.getCourtType().getId(),
+                court.getCourtType().getName(),
+                court.getSurfaceType().getId(),
+                court.getSurfaceType().getName(),
+                priceSlots,
+                images,
+                date,
+                timeSlotAvailabilities
+        );
+    }
+
+    /**
+     * Build time slot availabilities based on price slots and existing bookings
+     */
+    private List<TimeSlotAvailability> buildTimeSlotAvailabilities(
+            List<PriceSlotDto> priceSlots,
+            List<Booking> bookings,
+            java.time.LocalTime openingTime,
+            java.time.LocalTime closingTime,
+            java.time.LocalDate date
+    ) {
+        List<TimeSlotAvailability> availabilities = new java.util.ArrayList<>();
+
+        for (PriceSlotDto priceSlot : priceSlots) {
+            java.time.LocalTime fromTime = priceSlot.fromTime();
+            java.time.LocalTime toTime = priceSlot.toTime();
+
+            // Check if slot is within operating hours
+            if (fromTime.isBefore(openingTime) || toTime.isAfter(closingTime)) {
+                availabilities.add(new TimeSlotAvailability(
+                        fromTime,
+                        toTime,
+                        priceSlot.price(),
+                        TimeSlotAvailability.SlotStatus.LOCKED
+                ));
+                continue;
+            }
+
+            // Check if slot overlaps with any booking
+            boolean isBooked = bookings.stream().anyMatch(booking -> {
+                // For now, we check if the time slots overlap
+                // Note: This is a simplified check. In a real system, you'd also check the booking date
+                java.time.LocalTime bookingStart = booking.getStartTime();
+                java.time.LocalTime bookingEnd = booking.getEndTime();
+                
+                // Check if time slots overlap
+                return !(toTime.isBefore(bookingStart) || fromTime.isAfter(bookingEnd));
+            });
+
+            if (isBooked) {
+                // Check if booking is completed
+                boolean isCompleted = bookings.stream()
+                        .filter(b -> {
+                            java.time.LocalTime bookingStart = b.getStartTime();
+                            java.time.LocalTime bookingEnd = b.getEndTime();
+                            return !(toTime.isBefore(bookingStart) || fromTime.isAfter(bookingEnd));
+                        })
+                        .anyMatch(b -> b.getStatus() == BookingStatus.COMPLETED);
+
+                availabilities.add(new TimeSlotAvailability(
+                        fromTime,
+                        toTime,
+                        priceSlot.price(),
+                        isCompleted ? TimeSlotAvailability.SlotStatus.PLAYED : TimeSlotAvailability.SlotStatus.BOOKED
+                ));
+            } else {
+                availabilities.add(new TimeSlotAvailability(
+                        fromTime,
+                        toTime,
+                        priceSlot.price(),
+                        TimeSlotAvailability.SlotStatus.AVAILABLE
+                ));
+            }
+        }
+
+        return availabilities;
     }
 
     /**

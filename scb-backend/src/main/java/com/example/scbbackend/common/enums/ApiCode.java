@@ -49,6 +49,8 @@ public enum ApiCode {
     APPROVE_FACILITY_SUCCESS(2029, "Approve facility successfully", HttpStatus.OK),
     REJECT_FACILITY_SUCCESS(2030, "Reject facility successfully", HttpStatus.OK),
     APPROVE_ALL_FACILITIES_SUCCESS(2031, "Approve all facilities successfully", HttpStatus.OK),
+    GET_PUBLIC_COURTS_SUCCESS(2032, "Get public courts successfully", HttpStatus.OK),
+    GET_PUBLIC_COURT_DETAIL_SUCCESS(2033, "Get public court detail successfully", HttpStatus.OK),
 
 
     /* BUSINESS ERRORS */

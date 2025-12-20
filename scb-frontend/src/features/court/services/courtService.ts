@@ -1,10 +1,12 @@
-import { privateClient, type ApiResponse } from "@/lib/axios";
+import { privateClient, publicClient, type ApiResponse } from "@/lib/axios";
 import { ENDPOINTS } from "@/constants/endpoint";
 import type {
     OwnerCourtSummary,
     OwnerCourtDetail,
     CourtCreationRequest,
     CourtUpdationRequest,
+    PublicCourt,
+    PublicCourtDetail,
 } from "../types/court.types";
 
 /**
@@ -83,4 +85,34 @@ export const courtServiceForOwner = {
  */
 export const courtServiceForAdmin = {
     // Admin-specific court operations can be added here
+};
+
+/**
+ * Public court service for unauthenticated users
+ */
+export const publicCourtService = {
+    /**
+     * Get all public courts (ACTIVE courts from APPROVED facilities)
+     * @returns List of public courts
+     */
+    getPublicCourts: async (): Promise<PublicCourt[]> => {
+        const response = await publicClient.get<ApiResponse<PublicCourt[]>>(
+            ENDPOINTS.PUBLIC.COURTS
+        );
+        return response.data.data || [];
+    },
+
+    /**
+     * Get public court detail by ID
+     * @param id - Court ID
+     * @param date - Optional date for booking availability (defaults to today)
+     * @returns Court detail with booking availability
+     */
+    getPublicCourtDetail: async (id: number | string, date?: string): Promise<PublicCourtDetail> => {
+        const url = date 
+            ? `${ENDPOINTS.PUBLIC.COURT_DETAIL(id)}?date=${date}`
+            : ENDPOINTS.PUBLIC.COURT_DETAIL(id);
+        const response = await publicClient.get<ApiResponse<PublicCourtDetail>>(url);
+        return response.data.data!;
+    },
 };

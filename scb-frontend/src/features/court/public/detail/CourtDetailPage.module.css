@@ -1,0 +1,592 @@
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    background: none;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.backButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.headerLeft {
+    flex: 1;
+    min-width: 300px;
+}
+
+.courtName {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+.facilityName {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.address {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.headerRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.rating {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.reviewCount {
+    color: var(--text-tertiary);
+    margin-left: 4px;
+}
+
+.actionIcons {
+    display: flex;
+    gap: 8px;
+}
+
+.iconButton {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.iconButton:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-medium);
+}
+
+/* Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+}
+
+/* Left Column */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Image Section */
+.imageSection {
+    display: flex;
+    gap: 12px;
+}
+
+.mainImage {
+    flex: 1;
+    height: 400px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-tertiary);
+}
+
+.mainImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imagePlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    background: var(--bg-secondary);
+}
+
+.thumbnailImages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 120px;
+}
+
+.thumbnail {
+    flex: 1;
+    min-height: 120px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-tertiary);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.viewMore {
+    flex: 1;
+    min-height: 120px;
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    position: relative;
+}
+
+.viewMore:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Schedule Section */
+.scheduleSection {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.scheduleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.navButton {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.navButton:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-medium);
+    color: var(--text-primary);
+}
+
+.weekRange {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.legendColor {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.legendColor.available {
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+}
+
+.legendColor.locked {
+    background: #64748b;
+}
+
+.legendColor.booked {
+    background: #ef4444;
+}
+
+.legendColor.played {
+    background: #10b981;
+}
+
+.timeFilters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filterButton {
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filterButton:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-medium);
+}
+
+.filterButton.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.dayTabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.dayTab {
+    min-width: 80px;
+    padding: 12px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.dayTab:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-medium);
+}
+
+.dayTab.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.dayName {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.dayDate {
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.timeSlots {
+    margin-top: 16px;
+}
+
+.courtRow {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.courtLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+    min-width: 60px;
+    justify-content: center;
+}
+
+.slotsGrid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.timeSlot {
+    min-width: 70px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.timeSlot.available {
+    background: #e0f2fe;
+    border-color: #bae6fd;
+    color: var(--text-primary);
+}
+
+.timeSlot.available:hover {
+    background: #bae6fd;
+    border-color: var(--secondary-500);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.timeSlot.available.selected {
+    background: var(--secondary-500);
+    border-color: var(--secondary-500);
+    color: white;
+}
+
+.timeSlot.locked {
+    background: #64748b;
+    border-color: #64748b;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.timeSlot.booked {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.timeSlot.played {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Right Column */
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.infoPanel {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.panelTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.infoLabel {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.infoValue {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.amenitiesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.amenityItem {
+    padding: 10px 12px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Booking Form */
+.bookingForm {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.bookingForm form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loading,
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    gap: 16px;
+}
+
+.loading p,
+.error p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.error p {
+    color: var(--color-error);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+
+    .rightColumn {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .headerRight {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .mainImage {
+        height: 300px;
+    }
+
+    .thumbnailImages {
+        width: 100px;
+    }
+
+    .thumbnail {
+        min-height: 100px;
+    }
+
+    .dayTabs {
+        gap: 4px;
+    }
+
+    .dayTab {
+        min-width: 60px;
+        padding: 8px 4px;
+    }
+
+    .slotsGrid {
+        gap: 4px;
+    }
+
+    .timeSlot {
+        min-width: 60px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .amenitiesGrid {
+        grid-template-columns: 1fr;
+    }
+}
