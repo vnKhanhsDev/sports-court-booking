@@ -1,0 +1,520 @@
+.container {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Schedule Type Section */
+.scheduleTypeSection {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.scheduleTypeOptions {
+    display: flex;
+    gap: 12px;
+}
+
+.scheduleTypeBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.scheduleTypeBtn:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-secondary);
+}
+
+.scheduleTypeBtn.active {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.05);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.scheduleTypeIcon {
+    font-size: 1.25rem;
+}
+
+.scheduleTypeText {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.scheduleTypeBtn.active .scheduleTypeText {
+    color: var(--primary-color);
+}
+
+/* Date Section */
+.dateSection {
+    margin-bottom: 32px;
+}
+
+.sectionLabel {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.operatingHours {
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 8px;
+    font-size: 0.8rem;
+}
+
+.dateOptionsRow {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.dateOptionBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    min-width: 0;
+}
+
+.dateOptionBtn:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-secondary);
+}
+
+.dateOptionBtn.active {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.05);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.dateOptionIcon {
+    font-size: 1.125rem;
+}
+
+.dateOptionText {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dateOptionBtn.active .dateOptionText {
+    color: var(--primary-color);
+}
+
+.customDateInputWrapper {
+    margin-top: 12px;
+    animation: slideDown 0.2s ease;
+    width: 100%;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.customDateInput {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: all 0.2s ease;
+}
+
+.customDateInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.selectedDateDisplay {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selectedDateLabel {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.selectedDateValue {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* Days of Week Selection */
+.daysOfWeekGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.dayOfWeekBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 8px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dayOfWeekBtn:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-secondary);
+    transform: translateY(-2px);
+}
+
+.dayOfWeekBtn.selected {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.1);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.dayOfWeekShort {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.dayOfWeekBtn.selected .dayOfWeekShort {
+    color: var(--primary-color);
+}
+
+.dayOfWeekLabel {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.dayOfWeekBtn.selected .dayOfWeekLabel {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Time Section */
+.timeSection {
+    margin-bottom: 32px;
+}
+
+.timeSlotsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+.timeSlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.timeSlot.available {
+    border-color: var(--border-light);
+}
+
+.timeSlot.available:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.timeSlot.available.selectedStart {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.15);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+    position: relative;
+}
+
+.timeSlot.available.selectedStart::after {
+    content: "Bắt đầu";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    background: var(--bg-primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.timeSlot.available.selectedEnd {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.15);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+    position: relative;
+}
+
+.timeSlot.available.selectedEnd::after {
+    content: "Kết thúc";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    background: var(--bg-primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.timeSlot.available.selectedRange {
+    border-color: var(--primary-color);
+    background: rgba(23, 42, 83, 0.08);
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.timeSlot.unavailable {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-tertiary);
+    border-color: var(--border-medium);
+}
+
+.time {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.timeSlot.unavailable .time {
+    color: var(--text-tertiary);
+}
+
+.timeSlot.available.selected .time {
+    color: var(--primary-color);
+}
+
+.price {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.timeSlot.available:hover .price,
+.timeSlot.available.selected .price {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Selection Summary */
+.selectedInfo {
+    margin-top: 24px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(23, 42, 83, 0.05) 0%, rgba(23, 42, 83, 0.02) 100%);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--primary-color);
+}
+
+.selectedHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.selectedHeaderIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.selectedHeaderText {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.selectedDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.selectedItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selectedLabel {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.selectedValue {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.selectedDivider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 4px 0;
+}
+
+.selectedTotal {
+    font-size: 1.125rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .dateOptionsRow {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dateOptionBtn {
+        padding: 10px 12px;
+    }
+
+    .dateOptionIcon {
+        font-size: 1rem;
+    }
+
+    .dateOptionText {
+        font-size: 0.8rem;
+    }
+
+    .scheduleTypeOptions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .scheduleTypeBtn {
+        padding: 10px 16px;
+    }
+
+    .scheduleTypeIcon {
+        font-size: 1.125rem;
+    }
+
+    .scheduleTypeText {
+        font-size: 0.8rem;
+    }
+
+    .daysOfWeekGrid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+
+    .dayOfWeekBtn {
+        padding: 10px 6px;
+    }
+
+    .dayOfWeekShort {
+        font-size: 0.8rem;
+    }
+
+    .dayOfWeekLabel {
+        font-size: 0.65rem;
+    }
+
+    .timeSlotsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 8px;
+    }
+
+    .timeSlot {
+        padding: 10px 6px;
+    }
+
+    .time {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 0.7rem;
+    }
+}

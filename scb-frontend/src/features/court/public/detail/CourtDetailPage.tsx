@@ -1,8 +1,10 @@
-import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { generatePath } from "react-router-dom";
 import useCourtDetail from "./useCourtDetail";
+import CourtAvailabilitySchedule from "./CourtAvailabilitySchedule";
 import Badge from "@/components/ui/badge/Badge";
 import { LeftArrow } from "@/components/ui/icons";
+import { ROUTES } from "@/constants/route";
 import styles from "./CourtDetailPage.module.css";
 
 function formatTime(timeString: string): string {
@@ -10,64 +12,9 @@ function formatTime(timeString: string): string {
     return timeString.substring(0, 5);
 }
 
-function formatDate(dateString: string): string {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-}
-
-function getDayName(dateString: string): string {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    const days = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
-    return days[date.getDay()];
-}
-
-function getWeekDates(centerDate: Date): Date[] {
-    const dates: Date[] = [];
-    const startOfWeek = new Date(centerDate);
-    // Get Monday of the week (day 1 in JavaScript, but we want Monday = 0)
-    const day = startOfWeek.getDay();
-    const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
-    startOfWeek.setDate(diff);
-    
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(startOfWeek);
-        date.setDate(startOfWeek.getDate() + i);
-        dates.push(date);
-    }
-    return dates;
-}
-
-function formatDateForApi(date: Date): string {
-    return date.toISOString().split('T')[0];
-}
-
 export default function CourtDetailPage() {
     const navigate = useNavigate();
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
-    const dateString = formatDateForApi(selectedDate);
-    const { courtDetail, isLoading, error, refetch } = useCourtDetail(dateString);
-    
-    const weekDates = useMemo(() => getWeekDates(selectedDate), [selectedDate]);
-
-    const handleDateChange = (date: Date) => {
-        setSelectedDate(date);
-        refetch(formatDateForApi(date));
-    };
-
-    const handlePrevWeek = () => {
-        const newDate = new Date(selectedDate);
-        newDate.setDate(newDate.getDate() - 7);
-        handleDateChange(newDate);
-    };
-
-    const handleNextWeek = () => {
-        const newDate = new Date(selectedDate);
-        newDate.setDate(newDate.getDate() + 7);
-        handleDateChange(newDate);
-    };
+    const { courtDetail, isLoading, error } = useCourtDetail();
 
 
     if (isLoading) {
@@ -153,87 +100,26 @@ export default function CourtDetailPage() {
                         )}
                     </div>
 
-                    {/* Booking Schedule */}
-                    <div className={styles.scheduleSection}>
-                        <div className={styles.scheduleHeader}>
-                            <button className={styles.navButton} onClick={handlePrevWeek}>‹</button>
-                            <span className={styles.weekRange}>
-                                {formatDate(formatDateForApi(weekDates[0]))} - {formatDate(formatDateForApi(weekDates[6]))}
-                            </span>
-                            <button className={styles.navButton} onClick={handleNextWeek}>›</button>
-                        </div>
-
-                        <div className={styles.legend}>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendColor} ${styles.available}`}></div>
-                                <span>Giờ trống</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendColor} ${styles.locked}`}></div>
-                                <span>Đã khóa</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendColor} ${styles.booked}`}></div>
-                                <span>Đã đặt</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendColor} ${styles.played}`}></div>
-                                <span>Đã chơi</span>
-                            </div>
-                        </div>
-
-                        <div className={styles.timeFilters}>
-                            <button className={styles.filterButton}>Hôm nay</button>
-                            <button className={styles.filterButton}>Ca sáng</button>
-                            <button className={`${styles.filterButton} ${styles.active}`}>Ca chiều</button>
-                        </div>
-
-                        <div className={styles.dayTabs}>
-                            {weekDates.map((date, index) => {
-                                const dateStr = formatDateForApi(date);
-                                const isSelected = dateStr === dateString;
-                                return (
-                                    <button
-                                        key={index}
-                                        className={`${styles.dayTab} ${isSelected ? styles.active : ""}`}
-                                        onClick={() => handleDateChange(date)}
-                                    >
-                                        <span className={styles.dayName}>{getDayName(dateStr)}</span>
-                                        <span className={styles.dayDate}>{formatDate(dateStr).split('/')[0]}</span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-
-                        <div className={styles.timeSlots}>
-                            <div className={styles.courtRow}>
-                                <div className={styles.courtLabel}>
-                                    <span>⚽</span>
-                                    <span>01</span>
-                                </div>
-                                <div className={styles.slotsGrid}>
-                                    {courtDetail.timeSlotAvailabilities.map((slot, index) => {
-                                        const isClickable = slot.status === "AVAILABLE";
-                                        
-                                        return (
-                                            <button
-                                                key={index}
-                                                className={`${styles.timeSlot} ${styles[slot.status.toLowerCase()]}`}
-                                                disabled={!isClickable}
-                                                title={`${formatTime(slot.fromTime)} - ${formatTime(slot.toTime)}: ${slot.price.toLocaleString('vi-VN')}₫`}
-                                            >
-                                                {formatTime(slot.fromTime)}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Court Availability Schedule */}
+                    {courtDetail && (
+                        <CourtAvailabilitySchedule
+                            courtId={courtDetail.id}
+                            initialDate={new Date(courtDetail.date)}
+                            initialTimeSlotAvailabilities={courtDetail.timeSlotAvailabilities}
+                        />
+                    )}
                 </div>
 
                 {/* Right Column: Info and Booking Form */}
                 <div className={styles.rightColumn}>
+                    {/* Book Now Button */}
+                    <Link
+                        to={generatePath(ROUTES.PUBLIC.COURTS.BOOK, { id: courtDetail.id.toString() })}
+                        className={styles.bookNowButton}
+                    >
+                        Đặt sân ngay
+                    </Link>
+
                     {/* Court Information Panel */}
                     <div className={styles.infoPanel}>
                         <h3 className={styles.panelTitle}>| Thông tin sân</h3>

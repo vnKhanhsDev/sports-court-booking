@@ -51,6 +51,8 @@ public enum ApiCode {
     APPROVE_ALL_FACILITIES_SUCCESS(2031, "Approve all facilities successfully", HttpStatus.OK),
     GET_PUBLIC_COURTS_SUCCESS(2032, "Get public courts successfully", HttpStatus.OK),
     GET_PUBLIC_COURT_DETAIL_SUCCESS(2033, "Get public court detail successfully", HttpStatus.OK),
+    CREATE_BOOKING_SUCCESS(2034, "Create booking successfully", HttpStatus.OK),
+    GET_BOOKINGS_SUCCESS(2035, "Get bookings successfully", HttpStatus.OK),
 
 
     /* BUSINESS ERRORS */
@@ -89,6 +91,8 @@ public enum ApiCode {
 
     PRICE_LIST_NOT_FOUND(10018, "Price list not found", HttpStatus.NOT_FOUND),
     PRICE_LIST_IN_USE(10019, "Price list in use", HttpStatus.BAD_REQUEST),
+    BOOKING_NOT_FOUND(10022, "Booking not found", HttpStatus.NOT_FOUND),
+    UPDATE_BOOKING_SUCCESS(2036, "Update booking successfully", HttpStatus.OK),
 
     /* SYSTEM ERRORS */
 

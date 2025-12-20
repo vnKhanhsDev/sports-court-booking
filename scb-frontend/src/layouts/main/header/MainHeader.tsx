@@ -3,7 +3,7 @@ import { Help, Notification } from '@/components/ui/icons';
 import { ShoppingCart } from '@/components/ui/icons';
 import { ROUTES } from '@/constants/route';
 import { USER_ROLES } from '@/constants/role';
-import UserAvatar from '@/layouts/shared/UserAvatar';
+import HeaderUser from '@/layouts/shared/HeaderUser';
 import { useAuth } from '@/contexts/AuthContext';
 import styles from './MainHeader.module.css';
 import { useCallback } from 'react';
@@ -13,7 +13,6 @@ const MainHeader = () => {
     const isAuthenticated = Boolean(accessToken);
     // Only show avatar for players, not for owners or admins
     const showAvatar = isAuthenticated && !!user && activeRole === USER_ROLES.PLAYER;
-    const currentUser = user ?? { accountId: '', username: 'Khách', avatarUrl: '', roles: [] };
 
     const handleOwnerClick = useCallback((action: string) => {
         if (switchRole(USER_ROLES.OWNER)) {
@@ -52,12 +51,7 @@ const MainHeader = () => {
                         </li>
                         {showAvatar ? (
                             <li className={styles.navbarTop__item}>
-                                <UserAvatar
-                                    username={currentUser.username}
-                                    subtitle=""
-                                    avatarUrl={currentUser.avatarUrl}
-                                    size="sm"
-                                />
+                                <HeaderUser size="sm" />
                             </li>
                         ) : (
                             <>

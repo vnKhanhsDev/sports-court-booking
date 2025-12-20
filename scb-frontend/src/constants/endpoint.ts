@@ -59,5 +59,12 @@ export const ENDPOINTS = {
     
     MEDIA: {
         UPLOAD: '/media'
+    },
+    
+    BOOKING: {
+        CREATE: '/booking/create',
+        MY_BOOKINGS: '/booking/my-bookings',
+        OWNER_BOOKINGS: '/booking/owner-bookings',
+        UPDATE_STATUS: (id: string) => `/booking/${id}/status`
     }
 } as const;

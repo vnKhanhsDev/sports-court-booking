@@ -26,13 +26,16 @@ export default function useCourtDetail(date?: string) {
 
     useEffect(() => {
         if (id) {
-            fetchCourtDetail(id, date);
+            // Use today's date if no date provided
+            const dateToUse = date || new Date().toISOString().split('T')[0];
+            fetchCourtDetail(id, dateToUse);
         }
     }, [id, date, fetchCourtDetail]);
 
     const refetch = useCallback((selectedDate?: string) => {
         if (id) {
-            fetchCourtDetail(id, selectedDate);
+            const dateToUse = selectedDate || new Date().toISOString().split('T')[0];
+            fetchCourtDetail(id, dateToUse);
         }
     }, [id, fetchCourtDetail]);
 
