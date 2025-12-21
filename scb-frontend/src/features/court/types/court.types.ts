@@ -87,6 +87,91 @@ export interface CourtUpdationRequest {
 }
 
 /**
+ * Public Court Response - matches backend PublicCourtResponse
+ */
+export interface PublicCourt {
+    id: number;
+    name: string;
+    status: CourtStatus;
+    
+    // Facility information
+    facilityId: number;
+    facilityName: string;
+    facilityAddress: string;
+    facilityLatitude: number | null;
+    facilityLongitude: number | null;
+    facilityOpeningTime: string; // LocalTime as string (HH:mm:ss)
+    facilityClosingTime: string; // LocalTime as string (HH:mm:ss)
+    
+    // Sport and court type information
+    sportId: number;
+    sportName: string;
+    courtTypeId: number;
+    courtTypeName: string;
+    surfaceTypeId: number;
+    surfaceTypeName: string;
+    
+    // Pricing information
+    priceSlots: PriceSlot[];
+    
+    // Images
+    images: CourtImage[];
+}
+
+/**
+ * Time Slot Availability Status - matches backend TimeSlotAvailability.SlotStatus
+ */
+export type SlotStatus = "AVAILABLE" | "BOOKED" | "LOCKED" | "PLAYED";
+
+/**
+ * Time Slot Availability - matches backend TimeSlotAvailability
+ */
+export interface TimeSlotAvailability {
+    fromTime: string; // LocalTime as string (HH:mm:ss)
+    toTime: string; // LocalTime as string (HH:mm:ss)
+    price: number; // BigDecimal as number
+    status: SlotStatus;
+}
+
+/**
+ * Public Court Detail Response - matches backend PublicCourtDetailResponse
+ */
+export interface PublicCourtDetail {
+    id: number;
+    name: string;
+    status: CourtStatus;
+    
+    // Facility information
+    facilityId: number;
+    facilityName: string;
+    facilityDescription: string;
+    facilityAddress: string;
+    facilityLatitude: number | null;
+    facilityLongitude: number | null;
+    facilityOpeningTime: string; // LocalTime as string (HH:mm:ss)
+    facilityClosingTime: string; // LocalTime as string (HH:mm:ss)
+    facilityTotalCourts: number; // Number of courts in the facility
+    
+    // Sport and court type information
+    sportId: number;
+    sportName: string;
+    courtTypeId: number;
+    courtTypeName: string;
+    surfaceTypeId: number;
+    surfaceTypeName: string;
+    
+    // Pricing information
+    priceSlots: PriceSlot[];
+    
+    // Images
+    images: CourtImage[];
+    
+    // Booking availability for a specific date
+    date: string; // LocalDate as string (YYYY-MM-DD)
+    timeSlotAvailabilities: TimeSlotAvailability[];
+}
+
+/**
  * Legacy type - kept for backward compatibility
  * @deprecated Use OwnerCourtSummary instead
  */

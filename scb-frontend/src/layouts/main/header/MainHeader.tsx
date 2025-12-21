@@ -3,17 +3,17 @@ import { Help, Notification } from '@/components/ui/icons';
 import { ShoppingCart } from '@/components/ui/icons';
 import { ROUTES } from '@/constants/route';
 import { USER_ROLES } from '@/constants/role';
-import UserAvatar from '@/layouts/shared/UserAvatar';
+import HeaderUser from '@/layouts/shared/HeaderUser';
 import { useAuth } from '@/contexts/AuthContext';
 import styles from './MainHeader.module.css';
 import { useCallback } from 'react';
+import CourtSearch from './CourtSearch';
 
 const MainHeader = () => {
     const { accessToken, activeRole, user, switchRole } = useAuth();
     const isAuthenticated = Boolean(accessToken);
     // Only show avatar for players, not for owners or admins
     const showAvatar = isAuthenticated && !!user && activeRole === USER_ROLES.PLAYER;
-    const currentUser = user ?? { accountId: '', username: 'Khách', avatarUrl: '', roles: [] };
 
     const handleOwnerClick = useCallback((action: string) => {
         if (switchRole(USER_ROLES.OWNER)) {
@@ -52,12 +52,7 @@ const MainHeader = () => {
                         </li>
                         {showAvatar ? (
                             <li className={styles.navbarTop__item}>
-                                <UserAvatar
-                                    username={currentUser.username}
-                                    subtitle=""
-                                    avatarUrl={currentUser.avatarUrl}
-                                    size="sm"
-                                />
+                                <HeaderUser size="sm" />
                             </li>
                         ) : (
                             <>
@@ -72,13 +67,19 @@ const MainHeader = () => {
                     </ul>
                 </nav>
 
-                <nav className='flex items-center justify-between px-3 py-4'>
-                    <div className='logo' style={{ width: '100px', height: '50px', backgroundColor: '#fff'}}></div>
+                <nav className={styles.navbarMain}>
+                    <div className={styles.logoContainer}>
+                        <div className={styles.logo}></div>
+                    </div>
 
-                    <form></form>
+                    <div className={styles.searchContainer}>
+                        <CourtSearch />
+                    </div>
 
-                    <div className="flex items-center gap-3">
-                        <ShoppingCart fontSize={35} />
+                    <div className={styles.cartContainer}>
+                        <button className={styles.cartButton} type="button" aria-label="Shopping cart">
+                            <ShoppingCart className={styles.cartIcon} />
+                        </button>
                     </div>
                 </nav>
             </div>

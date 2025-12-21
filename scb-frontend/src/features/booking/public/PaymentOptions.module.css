@@ -1,0 +1,242 @@
+.container {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.paymentMethods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.paymentMethod {
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    background: var(--bg-primary);
+}
+
+.paymentMethod:hover {
+    border-color: var(--border-medium);
+}
+
+.paymentLabel {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+.paymentLabel input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.paymentContent {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.paymentIcon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.paymentInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.paymentName {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.paymentDescription {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.radioIndicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-medium);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.paymentLabel input[type="radio"]:checked ~ .radioIndicator {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+}
+
+.paymentLabel input[type="radio"]:checked ~ .radioIndicator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+}
+
+.paymentLabel input[type="radio"]:checked ~ .paymentContent .paymentIcon {
+    background: rgba(23, 42, 83, 0.1);
+}
+
+.paymentLabel input[type="radio"]:checked ~ .paymentContent .paymentName {
+    color: var(--primary-color);
+}
+
+.paymentNote {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    margin-bottom: 24px;
+}
+
+.noteIcon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.noteContent {
+    flex: 1;
+}
+
+.noteTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+}
+
+.noteList {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.noteList li {
+    margin-bottom: 4px;
+}
+
+.noteList li:last-child {
+    margin-bottom: 0;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.cancelButton {
+    flex: 1;
+    padding: 14px 24px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border-medium);
+}
+
+.submitButton {
+    flex: 2;
+    padding: 14px 24px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submitButton:hover {
+    background: var(--primary-800);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.submitButton:active {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .paymentContent {
+        gap: 12px;
+    }
+
+    .paymentIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+    }
+
+    .cancelButton,
+    .submitButton {
+        flex: 1;
+        width: 100%;
+    }
+}

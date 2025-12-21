@@ -6,8 +6,10 @@ export const ROUTES = {
         HOME: '/',
         COURTS: {
             SEARCH: '/courts/search',
-            DETAIL: '/courts/:id'
-        }
+            DETAIL: '/courts/:id',
+            BOOK: '/courts/:id/book'
+        },
+        RESERVATIONS: '/reservations'
     },
 
     AUTH: {

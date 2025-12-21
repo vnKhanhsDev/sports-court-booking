@@ -6,7 +6,10 @@ import { RoleBasedGuard } from './RoleBasedGuard';
 import { USER_ROLES } from '@/constants/role';
 
 const HomePage = lazy(() => import('@features/public/home/HomePage'));
-const CourtSearchPage = lazy(() => import('@features/public/court/search/CourtSearchPage'));
+const CourtSearchPage = lazy(() => import('@features/court/public/search/CourtSearchPage'));
+const CourtDetailPage = lazy(() => import('@features/court/public/detail/CourtDetailPage'));
+const CourtBookingPage = lazy(() => import('@features/booking/public/CourtBookingPage'));
+const PlayerBookingPage = lazy(() => import('@features/booking/player/PlayerBookingPage'));
 
 const RegisterPage = lazy(() => import('@features/auth/pages/RegisterPage'));
 const LoginPage = lazy(() => import('@features/auth/pages/LoginPage'));
@@ -14,7 +17,7 @@ const LoginPage = lazy(() => import('@features/auth/pages/LoginPage'));
 const OwnerHomePage = lazy(() => import('@features/owner/home/OwnerHomePage'));
 const OwnerCourtPage = lazy(() => import('@/features/court/pages/OwnerCourtPage'));
 const PriceListPage = lazy(() => import('@/features/court/pages/PriceListPage'));
-const OwnerBookingPage = lazy(() => import('@features/owner/booking/OwnerBookingPage'));
+const OwnerBookingPage = lazy(() => import('@features/booking/owner/OwnerBookingPage'));
 
 const AdminHomePage = lazy(() => import('@features/admin/home/AdminHomePage'));
 const AdminCourtPage = lazy(() => import('@/features/court/pages/AdminCourtPage'));
@@ -26,7 +29,10 @@ const AppRoutes = () => {
         <Route element={<MainLayout />}>
           <Route element={<RoleBasedGuard isPublic={true} />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/courts" element={<CourtSearchPage />} />
+            <Route path={ROUTES.PUBLIC.COURTS.SEARCH} element={<CourtSearchPage />} />
+            <Route path={ROUTES.PUBLIC.COURTS.DETAIL} element={<CourtDetailPage />} />
+            <Route path={ROUTES.PUBLIC.COURTS.BOOK} element={<CourtBookingPage />} />
+            <Route path={ROUTES.PUBLIC.RESERVATIONS} element={<PlayerBookingPage />} />
           </Route>
         </Route>
 

@@ -14,6 +14,8 @@ export const ENDPOINTS = {
     },
     PUBLIC: {
         CATALOG: '/public/catalog',
+        COURTS: '/public/courts',
+        COURT_DETAIL: (id: number | string) => `/public/courts/${id}`,
 
         ADDRESS: {
             PROVINCES: '/public/address/provinces',
@@ -57,5 +59,12 @@ export const ENDPOINTS = {
     
     MEDIA: {
         UPLOAD: '/media'
+    },
+    
+    BOOKING: {
+        CREATE: '/booking/create',
+        MY_BOOKINGS: '/booking/my-bookings',
+        OWNER_BOOKINGS: '/booking/owner-bookings',
+        UPDATE_STATUS: (id: string) => `/booking/${id}/status`
     }
 } as const;

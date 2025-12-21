@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { User } from "@/components/ui/icons";
 import styles from "./HeaderUser.module.css";
 import { USER_ROLES } from "@/constants/role";
+import { ROUTES } from "@/constants/route";
 import clsx from "clsx";
 
 interface HeaderUser {
@@ -72,6 +73,11 @@ export default function HeaderUser({
                         ))}
                     </div>
                 </div>
+                {activeRole === USER_ROLES.PLAYER && (
+                    <Link to={ROUTES.PUBLIC.RESERVATIONS} className={styles.dropdownItem}>
+                        <span>Đơn đặt sân</span>
+                    </Link>
+                )}
                 <Link to="#" className={styles.dropdownItem}>
                     <span>Cài đặt</span>
                 </Link>
