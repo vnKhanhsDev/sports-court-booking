@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "court_types")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class CourtType {
     @Id
@@ -25,6 +24,9 @@ public class CourtType {
 
     @Column(nullable = false, length = 150)
     private String name;
+
+    @Column(nullable = false, length = 50)
+    private String code;
 
     @Column(columnDefinition = "TEXT")
     private String description;

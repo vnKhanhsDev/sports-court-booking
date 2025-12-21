@@ -12,6 +12,11 @@ export const ENDPOINTS = {
         RESEND_OTP: '/auth/resend-otp',
         REFRESH_TOKEN: '/auth/refresh-token'
     },
+
+    MARKETPLACE: {
+        FACILITIES: '/public/facilities'
+    },
+
     PUBLIC: {
         CATALOG: '/public/catalog',
         COURTS: '/public/courts',

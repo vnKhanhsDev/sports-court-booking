@@ -6,7 +6,8 @@ import { RoleBasedGuard } from './RoleBasedGuard';
 import { USER_ROLES } from '@/constants/role';
 
 const HomePage = lazy(() => import('@features/public/home/HomePage'));
-const CourtSearchPage = lazy(() => import('@features/court/public/search/CourtSearchPage'));
+// const CourtSearchPage = lazy(() => import('@features/court/public/search/CourtSearchPage'));
+const CourtSearchPage = lazy(() => import('@features/marketplace/pages/SearchPage'));
 const CourtDetailPage = lazy(() => import('@features/court/public/detail/CourtDetailPage'));
 const CourtBookingPage = lazy(() => import('@features/booking/public/CourtBookingPage'));
 const PlayerBookingPage = lazy(() => import('@features/booking/player/PlayerBookingPage'));

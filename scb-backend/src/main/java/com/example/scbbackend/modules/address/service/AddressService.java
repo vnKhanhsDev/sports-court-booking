@@ -44,14 +44,32 @@ public class AddressService {
     }
 
     @Transactional(readOnly = true)
+    public Province getProvinceByCodeName(String provinceCodeName) {
+        return provinceRepository.findByCodeName(provinceCodeName)
+                .orElseThrow(() -> new AppException(ApiCode.PROVINCE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public District findDistrictByCode(String districtCode) {
         return districtRepository.findByCode(districtCode)
                 .orElseThrow(() -> new AppException(ApiCode.DISTRICT_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
+    public District getDistrictByCodeName(String districtCodeName) {
+        return districtRepository.findByCodeName(districtCodeName)
+                .orElseThrow(() -> new AppException(ApiCode.DISTRICT_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public Ward findWardByCode(String wardCode) {
         return wardRepository.findByCode(wardCode)
+                .orElseThrow(() -> new AppException(ApiCode.WARD_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public Ward getWardByCodeName(String wardCodeName) {
+        return wardRepository.findByCodeName(wardCodeName)
                 .orElseThrow(() -> new AppException(ApiCode.WARD_NOT_FOUND));
     }
 

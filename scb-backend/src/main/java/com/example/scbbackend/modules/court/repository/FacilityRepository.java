@@ -2,7 +2,9 @@ package com.example.scbbackend.modules.court.repository;
 
 import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
+import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
+import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.NonNull;
@@ -16,6 +18,8 @@ import java.util.Optional;
 
 @Repository
 public interface FacilityRepository extends JpaRepository<@NonNull Facility, @NonNull Long> {
+
+    boolean existsByOwnerInfo(@NonNull OwnerInfo ownerInfo);
 
     List<Facility> findByOwnerInfo(OwnerInfo ownerInfo);
 
@@ -54,6 +58,31 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
         GROUP BY f.id, f.name, a.email, f.status
     """)
     List<AdminFacilitySummaryResponse> findAllAdminFacilities();
+
+    @Query("""
+        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse(
+            f.id,
+            f.name,
+            s.name,
+            f.addressDetail,
+            COUNT(c),
+            MIN(ps.price),
+            MAX(ps.price)
+        )
+        FROM Facility f
+        JOIN f.ownerInfo o
+        JOIN o.account a
+        LEFT JOIN Court c ON c.facility = f AND c.status = :courtStatus
+        LEFT JOIN c.sport s
+        LEFT JOIN c.priceList pl
+        LEFT JOIN pl.priceSlots ps
+        WHERE f.status = :facilityStatus
+        GROUP BY f.id, f.name, s.name, f.addressDetail
+    """)
+    List<PublicFacilityResponse> findPublicFacilities(
+            @Param("courtStatus") CourtStatus courtStatus,
+            @Param("facilityStatus") FacilityStatus facilityStatus
+    );
 
     List<Facility> findByStatus(FacilityStatus status);
 

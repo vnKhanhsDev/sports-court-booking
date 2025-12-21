@@ -1,5 +1,7 @@
 package com.example.scbbackend.config.data.mock;
 
+import com.example.scbbackend.modules.catalog.service.CatalogService;
+import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.entity.PriceList;
 import com.example.scbbackend.modules.court.entity.PriceSlot;
 import com.example.scbbackend.modules.court.repository.PriceListRepository;
@@ -8,9 +10,11 @@ import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -21,86 +25,95 @@ public class PriceMockData {
     private final PriceListRepository priceListRepository;
     private final PriceSlotRepository priceSlotRepository;
 
+    private final CatalogService catalogService;
+
     private record PriceListData(
+            int facilityIndex,
+            String sportCode,
+            String courtTypeCode,
+            String surfaceTypeCode,
             String name,
-            List<PriceSlotData> priceSlotList
+            List<PriceSlotData> slots
     ) {}
 
     private record PriceSlotData(
-            String fromTime,
-            String toTime,
+            LocalTime fromTime,
+            LocalTime toTime,
             BigDecimal price
     ) {}
 
-    private static final List<PriceListData> PRICE_LISTS = List.of(
+    private static final List<PriceListData> PRICE_LIST_DATA = List.of(
             new PriceListData(
+                    -1,
+                    "",
+                    "",
+                    "",
                     "Bảng giá chung",
                     List.of(
-                            new PriceSlotData("06:00", "13:00", BigDecimal.valueOf(150_000)),
-                            new PriceSlotData("13:00", "18:00", BigDecimal.valueOf(250_000)),
-                            new PriceSlotData("18:00", "23:00", BigDecimal.valueOf(350_000))
+                            new PriceSlotData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), BigDecimal.valueOf(120_000)),
+                            new PriceSlotData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), BigDecimal.valueOf(180_000)),
+                            new PriceSlotData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), BigDecimal.valueOf(250_000))
                     )
             ),
             new PriceListData(
-                    "Bảng giá Pickfit",
+                    -1,
+                    "football",
+                    "7v7",
+                    "artificial_grass",
+                    "Bảng giá bóng đá_sân 7_nhân tạo",
                     List.of(
-                            new PriceSlotData("06:00", "13:00", BigDecimal.valueOf(180_000)),
-                            new PriceSlotData("13:00", "18:00", BigDecimal.valueOf(230_000)),
-                            new PriceSlotData("18:00", "23:00", BigDecimal.valueOf(300_000))
-                    )
-            ),
-            new PriceListData(
-                    "Bảng giá Phenikaa_sân bóng_7_nhân tạo",
-                    List.of(
-                            new PriceSlotData("06:00", "13:00", BigDecimal.valueOf(200_000)),
-                            new PriceSlotData("13:00", "18:00", BigDecimal.valueOf(250_000)),
-                            new PriceSlotData("18:00", "23:00", BigDecimal.valueOf(350_000))
-                    )
-            ),
-            new PriceListData(
-                    "Bảng giá sân bóng_7_nhân tạo",
-                    List.of(
-                            new PriceSlotData("06:00", "13:00", BigDecimal.valueOf(180_000)),
-                            new PriceSlotData("13:00", "18:00", BigDecimal.valueOf(250_000)),
-                            new PriceSlotData("18:00", "23:00", BigDecimal.valueOf(300_000))
-                    )
-            ),
-            new PriceListData(
-                    "Bảng giá pickleball",
-                    List.of(
-                            new PriceSlotData("06:00", "13:00", BigDecimal.valueOf(200_000)),
-                            new PriceSlotData("13:00", "18:00", BigDecimal.valueOf(280_000)),
-                            new PriceSlotData("18:00", "23:00", BigDecimal.valueOf(400_000))
+                            new PriceSlotData(LocalTime.parse("06:00"), LocalTime.parse("13:00"), BigDecimal.valueOf(150_000)),
+                            new PriceSlotData(LocalTime.parse("13:00"), LocalTime.parse("18:00"), BigDecimal.valueOf(200_000)),
+                            new PriceSlotData(LocalTime.parse("18:00"), LocalTime.parse("23:00"), BigDecimal.valueOf(300_000))
                     )
             )
     );
 
-    public void mock(OwnerInfo ownerInfo) {
-        if (priceListRepository.count() > 0) {
+    @Transactional
+    public List<PriceList> mock(OwnerInfo ownerInfo, List<Facility> facilities) {
+        if (priceListRepository.existsByOwnerInfo(ownerInfo)) {
             log.info("Price list already exists. Skipping...");
-            return;
+            return List.of();
         }
 
-        PRICE_LISTS.forEach(l -> {
-            PriceList priceList = priceListRepository.save(
-                    PriceList.builder()
-                            .ownerInfo(ownerInfo)
-                            .name(l.name)
-                            .version(1)
-                            .isActive(true)
-                            .build()
-            );
+        List<PriceList> priceLists = new ArrayList<>();
+        List<PriceSlot> priceSlots = new ArrayList<>();
 
-            List<PriceSlot> priceSlots = l.priceSlotList.stream()
-                    .map(s -> PriceSlot.builder()
-                            .priceList(priceList)
-                            .fromTime(LocalTime.parse(s.fromTime))
-                            .toTime(LocalTime.parse(s.toTime))
-                            .price(s.price)
-                            .build()
-                    )
-                    .toList();
-            priceSlotRepository.saveAll(priceSlots);
-        });
+        for (PriceListData pld : PRICE_LIST_DATA) {
+            PriceList priceList = PriceList.builder()
+                    .ownerInfo(ownerInfo)
+                    .facility(pld.facilityIndex() != -1 ? facilities.get(pld.facilityIndex()) : null)
+                    .sport(pld.sportCode().isEmpty() ? null : catalogService.getSportByCode(pld.sportCode()))
+                    .courtType(pld.courtTypeCode().isEmpty() ? null : catalogService.getCourtTypeByCode(pld.courtTypeCode()))
+                    .surfaceType(pld.surfaceTypeCode().isEmpty() ? null : catalogService.getSurfaceTypeByCode(pld.surfaceTypeCode()))
+                    .name(pld.name().isEmpty() ? null : pld.name())
+                    .version(1)
+                    .isActive(true)
+                    .build();
+            priceLists.add(priceList);
+        }
+        priceListRepository.saveAll(priceLists);
+
+        for (int i = 0; i < PRICE_LIST_DATA.size(); i++) {
+            PriceList savedPriceList = priceLists.get(i);
+            PriceListData pld = PRICE_LIST_DATA.get(i);
+
+            for (PriceSlotData psd : pld.slots()) {
+                priceSlots.add(
+                        PriceSlot.builder()
+                                .priceList(savedPriceList)
+                                .fromTime(psd.fromTime())
+                                .toTime(psd.toTime())
+                                .price(psd.price())
+                                .build()
+                );
+            }
+        }
+        priceSlotRepository.saveAll(priceSlots);
+
+        log.info("Mocked {} price lists and {} price slots", priceLists.size(), priceSlots.size());
+
+        return priceLists;
     }
+
 }

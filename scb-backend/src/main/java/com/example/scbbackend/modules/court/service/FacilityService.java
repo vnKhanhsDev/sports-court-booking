@@ -9,6 +9,7 @@ import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryRes
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.FacilityOptionResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
+import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse;
 import com.example.scbbackend.modules.court.entity.Court;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
@@ -205,6 +206,18 @@ public class FacilityService {
         
         facilityRepository.saveAll(facilities);
         return getAllAdminFacilities();
+    }
+
+    /**
+     * PUBLIC: GET ALL PUBLIC FACILITIES
+     * Returns all APPROVED facilities with their active courts information
+     * */
+    @Transactional(readOnly = true)
+    public List<PublicFacilityResponse> getAllPublicFacilities() {
+        return facilityRepository.findPublicFacilities(
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        );
     }
 
 

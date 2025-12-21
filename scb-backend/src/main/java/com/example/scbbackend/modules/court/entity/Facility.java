@@ -3,6 +3,7 @@ package com.example.scbbackend.modules.court.entity;
 import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
 import com.example.scbbackend.modules.address.entity.Ward;
+import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import jakarta.persistence.*;
@@ -16,10 +17,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "facilities")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Facility {
     @Id
@@ -77,6 +77,14 @@ public class Facility {
 
     @OneToMany(mappedBy = "facility", fetch = FetchType.LAZY)
     private Set<Court> courts;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "facility_sports",
+        joinColumns = @JoinColumn(name = "facility_id"),
+        inverseJoinColumns = @JoinColumn(name = "sport_id")
+    )
+    private Set<Sport> activeSports;
 
     @PrePersist
     public void prePersist() {

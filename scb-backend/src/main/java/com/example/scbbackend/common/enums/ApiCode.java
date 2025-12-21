@@ -54,6 +54,8 @@ public enum ApiCode {
     CREATE_BOOKING_SUCCESS(2034, "Create booking successfully", HttpStatus.OK),
     GET_BOOKINGS_SUCCESS(2035, "Get bookings successfully", HttpStatus.OK),
 
+    GET_ALL_PUBLIC_FACILITIES_SUCCESS(2036, "Get all public facilities successfully", HttpStatus.OK),
+
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),

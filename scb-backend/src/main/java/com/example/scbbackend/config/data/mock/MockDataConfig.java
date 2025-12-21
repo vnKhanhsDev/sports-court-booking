@@ -2,6 +2,8 @@ package com.example.scbbackend.config.data.mock;
 
 import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.modules.court.entity.Facility;
+import com.example.scbbackend.modules.court.entity.PriceList;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import com.example.scbbackend.modules.user.repository.OwnerInfoRepository;
 import lombok.NonNull;
@@ -13,25 +15,31 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import java.util.List;
+
 @Slf4j
 @Order(20)
 @Configuration
 @RequiredArgsConstructor
 public class MockDataConfig implements ApplicationRunner {
 
-    @Value("${app.mock-data.enabled}")
-    private static boolean enabled;
+    @Value("${app.mock-data.enabled:false}")
+    private boolean enabled;
 
     private final UserMockData userMockData;
     private final FacilityMockData facilityMockData;
     private final PriceMockData priceMockData;
+    private final CourtMockData courtMockData;
 
     private final OwnerInfoRepository ownerInfoRepository;
 
     @Override
     public void run(@NonNull ApplicationArguments args) throws Exception {
 
-        if (enabled) return;
+        if (!enabled) {
+            log.info("Mock data is disabled. Skipping...");
+            return;
+        }
 
         log.info(">>> MOCK DATA CONFIG STARTED <<<");
 
@@ -40,9 +48,11 @@ public class MockDataConfig implements ApplicationRunner {
         OwnerInfo ownerInfo = ownerInfoRepository.findByAccountUsername("chusan1")
                         .orElseThrow(() -> new AppException(ApiCode.USER_NOT_FOUND));
 
-        facilityMockData.mock(ownerInfo);
+        List<Facility> facilities = facilityMockData.mock(ownerInfo);
 
-        priceMockData.mock(ownerInfo);
+        List<PriceList> priceLists = priceMockData.mock(ownerInfo, facilities);
+
+        courtMockData.mock(facilities, priceLists);
 
         log.info(">>> MOCK DATA CONFIG SUCCESS <<<");
     }

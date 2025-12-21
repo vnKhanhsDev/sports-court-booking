@@ -10,10 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "sports")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Sport {
     @Id
@@ -22,6 +21,9 @@ public class Sport {
 
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+
+    @Column(nullable = false, unique = true, length = 20)
+    private String code;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
