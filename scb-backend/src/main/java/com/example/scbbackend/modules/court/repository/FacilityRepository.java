@@ -3,6 +3,7 @@ package com.example.scbbackend.modules.court.repository;
 import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse;
+import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponseWithoutImages;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
@@ -60,26 +61,35 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
     List<AdminFacilitySummaryResponse> findAllAdminFacilities();
 
     @Query("""
-        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse(
+        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponseWithoutImages(
             f.id,
+            activeSport.id,
             f.name,
-            s.name,
-            f.addressDetail,
-            COUNT(c),
+            activeSport.name,
+            CONCAT(
+                COALESCE(d.name, ''),
+                CASE WHEN d.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END,
+                COALESCE(p.name, '')
+            ),
+            COUNT(DISTINCT c.id),
             MIN(ps.price),
             MAX(ps.price)
         )
         FROM Facility f
         JOIN f.ownerInfo o
         JOIN o.account a
-        LEFT JOIN Court c ON c.facility = f AND c.status = :courtStatus
-        LEFT JOIN c.sport s
+        JOIN f.activeSports activeSport
+        LEFT JOIN f.province p
+        LEFT JOIN f.district d
+        LEFT JOIN Court c ON c.facility = f 
+            AND c.sport = activeSport 
+            AND c.status = :courtStatus
         LEFT JOIN c.priceList pl
         LEFT JOIN pl.priceSlots ps
         WHERE f.status = :facilityStatus
-        GROUP BY f.id, f.name, s.name, f.addressDetail
+        GROUP BY f.id, activeSport.id, f.name, activeSport.name, d.name, p.name
     """)
-    List<PublicFacilityResponse> findPublicFacilities(
+    List<PublicFacilityResponseWithoutImages> findPublicFacilities(
             @Param("courtStatus") CourtStatus courtStatus,
             @Param("facilityStatus") FacilityStatus facilityStatus
     );

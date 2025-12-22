@@ -14,6 +14,7 @@ import com.example.scbbackend.modules.court.entity.Court;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
+import com.example.scbbackend.modules.court.repository.CourtImageRepository;
 import com.example.scbbackend.modules.court.repository.CourtRepository;
 import com.example.scbbackend.modules.court.repository.FacilityRepository;
 import com.example.scbbackend.modules.court.repository.PriceListRepository;
@@ -33,6 +34,7 @@ public class FacilityService {
     private final FacilityRepository facilityRepository;
     private final CourtRepository courtRepository;
     private final PriceListRepository priceListRepository;
+    private final CourtImageRepository courtImageRepository;
 
     private final AddressService addressService;
 
@@ -214,10 +216,32 @@ public class FacilityService {
      * */
     @Transactional(readOnly = true)
     public List<PublicFacilityResponse> getAllPublicFacilities() {
-        return facilityRepository.findPublicFacilities(
-                CourtStatus.ACTIVE,
-                FacilityStatus.APPROVED
-        );
+        List<com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponseWithoutImages> facilities = 
+                facilityRepository.findPublicFacilities(
+                        CourtStatus.ACTIVE,
+                        FacilityStatus.APPROVED
+                );
+        
+        // Enrich each facility with images
+        return facilities.stream()
+                .map(facility -> {
+                    List<String> imageUrls = courtImageRepository.findImageUrlsByFacilityAndSport(
+                            facility.facilityId(),
+                            facility.sportId()
+                    );
+                    return new PublicFacilityResponse(
+                            facility.facilityId(),
+                            facility.sportId(),
+                            facility.facilityName(),
+                            facility.sportName(),
+                            facility.address(),
+                            facility.totalCourts(),
+                            facility.minPrice(),
+                            facility.maxPrice(),
+                            imageUrls
+                    );
+                })
+                .toList();
     }
 
 

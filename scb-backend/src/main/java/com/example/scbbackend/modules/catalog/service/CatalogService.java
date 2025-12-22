@@ -99,6 +99,13 @@ public class CatalogService {
     }
 
     @Transactional(readOnly = true)
+    public CourtType getCourtTypeBySportCodeAndCode(String sportCode, String code) {
+        Sport sport = getSportByCode(sportCode);
+        return courtTypeRepository.findBySportAndCode(sport, code)
+                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public SurfaceType findSurfaceTypeById(Long id) {
         return surfaceTypeRepository.findById(id).orElse(null);
     }
@@ -112,6 +119,13 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public SurfaceType getSurfaceTypeByCode(String code) {
         return surfaceTypeRepository.findByCode(code)
+                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public SurfaceType getSurfaceTypeBySportCodeAndCode(String sportCode, String code) {
+        Sport sport = getSportByCode(sportCode);
+        return surfaceTypeRepository.findBySportAndCode(sport, code)
                 .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
     }
 

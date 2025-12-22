@@ -286,6 +286,24 @@ public class CourtService {
     }
 
     /**
+     * PUBLIC: GET PUBLIC COURTS BY FACILITY AND SPORT
+     * Returns ACTIVE courts from APPROVED facility filtered by sport
+     */
+    @Transactional(readOnly = true)
+    public List<PublicCourtResponse> getPublicCourtsByFacilityAndSport(Long facilityId, Long sportId) {
+        List<Court> courts = courtRepository.findPublicCourtsByFacilityAndSport(
+                facilityId,
+                sportId,
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        );
+
+        return courts.stream()
+                .map(this::mapToPublicCourtResponse)
+                .toList();
+    }
+
+    /**
      * Map Court entity to PublicCourtResponse DTO
      */
     private PublicCourtResponse mapToPublicCourtResponse(Court court) {

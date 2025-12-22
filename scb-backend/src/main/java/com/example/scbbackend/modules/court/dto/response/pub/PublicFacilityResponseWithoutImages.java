@@ -1,9 +1,12 @@
 package com.example.scbbackend.modules.court.dto.response.pub;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-public record PublicFacilityResponse(
+/**
+ * Intermediate DTO for JPQL query construction
+ * Used internally to construct PublicFacilityResponse with images
+ */
+public record PublicFacilityResponseWithoutImages(
         Long facilityId,
         Long sportId,
         String facilityName,
@@ -11,6 +14,6 @@ public record PublicFacilityResponse(
         String address,
         Long totalCourts,
         BigDecimal minPrice,
-        BigDecimal maxPrice,
-        List<String> imageUrls
+        BigDecimal maxPrice
 ) {}
+

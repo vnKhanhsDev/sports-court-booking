@@ -93,12 +93,24 @@ export const courtServiceForAdmin = {
 export const publicCourtService = {
     /**
      * Get all public courts (ACTIVE courts from APPROVED facilities)
+     * @param facilityId - Optional facility ID to filter by
+     * @param sportId - Optional sport ID to filter by
      * @returns List of public courts
      */
-    getPublicCourts: async (): Promise<PublicCourt[]> => {
-        const response = await publicClient.get<ApiResponse<PublicCourt[]>>(
-            ENDPOINTS.PUBLIC.COURTS
-        );
+    getPublicCourts: async (facilityId?: number, sportId?: number): Promise<PublicCourt[]> => {
+        const params = new URLSearchParams();
+        if (facilityId !== undefined) {
+            params.append('facilityId', facilityId.toString());
+        }
+        if (sportId !== undefined) {
+            params.append('sportId', sportId.toString());
+        }
+        
+        const url = params.toString() 
+            ? `${ENDPOINTS.PUBLIC.COURTS}?${params.toString()}`
+            : ENDPOINTS.PUBLIC.COURTS;
+            
+        const response = await publicClient.get<ApiResponse<PublicCourt[]>>(url);
         return response.data.data || [];
     },
 

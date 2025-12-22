@@ -84,8 +84,12 @@ public class PriceMockData {
                     .ownerInfo(ownerInfo)
                     .facility(pld.facilityIndex() != -1 ? facilities.get(pld.facilityIndex()) : null)
                     .sport(pld.sportCode().isEmpty() ? null : catalogService.getSportByCode(pld.sportCode()))
-                    .courtType(pld.courtTypeCode().isEmpty() ? null : catalogService.getCourtTypeByCode(pld.courtTypeCode()))
-                    .surfaceType(pld.surfaceTypeCode().isEmpty() ? null : catalogService.getSurfaceTypeByCode(pld.surfaceTypeCode()))
+                    .courtType(pld.courtTypeCode().isEmpty() || pld.sportCode().isEmpty() 
+                            ? null 
+                            : catalogService.getCourtTypeBySportCodeAndCode(pld.sportCode(), pld.courtTypeCode()))
+                    .surfaceType(pld.surfaceTypeCode().isEmpty() || pld.sportCode().isEmpty() 
+                            ? null 
+                            : catalogService.getSurfaceTypeBySportCodeAndCode(pld.sportCode(), pld.surfaceTypeCode()))
                     .name(pld.name().isEmpty() ? null : pld.name())
                     .version(1)
                     .isActive(true)

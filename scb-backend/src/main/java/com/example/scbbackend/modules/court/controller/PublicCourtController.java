@@ -20,7 +20,17 @@ public class PublicCourtController {
     private final CourtService courtService;
 
     @GetMapping
-    public ApiResponse<List<PublicCourtResponse>> getPublicCourts() {
+    public ApiResponse<List<PublicCourtResponse>> getPublicCourts(
+            @RequestParam(required = false) Long facilityId,
+            @RequestParam(required = false) Long sportId
+    ) {
+        if (facilityId != null && sportId != null) {
+            return ApiResponse.success(
+                    ApiCode.GET_PUBLIC_COURTS_SUCCESS,
+                    courtService.getPublicCourtsByFacilityAndSport(facilityId, sportId)
+            );
+        }
+        
         return ApiResponse.success(
                 ApiCode.GET_PUBLIC_COURTS_SUCCESS,
                 courtService.getPublicCourts()
