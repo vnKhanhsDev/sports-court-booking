@@ -3,13 +3,11 @@ import { type UserRole } from "@/types/user.types";
 
 export const ROUTES = {
     PUBLIC: {
-        HOME: '/',
-        COURTS: {
+        MARKETPLACE: {
+            HOME: '/',
             SEARCH: '/courts/search',
-            DETAIL: '/courts/:id',
-            BOOK: '/courts/:id/book'
-        },
-        RESERVATIONS: '/reservations'
+            DETAIL: '/courts/:id'
+        }
     },
 
     AUTH: {
@@ -20,6 +18,17 @@ export const ROUTES = {
         getRegister: (role: UserRole) => generatePath(ROUTES.AUTH.REGISTER_TEMPLATE, { role }),
         getLogin: (role: UserRole) => generatePath(ROUTES.AUTH.LOGIN_TEMPLATE, { role }),
         getForgotPassword: (role: UserRole) => generatePath(ROUTES.AUTH.FORGOT_PASSWORD_TEMPLATE, { role })
+    },
+
+    PLAYER: {
+        BOOKING: {
+            CHECKOUT: '/courts/checkout',
+            MY_BOOKINGS: '/player/booking/my-bookings'
+        }
+    },
+
+    PAYMENT: {
+        VNPAY_RETURN: '/payment/vnpay-return'
     },
 
     OWNER: {

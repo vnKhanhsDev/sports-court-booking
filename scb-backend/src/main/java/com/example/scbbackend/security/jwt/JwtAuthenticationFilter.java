@@ -32,7 +32,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/auth/**",
             "/api/v1/public/**",
-            "/api/v1/media/**"
+            "/api/v1/media/**",
+            "/api/v1/payment/**"
     };
 
     @Override
@@ -46,7 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Skip public endpoints
         for (String path : PUBLIC_ENDPOINTS) {
-            if (requestURI.contains(path)) {
+            // Remove wildcard and check if request URI starts with the path
+            String pathPattern = path.replace("/**", "");
+            if (requestURI.startsWith(pathPattern)) {
                 filterChain.doFilter(request, response);
                 return;
             }

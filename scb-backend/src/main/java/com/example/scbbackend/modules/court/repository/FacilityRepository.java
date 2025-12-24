@@ -2,8 +2,7 @@ package com.example.scbbackend.modules.court.repository;
 
 import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryResponse;
-import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponse;
-import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponseWithoutImages;
+import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.entity.Facility;
 import com.example.scbbackend.modules.court.enums.CourtStatus;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
@@ -61,11 +60,11 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
     List<AdminFacilitySummaryResponse> findAllAdminFacilities();
 
     @Query("""
-        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityResponseWithoutImages(
+        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilitySummaryResponse(
             f.id,
-            activeSport.id,
             f.name,
-            activeSport.name,
+            ats.id,
+            ats.name,
             CONCAT(
                 COALESCE(d.name, ''),
                 CASE WHEN d.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END,
@@ -73,28 +72,45 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
             ),
             COUNT(DISTINCT c.id),
             MIN(ps.price),
-            MAX(ps.price)
+            MAX(ps.price),
+            NULL
         )
         FROM Facility f
         JOIN f.ownerInfo o
         JOIN o.account a
-        JOIN f.activeSports activeSport
+        JOIN f.activeSports ats
         LEFT JOIN f.province p
         LEFT JOIN f.district d
-        LEFT JOIN Court c ON c.facility = f 
-            AND c.sport = activeSport 
-            AND c.status = :courtStatus
+        LEFT JOIN Court c ON c.facility = f AND c.sport = ats AND c.status = :courtStatus
         LEFT JOIN c.priceList pl
         LEFT JOIN pl.priceSlots ps
         WHERE f.status = :facilityStatus
-        GROUP BY f.id, activeSport.id, f.name, activeSport.name, d.name, p.name
+        GROUP BY f.id, f.name, ats.id, ats.name, d.name, p.name
     """)
-    List<PublicFacilityResponseWithoutImages> findPublicFacilities(
-            @Param("courtStatus") CourtStatus courtStatus,
-            @Param("facilityStatus") FacilityStatus facilityStatus
+    List<PublicFacilitySummaryResponse> findPublicFacilities(
+            @Param("facilityStatus") FacilityStatus facilityStatus,
+            @Param("courtStatus") CourtStatus courtStatus
     );
 
     List<Facility> findByStatus(FacilityStatus status);
 
     Optional<Facility> findByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo);
+
+    /**
+     * Find a public facility by ID with eagerly fetched relationships
+     * Used for public facility detail endpoint
+     */
+    @Query("""
+        SELECT DISTINCT f FROM Facility f
+        LEFT JOIN FETCH f.activeSports
+        LEFT JOIN FETCH f.province
+        LEFT JOIN FETCH f.district
+        LEFT JOIN FETCH f.ward
+        WHERE f.id = :id
+        AND f.status = :status
+    """)
+    Optional<Facility> findPublicFacilityById(
+            @Param("id") Long id,
+            @Param("status") FacilityStatus status
+    );
 }

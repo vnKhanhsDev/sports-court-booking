@@ -14,18 +14,25 @@ export const ENDPOINTS = {
     },
 
     MARKETPLACE: {
-        FACILITIES: '/public/facilities'
+        FACILITIES: '/public/facilities',
+        FACILITY_DETAIL: (facilityId: number | string, sportId: number | string) => 
+            `/public/facilities/${facilityId}?sportId=${sportId}`
     },
 
     PUBLIC: {
         CATALOG: '/public/catalog',
         COURTS: '/public/courts',
         COURT_DETAIL: (id: number | string) => `/public/courts/${id}`,
+        COURT_PRICE: (id: number | string) => `/public/courts/${id}/prices`,
 
         ADDRESS: {
             PROVINCES: '/public/address/provinces',
             DISTRICTS: (provinceCode: string) => `/public/address/districts/${provinceCode}`,
             WARDS: (districtCode: string) => `/public/address/wards/${districtCode}`,
+        },
+
+        BOOKING: {
+            CREATE: '/public/booking',
         }
     },
     OWNER: {
@@ -71,5 +78,11 @@ export const ENDPOINTS = {
         MY_BOOKINGS: '/booking/my-bookings',
         OWNER_BOOKINGS: '/booking/owner-bookings',
         UPDATE_STATUS: (id: string) => `/booking/${id}/status`
+    },
+
+    PAYMENT: {
+        VNPAY: {
+            INIT: '/payment/vnpay/init',
+        }
     }
 } as const;

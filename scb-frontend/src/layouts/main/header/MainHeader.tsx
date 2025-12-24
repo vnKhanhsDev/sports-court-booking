@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Help, Notification } from '@/components/ui/icons';
-import { ShoppingCart } from '@/components/ui/icons';
 import { ROUTES } from '@/constants/route';
 import { USER_ROLES } from '@/constants/role';
 import HeaderUser from '@/layouts/shared/HeaderUser';
@@ -8,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import styles from './MainHeader.module.css';
 import { useCallback } from 'react';
 import CourtSearch from './CourtSearch';
+import Cart from './Cart';
 
 const MainHeader = () => {
     const { accessToken, activeRole, user, switchRole } = useAuth();
@@ -39,16 +39,10 @@ const MainHeader = () => {
                     </ul>
                     <ul className='flex items-center gap-1'>
                         <li className={styles.navbarTop__item}>
-                            <Link to="/">
-                                <Notification />
-                                <span>thông báo</span>
-                            </Link>
+                            <Link to="/"> <Notification /> <span>thông báo</span> </Link>
                         </li>
                         <li className={styles.navbarTop__item}>
-                            <a href="">
-                                <Help />
-                                <span>hỗ trợ</span>
-                            </a>
+                            <a href=""> <Help /> <span>hỗ trợ</span> </a>
                         </li>
                         {showAvatar ? (
                             <li className={styles.navbarTop__item}>
@@ -68,19 +62,15 @@ const MainHeader = () => {
                 </nav>
 
                 <nav className={styles.navbarMain}>
-                    <div className={styles.logoContainer}>
-                        <div className={styles.logo}></div>
-                    </div>
+                    <Link to="/">
+                        <div className={styles.logo}>
+                            <span>SCB</span>
+                        </div>
+                    </Link>
 
-                    <div className={styles.searchContainer}>
-                        <CourtSearch />
-                    </div>
+                    <CourtSearch />
 
-                    <div className={styles.cartContainer}>
-                        <button className={styles.cartButton} type="button" aria-label="Shopping cart">
-                            <ShoppingCart className={styles.cartIcon} />
-                        </button>
-                    </div>
+                    <Cart />
                 </nav>
             </div>
         </header>

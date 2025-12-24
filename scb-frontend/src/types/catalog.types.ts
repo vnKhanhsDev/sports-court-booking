@@ -1,17 +1,16 @@
-export interface SurfaceTypePublicResponse {
+export interface PublicSport {
+    id: number;
+    name: string;
+    courtTypes: PublicCourtType[];
+    surfaceTypes: PublicSurfaceType[];
+}
+
+export interface PublicCourtType {
     id: number;
     name: string;
 }
 
-export interface CourtTypePublicResponse {
+export interface PublicSurfaceType {
     id: number;
     name: string;
 }
-
-export interface SportPublicResponse {
-    id: number;
-    name: string;
-    courtTypes: CourtTypePublicResponse[];
-    surfaceTypes: SurfaceTypePublicResponse[];
-}
-

@@ -1,58 +1,45 @@
 package com.example.scbbackend.modules.booking.dto.request;
 
 import jakarta.validation.constraints.*;
-import lombok.NonNull;
+import lombok.Getter;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.UUID;
 
-public record BookingCreationRequest(
-        @NonNull
-        @NotNull(message = "Court ID is required")
-        Long courtId,
+@Getter
+public class BookingCreationRequest {
 
-        @NonNull
-        @NotNull(message = "Facility ID is required")
-        Long facilityId,
+    private UUID playerId;
 
-        @NonNull
-        @NotBlank(message = "Start time is required")
-        String startTime, // Format: "HH:mm:ss"
+    @NotBlank(message = "customer_name cannot be blank")
+    private String customerName;
 
-        @NonNull
-        @NotBlank(message = "End time is required")
-        String endTime, // Format: "HH:mm:ss"
+    @NotBlank(message = "customer_phone cannot be blank")
+    private String customerPhone;
 
-        @NonNull
-        @NotBlank(message = "Booking date is required")
-        String bookingDate, // Format: "YYYY-MM-DD"
+    @Email(message = "customer_email invalid")
+    @NotBlank(message = "customer_email cannot be blank")
+    private String customerEmail;
 
-        List<Integer> daysOfWeek, // For fixed schedule: [1, 3, 5] for Monday, Wednesday, Friday
+    @NotNull(message = "facility_id cannot be null")
+    private Long facilityId;
 
-        @NonNull
-        @NotBlank(message = "Schedule type is required")
-        String scheduleType, // "oddDays" or "fixedDays"
+    @NotNull(message = "court_id cannot be null")
+    private Long courtId;
 
-        @NonNull
-        @NotBlank(message = "Customer name is required")
-        String customerName,
+    @NotNull(message = "booking_date cannot be null")
+    private LocalDate bookingDate;
 
-        @NonNull
-        @NotBlank(message = "Customer phone is required")
-        String customerPhone,
+    @NotNull(message = "start_time cannot be null")
+    private LocalTime startTime;
 
-        @NonNull
-        @NotBlank(message = "Customer email is required")
-        @Email(message = "Invalid email format")
-        String customerEmail,
+    @NotNull(message = "end_time cannot be null")
+    private LocalTime endTime;
 
-        String notes,
+    private String note;
 
-        @NonNull
-        @NotNull(message = "Total price is required")
-        @Positive(message = "Total price must be positive")
-        Double totalPrice,
+    @NotBlank(message = "payment_method cannot be blank")
+    private String paymentMethod;
 
-        @NonNull
-        @NotBlank(message = "Payment method is required")
-        String paymentMethod // "banking", "momo", "vnpay", "cash"
-) {}
+}

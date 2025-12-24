@@ -1,0 +1,177 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 12px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.backButton {
+    border: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backButton:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-primary);
+    transform: translateY(-1px);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.sectionTitle {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.summaryItem {
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+}
+
+.label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.valueHighlight {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-primary, #2563eb);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.primaryButton,
+.secondaryButton {
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.primaryButton {
+    background: var(--color-primary, #2563eb);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.primaryButton:hover {
+    background: var(--color-primary-dark, #1d4ed8);
+    transform: translateY(-1px);
+}
+
+.primaryButton:disabled {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.secondaryButton {
+    border: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.secondaryButton:hover {
+    border-color: var(--border-medium);
+    background: var(--bg-primary);
+}
+
+.empty {
+    padding: 32px;
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .backButton {
+        align-self: flex-start;
+    }
+}
+
+

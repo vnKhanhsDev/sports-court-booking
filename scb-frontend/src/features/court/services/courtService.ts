@@ -127,4 +127,16 @@ export const publicCourtService = {
         const response = await publicClient.get<ApiResponse<PublicCourtDetail>>(url);
         return response.data.data!;
     },
+
+    /**
+     * Get court price slots by court ID
+     * @param id - Court ID
+     * @returns Price slots for the court
+     */
+    getPublicCourtPrice: async (id: number | string): Promise<PriceSlot[]> => {
+        const response = await publicClient.get<ApiResponse<{ slots: PriceSlot[] }>>(
+            ENDPOINTS.PUBLIC.COURT_PRICE(id)
+        );
+        return response.data.data?.slots || [];
+    },
 };

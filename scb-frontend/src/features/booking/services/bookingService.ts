@@ -1,29 +1,29 @@
-import { privateClient } from "@/lib/axios";
+import { publicClient } from "@/lib/axios";
 import { ENDPOINTS } from "@/constants/endpoint";
-import type { BookingRequest, BookingResponse, PlayerBookingResponse, OwnerBookingResponse } from "../types/booking.types";
+import type { BookingRequest, BookingResponse, PlayerBookingResponse } from "../types/booking.types";
 import type { ApiResponse } from "@/lib/axios";
 
 export const bookingService = {
     createBooking: async (data: BookingRequest): Promise<BookingResponse> => {
-        const response = await privateClient.post<ApiResponse<BookingResponse>>(ENDPOINTS.BOOKING.CREATE, data);
-        return response.data.data!;
-    },
-    
-    getMyBookings: async (): Promise<PlayerBookingResponse[]> => {
-        const response = await privateClient.get<ApiResponse<PlayerBookingResponse[]>>(ENDPOINTS.BOOKING.MY_BOOKINGS);
-        return response.data.data || [];
-    },
-    
-    getOwnerBookings: async (): Promise<OwnerBookingResponse[]> => {
-        const response = await privateClient.get<ApiResponse<OwnerBookingResponse[]>>(ENDPOINTS.BOOKING.OWNER_BOOKINGS);
-        return response.data.data || [];
-    },
-    
-    updateBookingStatus: async (bookingId: string, status: string): Promise<OwnerBookingResponse> => {
-        const response = await privateClient.put<ApiResponse<OwnerBookingResponse>>(
-            ENDPOINTS.BOOKING.UPDATE_STATUS(bookingId),
-            { status }
+        const response = await publicClient.post<ApiResponse<BookingResponse>>(
+            ENDPOINTS.PUBLIC.BOOKING.CREATE,
+            data
         );
-        return response.data.data!;
+        
+        // Check if the response indicates an error
+        if (!response.data.success || !response.data.data) {
+            const errorMessage = response.data.message || "Đặt sân thất bại. Vui lòng thử lại.";
+            throw new Error(errorMessage);
+        }
+        
+        return response.data.data;
+    },
+
+    getMyBookings: async (): Promise<PlayerBookingResponse[]> => {
+        const response = await publicClient.get<ApiResponse<PlayerBookingResponse[]>>(
+            ENDPOINTS.BOOKING.MY_BOOKINGS
+        );
+        return response.data.data || [];
     },
 };
+

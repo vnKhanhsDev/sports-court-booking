@@ -2,18 +2,16 @@
  * Booking Request - data sent to backend for creating a booking
  */
 export interface BookingRequest {
-    courtId: number;
-    facilityId: number;
-    startTime: string; // LocalTime format: "HH:mm:ss"
-    endTime: string; // LocalTime format: "HH:mm:ss"
-    bookingDate: string; // LocalDate format: "YYYY-MM-DD"
-    daysOfWeek?: number[]; // For fixed schedule: [1, 3, 5] for Monday, Wednesday, Friday
-    scheduleType: "oddDays" | "fixedDays";
+    playerId?: string; // Optional - if not provided, it's a guest booking
     customerName: string;
     customerPhone: string;
     customerEmail: string;
-    notes?: string;
-    totalPrice: number;
+    facilityId: number;
+    courtId: number;
+    bookingDate: string; // LocalDate format: "YYYY-MM-DD"
+    startTime: string; // LocalTime format: "HH:mm:ss"
+    endTime: string; // LocalTime format: "HH:mm:ss"
+    note?: string;
     paymentMethod: "banking" | "momo" | "vnpay" | "cash";
 }
 
@@ -74,3 +72,4 @@ export interface OwnerBookingResponse {
  * Booking Status
  */
 export type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELLED" | "COMPLETED" | "NO_SHOW" | "EXPIRED";
+

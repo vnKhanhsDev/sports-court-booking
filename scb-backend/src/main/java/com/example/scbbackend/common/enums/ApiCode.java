@@ -55,7 +55,9 @@ public enum ApiCode {
     GET_BOOKINGS_SUCCESS(2035, "Get bookings successfully", HttpStatus.OK),
 
     GET_ALL_PUBLIC_FACILITIES_SUCCESS(2036, "Get all public facilities successfully", HttpStatus.OK),
-
+    GET_ALL_NEARBY_FACILITIES_SUCCESS(2037, "Get all nearby facilities successfully", HttpStatus.OK),
+    GET_PUBLIC_FACILITY_DETAIL_SUCCESS(2037, "Get public facility detail successfully", HttpStatus.OK),
+    INIT_PAYMENT_SUCCESS(2038, "Initialize payment successfully", HttpStatus.OK),
 
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
@@ -94,9 +96,13 @@ public enum ApiCode {
     PRICE_LIST_NOT_FOUND(10018, "Price list not found", HttpStatus.NOT_FOUND),
     PRICE_LIST_IN_USE(10019, "Price list in use", HttpStatus.BAD_REQUEST),
     BOOKING_NOT_FOUND(10022, "Booking not found", HttpStatus.NOT_FOUND),
-    UPDATE_BOOKING_SUCCESS(2036, "Update booking successfully", HttpStatus.OK),
+    UPDATE_BOOKING_SUCCESS(2039, "Update booking successfully", HttpStatus.OK),
+    BOOKING_CONFLICT(2040, "Booking conflict", HttpStatus.BAD_REQUEST),
+    PLAYER_NOT_FOUND(2041, "Player not found", HttpStatus.NOT_FOUND),
+    PAYMENT_INIT_FAILED(2042, "Payment initialization failed", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /* SYSTEM ERRORS */
+    INTERNAL_SERVER_ERROR(5000, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
 
     ;
 
