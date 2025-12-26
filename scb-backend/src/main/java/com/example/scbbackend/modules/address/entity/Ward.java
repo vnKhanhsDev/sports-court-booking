@@ -9,19 +9,25 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "wards")
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ward {
     @Id
+    @Column(unique = true, nullable = false)
     private String code;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
+    @Column(name = "code_name", nullable = false)
     private String codeName;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "district_code")
-    private District district;
+    @JoinColumn(name = "province_code")
+    private Province province;
 }

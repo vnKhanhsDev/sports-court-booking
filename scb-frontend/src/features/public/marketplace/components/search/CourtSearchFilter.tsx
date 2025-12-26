@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
-import useCatalog from "@/hooks/useCatalog";
 import useAddress from "@/hooks/useAddress";
 import styles from "./CourtSearchFilter.module.css";
+import usePublicCatalog from "@/hooks/usePublicCatalog";
 
 interface CourtSearchFilterProps {
     onFilterChange?: (filters: FilterState) => void;
@@ -17,7 +17,7 @@ export interface FilterState {
 }
 
 export default function CourtSearchFilter({ onFilterChange }: CourtSearchFilterProps) {
-    const { catalog, isLoading: catalogLoading } = useCatalog();
+    const { catalog, catalogLoading } = usePublicCatalog();
     const { provinces, districts, wards, isLoading: addressLoading, loadDistricts, loadWards } = useAddress();
 
     const [selectedSportId, setSelectedSportId] = useState<string>("");
@@ -30,18 +30,18 @@ export default function CourtSearchFilter({ onFilterChange }: CourtSearchFilterP
     // Get selected sport object
     const selectedSport = useMemo(() => {
         if (!selectedSportId) return null;
-        return catalog.find(sport => sport.id === Number(selectedSportId)) || null;
+        return catalog?.find(sport => sport.id === Number(selectedSportId)) || null;
     }, [catalog, selectedSportId]);
 
     // Get available court types and surface types based on selected sport
     const availableCourtTypes = useMemo(() => {
         if (!selectedSport) return [];
-        return selectedSport.courtTypes;
+        return selectedSport.courtTypes || [];
     }, [selectedSport]);
 
     const availableSurfaceTypes = useMemo(() => {
         if (!selectedSport) return [];
-        return selectedSport.surfaceTypes;
+        return selectedSport.surfaceTypes || [];
     }, [selectedSport]);
 
     // Load districts when province changes
@@ -73,12 +73,12 @@ export default function CourtSearchFilter({ onFilterChange }: CourtSearchFilterP
             setSelectedSurfaceTypeId("");
         } else {
             // Check if current selections are still valid for the new sport
-            const sport = catalog.find(s => s.id === Number(selectedSportId));
+            const sport = catalog?.find(s => s.id === Number(selectedSportId));
             if (sport) {
-                if (selectedCourtTypeId && !sport.courtTypes.some(ct => ct.id === Number(selectedCourtTypeId))) {
+                if (selectedCourtTypeId && !sport.courtTypes?.some(ct => ct.id === Number(selectedCourtTypeId))) {
                     setSelectedCourtTypeId("");
                 }
-                if (selectedSurfaceTypeId && !sport.surfaceTypes.some(st => st.id === Number(selectedSurfaceTypeId))) {
+                if (selectedSurfaceTypeId && !sport.surfaceTypes?.some(st => st.id === Number(selectedSurfaceTypeId))) {
                     setSelectedSurfaceTypeId("");
                 }
             }
@@ -145,7 +145,7 @@ export default function CourtSearchFilter({ onFilterChange }: CourtSearchFilterP
                             {catalogLoading ? (
                                 <option disabled>Đang tải...</option>
                             ) : (
-                                catalog.map(sport => (
+                                catalog?.map(sport => (
                                     <option key={sport.id} value={sport.id}>
                                         {sport.name}
                                     </option>

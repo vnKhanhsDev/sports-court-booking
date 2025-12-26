@@ -14,7 +14,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -23,17 +25,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MockDataConfig implements ApplicationRunner {
 
-    @Value("${app.mock-data.enabled:false}")
+    @Value("${app.mock-data.enabled}")
     private boolean enabled;
 
     private final UserMockData userMockData;
-    private final FacilityMockData facilityMockData;
     private final PriceMockData priceMockData;
     private final CourtMockData courtMockData;
 
     private final OwnerInfoRepository ownerInfoRepository;
 
     @Override
+    @Transactional
     public void run(@NonNull ApplicationArguments args) throws Exception {
 
         if (!enabled) {
@@ -48,11 +50,12 @@ public class MockDataConfig implements ApplicationRunner {
         OwnerInfo ownerInfo = ownerInfoRepository.findByAccountUsername("chusan1")
                         .orElseThrow(() -> new AppException(ApiCode.USER_NOT_FOUND));
 
-        List<Facility> facilities = facilityMockData.mock(ownerInfo);
+        List<PriceList> priceLists = priceMockData.mock(ownerInfo);
+        PriceList firstPriceList = priceLists.isEmpty() ? null : priceLists.getFirst();
 
-        List<PriceList> priceLists = priceMockData.mock(ownerInfo, facilities);
+        if (firstPriceList == null) return;
 
-        courtMockData.mock(facilities, priceLists);
+        courtMockData.mock(ownerInfo, firstPriceList);
 
         log.info(">>> MOCK DATA CONFIG SUCCESS <<<");
     }

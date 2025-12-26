@@ -30,16 +30,15 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
             f.openingTime,
             f.closingTime,
             f.status,
-            CONCAT(f.addressDetail, ', ', w.name, ', ', d.name, ', ', p.name) ,
+            CONCAT(f.addressDetail, ', ', w.name, ', ', p.name) ,
             COUNT(c)
         )
         FROM Facility f
         LEFT JOIN f.courts c
         LEFT JOIN f.province p
-        LEFT JOIN f.district d
         LEFT JOIN f.ward w
         WHERE f.ownerInfo = :ownerInfo
-        GROUP BY f.id, f.name, f.openingTime, f.closingTime, f.status, f.addressDetail, w.name, d.name, p.name
+        GROUP BY f.id, f.name, f.openingTime, f.closingTime, f.status, f.addressDetail, w.name, p.name
     """)
     List<OwnerFacilitySummaryResponse> findSummaryByOwnerInfo(@Param("ownerInfo") OwnerInfo ownerInfo);
 
@@ -65,11 +64,7 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
             f.name,
             ats.id,
             ats.name,
-            CONCAT(
-                COALESCE(d.name, ''),
-                CASE WHEN d.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END,
-                COALESCE(p.name, '')
-            ),
+            CONCAT(COALESCE(f.addressDetail, ''), CASE WHEN f.addressDetail IS NOT NULL THEN ', ' ELSE '' END, COALESCE(w.name, ''), CASE WHEN w.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END, COALESCE(p.name, '')),
             COUNT(DISTINCT c.id),
             MIN(ps.price),
             MAX(ps.price),
@@ -80,16 +75,47 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
         JOIN o.account a
         JOIN f.activeSports ats
         LEFT JOIN f.province p
-        LEFT JOIN f.district d
+        LEFT JOIN f.ward w
         LEFT JOIN Court c ON c.facility = f AND c.sport = ats AND c.status = :courtStatus
         LEFT JOIN c.priceList pl
         LEFT JOIN pl.priceSlots ps
         WHERE f.status = :facilityStatus
-        GROUP BY f.id, f.name, ats.id, ats.name, d.name, p.name
+        GROUP BY f.id, f.name, ats.id, ats.name, f.addressDetail, w.name, p.name
     """)
     List<PublicFacilitySummaryResponse> findPublicFacilities(
             @Param("facilityStatus") FacilityStatus facilityStatus,
             @Param("courtStatus") CourtStatus courtStatus
+    );
+
+    @Query("""
+        SELECT new com.example.scbbackend.modules.court.dto.response.pub.PublicFacilitySummaryResponse(
+            f.id,
+            f.name,
+            ats.id,
+            ats.name,
+            CONCAT(COALESCE(f.addressDetail, ''), CASE WHEN f.addressDetail IS NOT NULL THEN ', ' ELSE '' END, COALESCE(w.name, ''), CASE WHEN w.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END, COALESCE(p.name, '')),
+            COUNT(DISTINCT c.id),
+            MIN(ps.price),
+            MAX(ps.price),
+            NULL
+        )
+        FROM Facility f
+        JOIN f.ownerInfo o
+        JOIN o.account a
+        JOIN f.activeSports ats
+        LEFT JOIN f.province p
+        LEFT JOIN f.ward w
+        LEFT JOIN Court c ON c.facility = f AND c.sport = ats AND c.status = :courtStatus
+        LEFT JOIN c.priceList pl
+        LEFT JOIN pl.priceSlots ps
+        WHERE f.status = :facilityStatus
+        AND ats.id = :sportId
+        GROUP BY f.id, f.name, ats.id, ats.name, f.addressDetail, w.name, p.name
+    """)
+    List<PublicFacilitySummaryResponse> findPublicFacilitiesBySportId(
+            @Param("facilityStatus") FacilityStatus facilityStatus,
+            @Param("courtStatus") CourtStatus courtStatus,
+            @Param("sportId") Long sportId
     );
 
     List<Facility> findByStatus(FacilityStatus status);
@@ -104,7 +130,6 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
         SELECT DISTINCT f FROM Facility f
         LEFT JOIN FETCH f.activeSports
         LEFT JOIN FETCH f.province
-        LEFT JOIN FETCH f.district
         LEFT JOIN FETCH f.ward
         WHERE f.id = :id
         AND f.status = :status

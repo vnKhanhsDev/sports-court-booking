@@ -29,6 +29,16 @@ public class PublicFacilityController {
         );
     }
 
+    @GetMapping("/featured")
+    public ApiResponse<List<PublicFacilitySummaryResponse>> getFeaturedFacilities(
+            @RequestParam Long sportId
+    ) {
+        return ApiResponse.success(
+                ApiCode.GET_ALL_PUBLIC_FACILITIES_SUCCESS,
+                facilityService.getFeaturedFacilitiesBySportId(sportId)
+        );
+    }
+
     @GetMapping("/nearby")
     public ApiResponse<List<PublicFacilitySummaryResponse>> getAllNearbyFacilities(
             @RequestParam Double geoLatitude, @RequestParam Double geoLongitude

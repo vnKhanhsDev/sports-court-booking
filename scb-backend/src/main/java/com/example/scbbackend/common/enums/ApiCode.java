@@ -59,6 +59,9 @@ public enum ApiCode {
     GET_PUBLIC_FACILITY_DETAIL_SUCCESS(2037, "Get public facility detail successfully", HttpStatus.OK),
     INIT_PAYMENT_SUCCESS(2038, "Initialize payment successfully", HttpStatus.OK),
 
+    GET_SPORT_CATALOG_SUCCESS(2039, "Get sport catalog successfully", HttpStatus.OK),
+    GET_ALL_CATALOG_SUCCESS(2040, "Get all catalog successfully", HttpStatus.OK),
+
     /* BUSINESS ERRORS */
     INPUT_INVALID(1000, "Input invalid", HttpStatus.BAD_REQUEST),
     GENDER_INVALID(1000, "Gender invalid", HttpStatus.BAD_REQUEST),

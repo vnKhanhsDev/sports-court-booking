@@ -62,7 +62,6 @@ public class FacilityService {
                         .openingTime(request.openingTime())
                         .closingTime(request.closingTime())
                         .province(addressService.findProvinceByCode(request.provinceCode()))
-                        .district(addressService.findDistrictByCode(request.districtCode()))
                         .ward(addressService.findWardByCode(request.wardCode()))
                         .addressDetail(request.addressDetail())
                         .geoLatitude(request.geoLatitude())
@@ -83,7 +82,6 @@ public class FacilityService {
                 facility.getOpeningTime(),
                 facility.getClosingTime(),
                 facility.getProvince() != null ? facility.getProvince().getCode() : null,
-                facility.getDistrict() != null ? facility.getDistrict().getCode() : null,
                 facility.getWard() != null ? facility.getWard().getCode() : null,
                 facility.getAddressDetail(),
                 facility.getGeoLatitude(),
@@ -101,7 +99,6 @@ public class FacilityService {
         facility.setOpeningTime(request.openingTime());
         facility.setClosingTime(request.closingTime());
         facility.setProvince(addressService.findProvinceByCode(request.provinceCode()));
-        facility.setDistrict(addressService.findDistrictByCode(request.districtCode()));
         facility.setWard(addressService.findWardByCode(request.wardCode()));
         facility.setAddressDetail(request.addressDetail());
         facility.setGeoLatitude(request.geoLatitude());
@@ -237,6 +234,59 @@ public class FacilityService {
     public List<PublicFacilitySummaryResponse> getAllPublicFacilities() {
         List<PublicFacilitySummaryResponse> facilities =
                 facilityRepository.findPublicFacilities(FacilityStatus.APPROVED, CourtStatus.ACTIVE);
+
+        List<Long> facilityIds = facilities.stream()
+                .map(PublicFacilitySummaryResponse::facilityId)
+                .distinct()
+                .toList();
+
+        List<DisplayFacilityImages> images = courtImageRepository.findDisplayFacilityImages(facilityIds);
+
+        Map<FacilitySportKey, List<String>> imageMap =
+                images.stream()
+                        .collect(Collectors.groupingBy(
+                                DisplayFacilityImages::key,
+                                Collectors.mapping(
+                                        DisplayFacilityImages::imageUrl,
+                                        Collectors.toList()
+                                )
+                        ));
+
+        return facilities.stream()
+                .map(f -> new PublicFacilitySummaryResponse(
+                        f.facilityId(),
+                        f.facilityName(),
+                        f.sportId(),
+                        f.sportName(),
+                        f.address(),
+                        f.totalCourts(),
+                        f.minPrice(),
+                        f.maxPrice(),
+                        imageMap.getOrDefault(
+                                new FacilitySportKey(f.facilityId(), f.sportId()),
+                                List.of()
+                        )
+                ))
+                .toList();
+    }
+
+    /**
+     * PUBLIC: GET FEATURED FACILITIES BY SPORT ID
+     * Returns up to 6 APPROVED facilities for a specific sport with their active courts information
+     * */
+    @Transactional(readOnly = true)
+    public List<PublicFacilitySummaryResponse> getFeaturedFacilitiesBySportId(Long sportId) {
+        List<PublicFacilitySummaryResponse> facilities =
+                facilityRepository.findPublicFacilitiesBySportId(
+                        FacilityStatus.APPROVED,
+                        CourtStatus.ACTIVE,
+                        sportId
+                );
+
+        // Limit to 6 facilities
+        facilities = facilities.stream()
+                .limit(6)
+                .toList();
 
         List<Long> facilityIds = facilities.stream()
                 .map(PublicFacilitySummaryResponse::facilityId)

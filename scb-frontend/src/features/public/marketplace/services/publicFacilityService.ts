@@ -5,9 +5,16 @@ import type { ApiResponse } from "@/lib/axios";
 
 export const publicFacilityService = {
 
+    getFeaturedPublicFacilities: async (sportId: number): Promise<PublicFacilitySummary[]> => {
+        const response = await publicClient.get<ApiResponse<PublicFacilitySummary[]>>(
+            ENDPOINTS.PUBLIC.FACILITIES.FEATURED(sportId)
+        );
+        return response.data.data || [];
+    },
+
     getAllPublicFacilities: async (): Promise<PublicFacilitySummary[]> => {
         const response = await publicClient.get<ApiResponse<PublicFacilitySummary[]>>(
-            ENDPOINTS.MARKETPLACE.FACILITIES
+            ENDPOINTS.PUBLIC.FACILITIES.ROOT
         );
         return response.data.data || [];
     },

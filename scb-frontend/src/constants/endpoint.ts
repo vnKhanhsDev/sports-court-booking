@@ -20,7 +20,26 @@ export const ENDPOINTS = {
     },
 
     PUBLIC: {
-        CATALOG: '/public/catalog',
+        FACILITIES: {
+            ROOT: '/public/facilities',
+
+            NEARBY: (latitude: number, longitude: number) => 
+                `/public/facilities/nearby?latitude=${latitude}&longitude=${longitude}`,
+            
+            FEATURED: (sportId: number) => 
+                `/public/facilities/featured?sportId=${sportId}`,
+            
+            DETAIL: (facilityId: number | string, sportId: number | string) =>
+                `/public/facilities/detail?facilityId=${facilityId}&sportId=${sportId}`
+        },
+
+
+        CATALOG: {
+            ROOT: '/public/catalog',
+            SPORTS: '/public/catalog/sports',
+        },
+
+
         COURTS: '/public/courts',
         COURT_DETAIL: (id: number | string) => `/public/courts/${id}`,
         COURT_PRICE: (id: number | string) => `/public/courts/${id}/prices`,
@@ -35,6 +54,7 @@ export const ENDPOINTS = {
             CREATE: '/public/booking',
         }
     },
+
     OWNER: {
         FACILITIES: {
             ROOT: '/owner/facilities',

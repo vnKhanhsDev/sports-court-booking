@@ -1,6 +1,5 @@
 package com.example.scbbackend.modules.court.entity;
 
-import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
 import com.example.scbbackend.modules.address.entity.Ward;
 import com.example.scbbackend.modules.catalog.entity.Sport;
@@ -47,10 +46,6 @@ public class Facility {
     private Province province;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "district_code")
-    private District district;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ward_code")
     private Ward ward;
 
@@ -95,7 +90,6 @@ public class Facility {
         StringBuilder sb = new StringBuilder();
         if (addressDetail != null) sb.append(addressDetail);
         if (ward != null) sb.append(", ").append(ward.getName());
-        if (district != null) sb.append(", ").append(district.getName());
         if (province != null) sb.append(", ").append(province.getName());
         return sb.toString();
     }

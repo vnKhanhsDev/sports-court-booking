@@ -9,7 +9,7 @@ import CourtAttributeSection, {
     type CourtAttributeValues,
 } from "../../components/form/CourtAttributeSection/CourtAttributeSection";
 import useFacility from "../../hooks/useFacility";
-import useCatalog from "@/hooks/useCatalog";
+import useCatalog from "@/hooks/usePublicCatalog";
 import type { PriceSlot } from "../../types/price.types";
 
 export interface PriceListFormValues {

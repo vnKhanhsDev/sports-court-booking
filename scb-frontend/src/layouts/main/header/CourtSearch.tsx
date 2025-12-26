@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { catalogService } from '@/services/catalogService';
+import { publicCatalogService } from '@/services/publicCatalogService';
 import type { PublicSport } from '@/types/catalog.types';
 import { fetchProvinces, fetchDistrictsByProvinceCode } from '@/services/address.service';
 import type { Province, District } from '@/types/address.types';
-import { Search } from '@/components/ui/icons';
 import styles from './CourtSearch.module.css';
 
 const CourtSearch = () => {
@@ -15,7 +14,7 @@ const CourtSearch = () => {
 
     const { data: catalog = [], isLoading: catalogLoading } = useQuery<PublicSport[]>({
         queryKey: ['catalog'],
-        queryFn: () => catalogService.getPublicCatalog(),
+        queryFn: () => publicCatalogService.getSportCatalog(),
         staleTime: 1000 * 60 * 5, // cache for 5 minutes
     });
 
@@ -137,7 +136,7 @@ const CourtSearch = () => {
 
             {/* Search Button */}
             <button className={styles.searchButton} type="button">
-                <Search className={styles.searchIcon} />
+                {/* <Search className={styles.searchIcon} /> */}
             </button>
         </form>
     );

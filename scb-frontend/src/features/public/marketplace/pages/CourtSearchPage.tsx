@@ -7,6 +7,7 @@ import { ROUTES } from "@/constants/route";
 
 export default function CourtSearchPage() {
     const { publicFacilities: facilities, isLoading, error } = usePublicFacility();
+    console.log(facilities);
     const navigate = useNavigate();
 
     const handleFacilityClick = (facilityId: number, sportId: number) => {

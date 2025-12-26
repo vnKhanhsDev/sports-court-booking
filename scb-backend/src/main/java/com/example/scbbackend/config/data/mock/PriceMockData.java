@@ -58,7 +58,7 @@ public class PriceMockData {
             new PriceListData(
                     -1,
                     "football",
-                    "7v7",
+                    "7_a_side",
                     "artificial_grass",
                     "Bảng giá bóng đá_sân 7_nhân tạo",
                     List.of(
@@ -70,7 +70,7 @@ public class PriceMockData {
     );
 
     @Transactional
-    public List<PriceList> mock(OwnerInfo ownerInfo, List<Facility> facilities) {
+    public List<PriceList> mock(OwnerInfo ownerInfo) {
         if (priceListRepository.existsByOwnerInfo(ownerInfo)) {
             log.info("Price list already exists. Skipping...");
             return List.of();
@@ -82,7 +82,7 @@ public class PriceMockData {
         for (PriceListData pld : PRICE_LIST_DATA) {
             PriceList priceList = PriceList.builder()
                     .ownerInfo(ownerInfo)
-                    .facility(pld.facilityIndex() != -1 ? facilities.get(pld.facilityIndex()) : null)
+                    .facility(null)
                     .sport(pld.sportCode().isEmpty() ? null : catalogService.getSportByCode(pld.sportCode()))
                     .courtType(pld.courtTypeCode().isEmpty() || pld.sportCode().isEmpty() 
                             ? null 

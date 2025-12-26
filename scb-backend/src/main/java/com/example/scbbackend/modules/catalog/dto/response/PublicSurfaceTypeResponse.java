@@ -1,6 +1,6 @@
 package com.example.scbbackend.modules.catalog.dto.response;
 
-public record CourtTypePublicResponse(
+public record PublicSurfaceTypeResponse(
         Long id,
         String name
-) { }
+) {}

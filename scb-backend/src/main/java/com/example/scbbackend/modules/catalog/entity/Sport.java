@@ -25,6 +25,12 @@ public class Sport {
     @Column(nullable = false, unique = true, length = 20)
     private String code;
 
+    @Column(name = "icon_url", nullable = false, unique = true)
+    private String iconUrl;
+
+    @Column(name = "image_url", nullable = false, unique = true)
+    private String imageUrl;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

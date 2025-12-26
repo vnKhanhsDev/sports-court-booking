@@ -1,5 +1,4 @@
 import type { PublicFacilitySummary } from "../../types/facility.type";
-import Carousel from "../../../../../components/ui/carousel/Carousel";
 import styles from "./PublicFacilityCard.module.css";
 
 interface PublicFacilityCardProps {
@@ -13,8 +12,6 @@ function formatPrice(price: number | null): string {
 }
 
 function getDisplayName(facilityName: string, sportName: string): string {
-    // Format: "Field + sport name + facility name"
-    // Example: "Phenikaa University Football Field"
     return `Sân ${sportName} ${facilityName}`;
 }
 
@@ -22,7 +19,7 @@ export default function PublicFacilityCard({ facility, onClick }: PublicFacility
     const hasPriceRange = facility.minPrice !== null && facility.maxPrice !== null;
     const isSinglePrice = facility.minPrice !== null && facility.maxPrice !== null && facility.minPrice === facility.maxPrice;
     const displayName = getDisplayName(facility.facilityName, facility.sportName);
-    const hasImages = facility.imageUrls && facility.imageUrls.length > 0;
+    const hasImage = facility.imageUrls && facility.imageUrls.length > 0;
 
     return (
         <div 
@@ -31,29 +28,32 @@ export default function PublicFacilityCard({ facility, onClick }: PublicFacility
             role={onClick ? "button" : undefined}
             tabIndex={onClick ? 0 : undefined}
         >
-            {hasImages && (
-                <div className={styles.imageContainer}>
-                    <Carousel
-                        slides={facility.imageUrls.map((url) => (
-                            <img
-                                key={url}
-                                src={url}
-                                alt={displayName}
-                                className={styles.image}
-                            />
-                        ))}
-                        autoPlay
-                        autoPlayInterval={5000}
-                        showIndicators
-                        showNavigation = {false}
-                        loop
-                    />
-                </div>
-            )}
+            <div className={styles.cardImage}>
+                {!hasImage ? (
+                    <div className={styles.placeholder}>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="0.75"
+                            className={styles.icon}
+                        >
+                            <rect x="2" y="5" width="20" height="14" rx="1" />
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <rect x="2" y="8" width="3" height="8" rx="0.5" />
+                            <rect x="19" y="8" width="3" height="8" rx="0.5" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </div>
+                ) : (
+                    <img src={facility.imageUrls[0]} alt={displayName} className={styles.image} />
+                )}
+            </div>
 
-            <div className={styles.content}>
+            <div className={styles.cardContent}>
                 <div className={styles.header}>
-                    <h3 className={styles.facilityName}>{displayName}</h3>
+                    <span className={styles.sportName}>sân {facility.sportName}</span>
+                    <h3 className={styles.facilityName}>{facility.facilityName}</h3>
                 </div>
 
                 <div className={styles.info}>
@@ -65,7 +65,7 @@ export default function PublicFacilityCard({ facility, onClick }: PublicFacility
                             viewBox="0 0 24 24" 
                             fill="none" 
                             stroke="currentColor" 
-                            strokeWidth="2"
+                            strokeWidth="1.5"
                         >
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
@@ -74,23 +74,23 @@ export default function PublicFacilityCard({ facility, onClick }: PublicFacility
                     </div>
 
                     <div className={styles.infoRow}>
-                        <svg 
-                            className={styles.icon} 
-                            width="14" 
-                            height="14" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2"
+                        <svg
+                            className={styles.icon}
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1"
                         >
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="9" y1="3" x2="9" y2="21"></line>
-                            <line x1="15" y1="3" x2="15" y2="21"></line>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="3" y1="15" x2="21" y2="15"></line>
+                            <rect x="2" y="5" width="20" height="14" rx="1" />
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <rect x="2" y="8" width="3" height="8" rx="0.5" />
+                            <rect x="19" y="8" width="3" height="8" rx="0.5" />
+                            <circle cx="12" cy="12" r="3" />
                         </svg>
                         <span className={styles.statValue}>
-                            {facility.totalCourts} {facility.totalCourts === 1 ? 'sân' : 'sân'}
+                            {facility.totalCourts} sân
                         </span>
                     </div>
                 </div>

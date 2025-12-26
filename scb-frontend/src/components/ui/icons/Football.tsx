@@ -1,0 +1,106 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgFootball = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={props.className}
+    {...props}
+  >
+    <g clipPath="url(#clip0_12811_98680)">
+      <path
+        d="M10 0.625C8.1458 0.625 6.33324 1.17483 4.79153 2.20497C3.24982 3.23511 2.04821 4.69929 1.33863 6.41234C0.629062 8.1254 0.443406 10.0104 0.805142 11.829C1.16688 13.6475 2.05976 15.318 3.37088 16.6291C4.682 17.9402 6.35246 18.8331 8.17103 19.1949C9.9896 19.5566 11.8746 19.3709 13.5877 18.6614C15.3007 17.9518 16.7649 16.7502 17.795 15.2085C18.8252 13.6668 19.375 11.8542 19.375 10C19.375 8.76886 19.1325 7.54977 18.6614 6.41234C18.1902 5.27492 17.4997 4.24142 16.6291 3.37087C15.7586 2.50032 14.7251 1.80977 13.5877 1.33863C12.4502 0.867492 11.2311 0.625 10 0.625V0.625Z"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.41253 13.9617L5.82086 9.04505L10 6.00671L14.1792 9.04505L12.5875 13.9617H7.41253Z"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.5842 1.33411L10 3.74994L6.41583 1.33411"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.1658 19.1233L13.9483 15.485L18.0183 14.86"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19.345 10.7575L16.4891 7.91336L17.1016 3.88086"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 3.75V6.00667"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.1791 9.045L16.4891 7.91333"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M0.655029 10.7575L3.51086 7.91336L2.89836 3.88086"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.8208 9.045L3.5108 7.91333"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.5875 13.9617L13.9484 15.485"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.83419 19.1233L6.05169 15.485L1.98169 14.86"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.41247 13.9617L6.05164 15.485"
+        stroke="currentColor"
+        strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_12811_98680">
+        <rect width={20} height={20} fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+export default SvgFootball;

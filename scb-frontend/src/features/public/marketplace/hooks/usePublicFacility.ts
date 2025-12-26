@@ -3,6 +3,7 @@ import { publicFacilityService } from "../services/publicFacilityService";
 import type { PublicFacilitySummary } from "../types/facility.type";
 
 export default function usePublicFacility() {
+
     const { data, isLoading, error, refetch } = useQuery<PublicFacilitySummary[], Error>({
         queryKey: ['publicFacilities'],
         queryFn: () => publicFacilityService.getAllPublicFacilities(),

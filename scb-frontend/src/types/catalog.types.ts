@@ -1,8 +1,10 @@
 export interface PublicSport {
     id: number;
     name: string;
-    courtTypes: PublicCourtType[];
-    surfaceTypes: PublicSurfaceType[];
+    iconUrl: string;
+    imageUrl: string;
+    courtTypes?: PublicCourtType[];
+    surfaceTypes?: PublicSurfaceType[];
 }
 
 export interface PublicCourtType {
