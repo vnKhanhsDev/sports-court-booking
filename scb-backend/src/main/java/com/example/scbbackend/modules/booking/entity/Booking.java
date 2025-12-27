@@ -9,16 +9,17 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "bookings")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Booking {
 
@@ -27,8 +28,12 @@ public class Booking {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_account_id", nullable = false)
+    @JoinColumn(name = "player_account_id")
     private PlayerInfo playerInfo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_guest_info_id")
+    private BookingGuestInfo bookingGuestInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "facility_id", nullable = false)
@@ -38,6 +43,9 @@ public class Booking {
     @JoinColumn(name = "court_id", nullable = false)
     private Court court;
 
+    @Column(name = "booking_date", nullable = false)
+    private LocalDate bookingDate;
+
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
 
@@ -45,10 +53,10 @@ public class Booking {
     private LocalTime endTime;
 
     @Column(name = "total_price", nullable = false)
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(name = "deposit_amount", nullable = false)
-    private double depositAmount;
+    private BigDecimal depositAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

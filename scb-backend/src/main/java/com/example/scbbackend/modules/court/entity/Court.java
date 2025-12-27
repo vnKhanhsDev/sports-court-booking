@@ -14,10 +14,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "courts")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Court {
     @Id

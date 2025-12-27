@@ -10,12 +10,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "owner_infos")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class OwnerInfo {
+
     @Id
     private UUID id;
 
@@ -43,4 +43,5 @@ public class OwnerInfo {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

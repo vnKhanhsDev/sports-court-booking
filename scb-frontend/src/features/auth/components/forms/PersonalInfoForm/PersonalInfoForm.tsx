@@ -11,8 +11,6 @@ import useForm from "@/hooks/useForm";
 export default function PersonalInfoForm() {
     const { registerOtpVerifiedUser, handlePersonalInfo, isLoading } = useRegisterContext();
 
-    const isFieldDisabled = registerOtpVerifiedUser !== null;
-
     const form = useForm(
         {
             fullName: registerOtpVerifiedUser?.fullName || "",
@@ -39,7 +37,6 @@ export default function PersonalInfoForm() {
                     value={form.data.fullName}
                     onChange={form.handleChange("fullName")}
                     error={form.errors.fullName}
-                    disabled={isFieldDisabled}
                 />
 
                 <RadioGroup

@@ -12,17 +12,49 @@ export const ENDPOINTS = {
         RESEND_OTP: '/auth/resend-otp',
         REFRESH_TOKEN: '/auth/refresh-token'
     },
+
+    MARKETPLACE: {
+        FACILITIES: '/public/facilities',
+        FACILITY_DETAIL: (facilityId: number | string, sportId: number | string) => 
+            `/public/facilities/${facilityId}?sportId=${sportId}`
+    },
+
     PUBLIC: {
-        CATALOG: '/public/catalog',
+        FACILITIES: {
+            ROOT: '/public/facilities',
+
+            NEARBY: (latitude: number, longitude: number) => 
+                `/public/facilities/nearby?latitude=${latitude}&longitude=${longitude}`,
+            
+            FEATURED: (sportId: number) => 
+                `/public/facilities/featured?sportId=${sportId}`,
+            
+            DETAIL: (facilityId: number | string, sportId: number | string) =>
+                `/public/facilities/detail?facilityId=${facilityId}&sportId=${sportId}`
+        },
+
+
+        CATALOG: {
+            ROOT: '/public/catalog',
+            SPORTS: '/public/catalog/sports',
+        },
+
+
         COURTS: '/public/courts',
         COURT_DETAIL: (id: number | string) => `/public/courts/${id}`,
+        COURT_PRICE: (id: number | string) => `/public/courts/${id}/prices`,
 
         ADDRESS: {
             PROVINCES: '/public/address/provinces',
             DISTRICTS: (provinceCode: string) => `/public/address/districts/${provinceCode}`,
             WARDS: (districtCode: string) => `/public/address/wards/${districtCode}`,
+        },
+
+        BOOKING: {
+            CREATE: '/public/booking',
         }
     },
+
     OWNER: {
         FACILITIES: {
             ROOT: '/owner/facilities',
@@ -66,5 +98,11 @@ export const ENDPOINTS = {
         MY_BOOKINGS: '/booking/my-bookings',
         OWNER_BOOKINGS: '/booking/owner-bookings',
         UPDATE_STATUS: (id: string) => `/booking/${id}/status`
+    },
+
+    PAYMENT: {
+        VNPAY: {
+            INIT: '/payment/vnpay/init',
+        }
     }
 } as const;

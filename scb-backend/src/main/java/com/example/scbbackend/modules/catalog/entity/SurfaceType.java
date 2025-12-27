@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "surface_types")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class SurfaceType {
     @Id
@@ -22,6 +21,9 @@ public class SurfaceType {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sport_id", nullable = false)
     private Sport sport;
+
+    @Column(nullable = false, length = 50)
+    private String code;
 
     @Column(nullable = false, length = 150)
     private String name;

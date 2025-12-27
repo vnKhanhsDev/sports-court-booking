@@ -1,8 +1,8 @@
 package com.example.scbbackend.modules.court.entity;
 
-import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
 import com.example.scbbackend.modules.address.entity.Ward;
+import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import jakarta.persistence.*;
@@ -16,10 +16,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "facilities")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Facility {
     @Id
@@ -45,10 +44,6 @@ public class Facility {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "province_code")
     private Province province;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "district_code")
-    private District district;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ward_code")
@@ -78,6 +73,14 @@ public class Facility {
     @OneToMany(mappedBy = "facility", fetch = FetchType.LAZY)
     private Set<Court> courts;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "facility_sports",
+        joinColumns = @JoinColumn(name = "facility_id"),
+        inverseJoinColumns = @JoinColumn(name = "sport_id")
+    )
+    private Set<Sport> activeSports;
+
     @PrePersist
     public void prePersist() {
         this.status = FacilityStatus.PENDING;
@@ -87,7 +90,6 @@ public class Facility {
         StringBuilder sb = new StringBuilder();
         if (addressDetail != null) sb.append(addressDetail);
         if (ward != null) sb.append(", ").append(ward.getName());
-        if (district != null) sb.append(", ").append(district.getName());
         if (province != null) sb.append(", ").append(province.getName());
         return sb.toString();
     }

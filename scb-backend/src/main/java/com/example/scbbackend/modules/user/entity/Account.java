@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "accounts")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class Account implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -32,7 +32,7 @@ public class Account implements UserDetails {
     @Column(nullable = false, unique = true, length = 30)
     private String username;
 
-    @Email(message = "Email invalid")
+    @Email
     @Column(unique = true, length = 100)
     private String email;
 
@@ -48,7 +48,7 @@ public class Account implements UserDetails {
     private boolean phoneVerified = false;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10)
+    @Column(length = 20)
     private AccountStatus status = AccountStatus.ACTIVE;
 
     @CreationTimestamp
@@ -90,4 +90,5 @@ public class Account implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
     }
+
 }

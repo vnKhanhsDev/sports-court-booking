@@ -96,4 +96,30 @@ public interface CourtRepository extends JpaRepository<@NonNull Court, @NonNull 
             @Param("facilityStatus") FacilityStatus facilityStatus
     );
 
+    /**
+     * Find public courts by facility and sport: ACTIVE courts from APPROVED facility
+     * Eagerly fetches related entities needed for public display
+     */
+    @Query("""
+        SELECT DISTINCT c FROM Court c
+        LEFT JOIN FETCH c.facility f
+        LEFT JOIN FETCH c.sport s
+        LEFT JOIN FETCH c.courtType ct
+        LEFT JOIN FETCH c.surfaceType st
+        LEFT JOIN FETCH c.priceList pl
+        LEFT JOIN FETCH pl.priceSlots
+        LEFT JOIN FETCH c.images
+        WHERE f.id = :facilityId
+        AND s.id = :sportId
+        AND c.status = :courtStatus
+        AND f.status = :facilityStatus
+        ORDER BY c.createdAt DESC
+    """)
+    List<Court> findPublicCourtsByFacilityAndSport(
+            @Param("facilityId") Long facilityId,
+            @Param("sportId") Long sportId,
+            @Param("courtStatus") CourtStatus courtStatus,
+            @Param("facilityStatus") FacilityStatus facilityStatus
+    );
+
 }

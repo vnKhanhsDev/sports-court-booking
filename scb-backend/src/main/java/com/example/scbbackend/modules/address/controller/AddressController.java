@@ -2,7 +2,6 @@ package com.example.scbbackend.modules.address.controller;
 
 import com.example.scbbackend.common.dto.ApiResponse;
 import com.example.scbbackend.common.enums.ApiCode;
-import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
 import com.example.scbbackend.modules.address.entity.Ward;
 import com.example.scbbackend.modules.address.service.AddressService;
@@ -29,19 +28,11 @@ public class AddressController {
         );
     }
 
-    @GetMapping("/districts/{provinceCode}")
-    public ApiResponse<List<District>> getAllDistrictsByProvinceCode(@PathVariable String provinceCode) {
-        return ApiResponse.success(
-                ApiCode.GET_DISTRICTS_SUCCESS,
-                addressService.findAllDistrictsByProvinceCode(provinceCode)
-        );
-    }
-
-    @GetMapping("/wards/{districtCode}")
-    public ApiResponse<List<Ward>> getAllWardsByDistrictCode(@PathVariable String districtCode) {
+    @GetMapping("/wards/{provinceCode}")
+    public ApiResponse<List<Ward>> getAllWardsByProvinceCode(@PathVariable String provinceCode) {
         return ApiResponse.success(
                 ApiCode.GET_WARDS_SUCCESS,
-                addressService.findAllWardsByDistrictCode(districtCode)
+                addressService.findAllWardsByProvinceCode(provinceCode)
         );
     }
 

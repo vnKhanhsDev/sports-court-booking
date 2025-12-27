@@ -1,0 +1,351 @@
+.container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    padding: 2rem 0;
+}
+
+.header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.headerContent {
+    flex: 1;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color, #172a53);
+    margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.newBookingButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(90deg, #172a53 0%, #3b82f6 100%);
+    color: white;
+    border-radius: var(--radius-md, 8px);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(23, 42, 83, 0.2);
+}
+
+.newBookingButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 42, 83, 0.3);
+}
+
+.newBookingButton span:first-child {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.filters {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.searchBox {
+    width: 100%;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md, 8px);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--primary-color, #172a53);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.statusFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.filterButton {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e5e7eb;
+    background: white;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filterButton:hover {
+    border-color: var(--primary-color, #172a53);
+    color: var(--primary-color, #172a53);
+}
+
+.filterButtonActive {
+    background: var(--primary-color, #172a53);
+    border-color: var(--primary-color, #172a53);
+    color: white;
+}
+
+.loading,
+.empty,
+.error {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty h3,
+.error h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color, #172a53);
+    margin: 0 0 0.5rem 0;
+}
+
+.empty p,
+.error p {
+    color: #6b7280;
+    margin: 0 0 1.5rem 0;
+}
+
+.emptyButton,
+.loginButton {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(90deg, #172a53 0%, #3b82f6 100%);
+    color: white;
+    border-radius: var(--radius-md, 8px);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.emptyButton:hover,
+.loginButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 42, 83, 0.3);
+}
+
+.bookingsList {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.bookingCard {
+    background: white;
+    border-radius: var(--radius-lg, 12px);
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.bookingCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.bookingHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.bookingInfo {
+    flex: 1;
+}
+
+.courtName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color, #172a53);
+    margin: 0 0 0.25rem 0;
+}
+
+.facilityName {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 0.25rem 0;
+}
+
+.facilityAddress {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.statusBadge {
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-full, 9999px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.statusPending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.statusConfirmed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.statusCancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.statusCompleted {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.statusNoShow {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.statusExpired {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.statusDefault {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.bookingDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: var(--radius-md, 8px);
+}
+
+.detailItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.detailLabel {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.detailValue {
+    font-size: 0.875rem;
+    color: #374151;
+    font-weight: 600;
+    text-align: right;
+}
+
+.bookingActions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.actionButton {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.625rem 1rem;
+    border: 2px solid var(--primary-color, #172a53);
+    background: white;
+    color: var(--primary-color, #172a53);
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.actionButton:hover {
+    background: var(--primary-color, #172a53);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.actionButtonDanger {
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.actionButtonDanger:hover {
+    background: #dc2626;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+    }
+
+    .bookingsList {
+        grid-template-columns: 1fr;
+    }
+
+    .statusFilters {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    .statusFilters::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .statusFilters::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 2px;
+    }
+}
+
+

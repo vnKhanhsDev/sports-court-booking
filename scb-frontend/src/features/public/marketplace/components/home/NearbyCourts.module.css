@@ -1,0 +1,164 @@
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 30px 20px 0;
+    background: var(--bg-primary);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.loading,
+.error,
+.noResults {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+
+.error p,
+.noResults p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+}
+
+.carouselWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.facilitiesList {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    padding: 8px 0;
+}
+
+.facilitiesList::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.facilityItem {
+    flex: 0 0 calc(33.333% - 16px);
+    min-width: 300px;
+    max-width: 350px;
+}
+
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    color: var(--primary-900);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+.navButton:hover {
+    background: var(--bg-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.navButton:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.prevButton {
+    left: -22px;
+}
+
+.nextButton {
+    right: -22px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .facilityItem {
+        flex: 0 0 calc(50% - 12px);
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 16px 0;
+    }
+
+    .title {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+    .facilitiesList {
+        gap: 16px;
+    }
+
+    .facilityItem {
+        flex: 0 0 calc(50% - 8px);
+        min-width: 250px;
+    }
+
+    .navButton {
+        width: 36px;
+        height: 36px;
+    }
+
+    .prevButton {
+        left: -18px;
+    }
+
+    .nextButton {
+        right: -18px;
+    }
+
+    .navButton svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .facilityItem {
+        flex: 0 0 85%;
+        min-width: 240px;
+    }
+
+    .navButton {
+        width: 32px;
+        height: 32px;
+    }
+
+    .prevButton {
+        left: -16px;
+    }
+
+    .nextButton {
+        right: -16px;
+    }
+
+    .navButton svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+

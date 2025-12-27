@@ -1,11 +1,17 @@
 package com.example.scbbackend.modules.user.entity;
 
 import com.example.scbbackend.modules.user.enums.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.UUID;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountRoleId implements Serializable {
-    UUID id;
-    UserRole role;
+
+    private UUID account;
+    private UserRole role;
+
 }

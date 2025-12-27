@@ -6,10 +6,18 @@ import com.example.scbbackend.modules.catalog.entity.SurfaceType;
 import com.example.scbbackend.modules.catalog.repository.CourtTypeRepository;
 import com.example.scbbackend.modules.catalog.repository.SportRepository;
 import com.example.scbbackend.modules.catalog.repository.SurfaceTypeRepository;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -21,49 +29,91 @@ public class CatalogInitialData {
     private final CourtTypeRepository courtTypeRepository;
     private final SurfaceTypeRepository surfaceTypeRepository;
 
+    @Transactional
     public void initialize() {
         if (sportRepository.count() > 0) {
-            log.info("Catalog already exists. Skipping...");
+            log.info("Catalog data already exists. Skipping...");
             return;
         }
 
-        Sport football = createSport("Bóng đá");
-        createCourtTypes(football, List.of("Sân 5", "Sân 7", "Sân 9", "Sân 11"));
-        createSurfaceTypes(football, List.of("Cỏ tự nhiên", "Cỏ nhân tạo"));
+        try {
+            log.info("Catalog initialization started...");
 
-        Sport badminton = createSport("Cầu lông");
-        createCourtTypes(badminton, List.of("Sân đơn/đôi"));
-        createSurfaceTypes(badminton, List.of("Thảm PVC", "Gỗ"));
+            ObjectMapper mapper = new ObjectMapper();
 
-        Sport pickleball = createSport("Pickleball");
-        createCourtTypes(pickleball, List.of("Sân đơn/dôi"));
-        createSurfaceTypes(pickleball, List.of("Acrylic", "Gỗ"));
+            ClassPathResource catalogResource = new ClassPathResource("/data/catalog_initial_data.json");
+            InputStream inputStream = catalogResource.getInputStream();
+
+            List<SportJsonDto> sportJsonDtos = mapper.readValue(inputStream, new TypeReference<>() {});
+
+            List<Sport> sports = new ArrayList<>();
+            List<CourtType> courtTypes = new ArrayList<>();
+            List<SurfaceType> surfaceTypes = new ArrayList<>();
+
+            for (SportJsonDto s : sportJsonDtos) {
+                Sport sport = Sport.builder()
+                        .name(s.getSportName())
+                        .code(s.getSportCode())
+                        .iconUrl(s.getIconUrl())
+                        .imageUrl(s.getImageUrl())
+                        .build();
+                sports.add(sport);
+
+                for (CourtTypeJsonDto ct : s.getCourtTypes()) {
+                    courtTypes.add(
+                            CourtType.builder()
+                                    .sport(sport)
+                                    .name(ct.getCourtTypeName())
+                                    .code(ct.getCourtTypeCode())
+                                    .build()
+                    );
+                }
+
+                for (SurfaceTypeJsonDto st : s.getSurfaceTypes()) {
+                    surfaceTypes.add(
+                            SurfaceType.builder()
+                                    .sport(sport)
+                                    .name(st.getSurfaceTypeName())
+                                    .code(st.getSurfaceTypeCode())
+                                    .build()
+                    );
+                }
+            }
+
+            sportRepository.saveAll(sports);
+            courtTypeRepository.saveAll(courtTypes);
+            surfaceTypeRepository.saveAll(surfaceTypes);
+
+            log.info("Catalog initialization completed successfully.");
+        } catch (Exception e) {
+            log.error("Catalog initialization failed", e);
+            throw new RuntimeException(e);
+        }
     }
 
-    private Sport createSport(String name) {
-        return sportRepository.save(Sport.builder().name(name).build());
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class SportJsonDto {
+        private String sportName;
+        private String sportCode;
+        private String iconUrl;
+        private String imageUrl;
+        private List<CourtTypeJsonDto> courtTypes = new ArrayList<>();
+        private List<SurfaceTypeJsonDto> surfaceTypes = new ArrayList<>();
     }
 
-    private void createCourtTypes(Sport sport, List<String> types) {
-        List<CourtType> courtTypes = types.stream()
-                .map(t -> CourtType.builder()
-                        .sport(sport)
-                        .name(t)
-                        .build()
-                )
-                .toList();
-        courtTypeRepository.saveAll(courtTypes);
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class CourtTypeJsonDto {
+        private String courtTypeName;
+        private String courtTypeCode;
     }
 
-    private void createSurfaceTypes(Sport sport, List<String> types) {
-        List<SurfaceType> surfaceTypes = types.stream()
-                .map(t -> SurfaceType.builder()
-                        .sport(sport)
-                        .name(t)
-                        .build()
-                )
-                .toList();
-        surfaceTypeRepository.saveAll(surfaceTypes);
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    static class SurfaceTypeJsonDto {
+        private String surfaceTypeName;
+        private String surfaceTypeCode;
     }
 
 }

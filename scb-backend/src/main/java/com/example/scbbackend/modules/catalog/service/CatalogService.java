@@ -2,9 +2,9 @@ package com.example.scbbackend.modules.catalog.service;
 
 import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
-import com.example.scbbackend.modules.catalog.dto.response.CourtTypePublicResponse;
-import com.example.scbbackend.modules.catalog.dto.response.SportPublicResponse;
-import com.example.scbbackend.modules.catalog.dto.response.SurfaceTypePublicResponse;
+import com.example.scbbackend.modules.catalog.dto.response.PublicCourtTypeResponse;
+import com.example.scbbackend.modules.catalog.dto.response.PublicSportResponse;
+import com.example.scbbackend.modules.catalog.dto.response.PublicSurfaceTypeResponse;
 import com.example.scbbackend.modules.catalog.entity.CourtType;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.catalog.entity.SurfaceType;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,41 +26,53 @@ public class CatalogService {
     private final SurfaceTypeRepository surfaceTypeRepository;
 
     @Transactional(readOnly = true)
-    public List<SportPublicResponse> getCatalog() {
-        List<Sport> sports = sportRepository.findAll();
-        
-        // Fetch all court types and surface types once
-        var allCourtTypes = courtTypeRepository.findAll();
-        var allSurfaceTypes = surfaceTypeRepository.findAll();
-        
+    public List<PublicSportResponse> getAllPublicCatalog() {
+        var sports = sportRepository.findAll();
+        var courtTypes = courtTypeRepository.findAll();
+        var surfaceTypes = surfaceTypeRepository.findAll();
+
         return sports.stream()
-                .map(sport -> {
-                    // Filter court types for this sport
-                    List<CourtTypePublicResponse> courtTypes = allCourtTypes.stream()
-                            .filter(courtType -> courtType.getSport().getId().equals(sport.getId()))
-                            .map(courtType -> new CourtTypePublicResponse(
-                                    courtType.getId(),
-                                    courtType.getName()
+                .map(s -> {
+                    List<PublicCourtTypeResponse> ctr = courtTypes.stream()
+                            .filter(ct -> ct.getSport().getId().equals(s.getId()))
+                            .map(ct -> new PublicCourtTypeResponse(
+                                    ct.getId(),
+                                    ct.getName()
                             ))
-                            .collect(Collectors.toList());
-                    
-                    // Filter surface types for this sport
-                    List<SurfaceTypePublicResponse> surfaceTypes = allSurfaceTypes.stream()
-                            .filter(surfaceType -> surfaceType.getSport().getId().equals(sport.getId()))
-                            .map(surfaceType -> new SurfaceTypePublicResponse(
-                                    surfaceType.getId(),
-                                    surfaceType.getName()
+                            .toList();
+
+                    List<PublicSurfaceTypeResponse> str = surfaceTypes.stream()
+                            .filter(st -> st.getSport().getId().equals(s.getId()))
+                            .map(st -> new PublicSurfaceTypeResponse(
+                                    st.getId(),
+                                    st.getName()
                             ))
-                            .collect(Collectors.toList());
-                    
-                    return new SportPublicResponse(
-                            sport.getId(),
-                            sport.getName(),
-                            courtTypes,
-                            surfaceTypes
+                            .toList();
+
+                    return new PublicSportResponse(
+                            s.getId(),
+                            s.getName(),
+                            s.getIconUrl(),
+                            s.getImageUrl(),
+                            ctr,
+                            str
                     );
                 })
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<PublicSportResponse> getOnlyPublicSportCatalog() {
+        return sportRepository.findAll().stream()
+                .map(s -> new PublicSportResponse(
+                        s.getId(),
+                        s.getName(),
+                        s.getIconUrl(),
+                        s.getImageUrl(),
+                        null,
+                        null
+                ))
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -72,6 +83,12 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public Sport getSportById(Long id) {
         return sportRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.SPORT_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public Sport getSportByCode(String code) {
+        return sportRepository.findByCode(code)
                 .orElseThrow(() -> new AppException(ApiCode.SPORT_NOT_FOUND));
     }
 
@@ -87,6 +104,19 @@ public class CatalogService {
     }
 
     @Transactional(readOnly = true)
+    public CourtType getCourtTypeByCode(String code) {
+        return courtTypeRepository.findByCode(code)
+                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public CourtType getCourtTypeBySportCodeAndCode(String sportCode, String code) {
+        Sport sport = getSportByCode(sportCode);
+        return courtTypeRepository.findBySportAndCode(sport, code)
+                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public SurfaceType findSurfaceTypeById(Long id) {
         return surfaceTypeRepository.findById(id).orElse(null);
     }
@@ -94,6 +124,19 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public SurfaceType getSurfaceTypeById(Long id) {
         return surfaceTypeRepository.findById(id)
+                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public SurfaceType getSurfaceTypeByCode(String code) {
+        return surfaceTypeRepository.findByCode(code)
+                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
+    public SurfaceType getSurfaceTypeBySportCodeAndCode(String sportCode, String code) {
+        Sport sport = getSportByCode(sportCode);
+        return surfaceTypeRepository.findBySportAndCode(sport, code)
                 .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
     }
 

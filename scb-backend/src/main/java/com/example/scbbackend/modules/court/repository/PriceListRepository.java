@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PriceListRepository extends JpaRepository<@NonNull PriceList, @NonNull Long> {
+
+    boolean existsByOwnerInfo(@NonNull OwnerInfo ownerInfo);
+
     Optional<PriceList> findByIdAndOwnerInfo(@NonNull Long id, @NonNull OwnerInfo ownerInfo);
 
     List<PriceList> findAllByOwnerInfoAndCourtIsNull(@NonNull OwnerInfo ownerInfo);

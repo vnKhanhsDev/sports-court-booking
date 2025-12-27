@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ProvinceRepository extends JpaRepository<@NonNull Province, @NonNull String> {
     Optional<Province> findByCode(@NonNull String provinceCode);
+    Optional<Province> findByCodeName(@NonNull String provinceCodeName);
 }

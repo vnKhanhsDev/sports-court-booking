@@ -37,6 +37,15 @@ cloudinary:
   api-key: 748165771485967
   api-secret: fNfkvYr-w658DE74fGnmaOyK6jQ
 
+payment:
+  vnpay:
+    tmn-code: F7RIVO5D
+    secret-key: SLCVL8MXQB9HTX50E24MFB9SC2HQ6DSB
+    init-payment-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    return-url: http://localhost:8080/api/v1/payment/vnpay/return
+    ipn-url: http://localhost:8080/api/v1/payment/vnpay/ipn
+    timeout: 60  # Increased to 60 minutes to allow sufficient time for payment
+
 app:
   master-data:
     enabled: true

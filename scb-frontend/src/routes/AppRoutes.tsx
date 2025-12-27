@@ -5,21 +5,21 @@ import { ROUTES } from '@constants/route';
 import { RoleBasedGuard } from './RoleBasedGuard';
 import { USER_ROLES } from '@/constants/role';
 
-const HomePage = lazy(() => import('@features/public/home/HomePage'));
-const CourtSearchPage = lazy(() => import('@features/court/public/search/CourtSearchPage'));
-const CourtDetailPage = lazy(() => import('@features/court/public/detail/CourtDetailPage'));
-const CourtBookingPage = lazy(() => import('@features/booking/public/CourtBookingPage'));
-const PlayerBookingPage = lazy(() => import('@features/booking/player/PlayerBookingPage'));
+const HomePage = lazy(() => import('@features/public/marketplace/pages/HomePage'));
+const CourtSearchPage = lazy(() => import('@features/public/marketplace/pages/CourtSearchPage'));
+const CourtDetailPage = lazy(() => import('@features/public/marketplace/pages/CourtDetailPage'));
 
 const RegisterPage = lazy(() => import('@features/auth/pages/RegisterPage'));
 const LoginPage = lazy(() => import('@features/auth/pages/LoginPage'));
 
-const OwnerHomePage = lazy(() => import('@features/owner/home/OwnerHomePage'));
+const BookingCheckoutPage = lazy(() => import('@features/player/booking/pages/BookingCheckoutPage'));
+const MyBookingPage = lazy(() => import('@features/player/booking/pages/MyBookingPage'));
+const VNPayReturnPage = lazy(() => import('@features/payment/pages/VNPayReturnPage'));
+
 const OwnerCourtPage = lazy(() => import('@/features/court/pages/OwnerCourtPage'));
 const PriceListPage = lazy(() => import('@/features/court/pages/PriceListPage'));
-const OwnerBookingPage = lazy(() => import('@features/booking/owner/OwnerBookingPage'));
+const OwnerBookingPage = lazy(() => import('@/features/owner/court-manager/pages/BookingManagementPage'));
 
-const AdminHomePage = lazy(() => import('@features/admin/home/AdminHomePage'));
 const AdminCourtPage = lazy(() => import('@/features/court/pages/AdminCourtPage'));
 
 const AppRoutes = () => {
@@ -28,11 +28,15 @@ const AppRoutes = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route element={<RoleBasedGuard isPublic={true} />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path={ROUTES.PUBLIC.COURTS.SEARCH} element={<CourtSearchPage />} />
-            <Route path={ROUTES.PUBLIC.COURTS.DETAIL} element={<CourtDetailPage />} />
-            <Route path={ROUTES.PUBLIC.COURTS.BOOK} element={<CourtBookingPage />} />
-            <Route path={ROUTES.PUBLIC.RESERVATIONS} element={<PlayerBookingPage />} />
+            <Route path={ROUTES.PUBLIC.MARKETPLACE.HOME} element={<HomePage />} />
+            <Route path={ROUTES.PUBLIC.MARKETPLACE.SEARCH} element={<CourtSearchPage />} />
+            <Route path={ROUTES.PUBLIC.MARKETPLACE.DETAIL} element={<CourtDetailPage />} />
+            <Route path={ROUTES.PAYMENT.VNPAY_RETURN} element={<VNPayReturnPage />} />
+          </Route>
+
+          <Route element={<RoleBasedGuard requiredRole={USER_ROLES.PLAYER} />}>
+            <Route path={ROUTES.PLAYER.BOOKING.CHECKOUT} element={<BookingCheckoutPage />} />
+            <Route path={ROUTES.PLAYER.BOOKING.MY_BOOKINGS} element={<MyBookingPage />} />
           </Route>
         </Route>
 
@@ -43,7 +47,7 @@ const AppRoutes = () => {
 
         <Route element={<RoleBasedGuard requiredRole={USER_ROLES.OWNER} />}>
           <Route element={<DashboardLayout role={USER_ROLES.OWNER} />}>
-            <Route path={ROUTES.OWNER.HOME} element={<OwnerHomePage />} />
+            <Route path={ROUTES.OWNER.HOME} element={<div>Owner Home</div>} />
             <Route path={ROUTES.OWNER.COURT} element={<OwnerCourtPage />} />
             <Route path={ROUTES.OWNER.PRICE_LIST} element={<PriceListPage />} />
             <Route path={ROUTES.OWNER.BOOKING} element={<OwnerBookingPage />} />
@@ -52,7 +56,7 @@ const AppRoutes = () => {
 
         <Route element={<RoleBasedGuard requiredRole={USER_ROLES.ADMIN} />}>
           <Route element={<DashboardLayout role={USER_ROLES.ADMIN} />}>
-            <Route path={ROUTES.ADMIN.HOME} element={<AdminHomePage />} />
+            <Route path={ROUTES.ADMIN.HOME} element={<div>Admin Home</div>} />
             <Route path={ROUTES.ADMIN.COURTS} element={<AdminCourtPage />} />
           </Route>
         </Route>

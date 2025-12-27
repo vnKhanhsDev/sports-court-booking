@@ -10,6 +10,7 @@ import com.example.scbbackend.modules.court.dto.response.OwnerCourtSummaryRespon
 import com.example.scbbackend.modules.court.dto.response.PublicCourtResponse;
 import com.example.scbbackend.modules.court.dto.response.PublicCourtDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.TimeSlotAvailability;
+import com.example.scbbackend.modules.court.dto.response.pub.PublicCourtPriceResponse;
 import com.example.scbbackend.modules.court.dto.shared.CourtImageDto;
 import com.example.scbbackend.modules.court.dto.shared.PriceSlotDto;
 import com.example.scbbackend.modules.court.domain.valueobject.PriceSlotKey;
@@ -283,6 +284,49 @@ public class CourtService {
         return courts.stream()
                 .map(this::mapToPublicCourtResponse)
                 .toList();
+    }
+
+    /**
+     * PUBLIC: GET PUBLIC COURTS BY FACILITY AND SPORT
+     * Returns ACTIVE courts from APPROVED facility filtered by sport
+     */
+    @Transactional(readOnly = true)
+    public List<PublicCourtResponse> getPublicCourtsByFacilityAndSport(Long facilityId, Long sportId) {
+        List<Court> courts = courtRepository.findPublicCourtsByFacilityAndSport(
+                facilityId,
+                sportId,
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        );
+
+        return courts.stream()
+                .map(this::mapToPublicCourtResponse)
+                .toList();
+    }
+
+    /**
+     * PUBLIC: GET COURT PRICE SLOTS BY COURT ID
+     * Returns price slots for an ACTIVE court from an APPROVED facility
+     */
+    @Transactional(readOnly = true)
+    public PublicCourtPriceResponse getPublicCourtPrice(Long courtId) {
+        Court court = courtRepository.findPublicCourtById(
+                courtId,
+                CourtStatus.ACTIVE,
+                FacilityStatus.APPROVED
+        ).orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+
+        List<PriceSlotDto> priceSlots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
+                ? court.getPriceList().getPriceSlots().stream()
+                        .map(s -> new PriceSlotDto(
+                                s.getFromTime(),
+                                s.getToTime(),
+                                s.getPrice()
+                        ))
+                        .toList()
+                : List.of();
+
+        return new PublicCourtPriceResponse(priceSlots);
     }
 
     /**

@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user_profiles")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class UserProfile {
+
     @Id
     private UUID id;
 
@@ -34,7 +34,7 @@ public class UserProfile {
     @Column(length = 10)
     private Gender gender;
 
-    @Past(message = "Birthday invalid")
+    @Past
     private LocalDate dob;
 
     @Column(name = "avatar_url")
@@ -47,4 +47,5 @@ public class UserProfile {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

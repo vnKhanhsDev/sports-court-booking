@@ -9,10 +9,30 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
 public interface BookingRepository extends JpaRepository<@NonNull Booking, @NonNull UUID> {
+
+    @Query("""
+        SELECT COUNT(b) > 0 FROM Booking b
+        WHERE b.court.id = :courtId
+            AND b.bookingDate = :bookingDate
+            AND b.startTime < :endTime
+            AND b.endTime > :startTime
+            AND b.status IN (
+                com.example.scbbackend.modules.booking.enums.BookingStatus.PENDING,
+                com.example.scbbackend.modules.booking.enums.BookingStatus.CONFIRMED
+            )
+    """)
+    boolean existsConflictingBooking(
+            @Param("courtId") Long courtId,
+            @Param("bookingDate") LocalDate bookingDate,
+            @Param("startTime") LocalTime startTime,
+            @Param("endTime") LocalTime endTime
+    );
 
     boolean existsByCourtAndStatusIn(@NonNull Court court, @NonNull List<BookingStatus> statuses);
     

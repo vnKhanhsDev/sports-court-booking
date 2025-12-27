@@ -1,0 +1,147 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg-secondary, #f5f5f5);
+}
+
+.content {
+    background: var(--bg-primary, #ffffff);
+    border-radius: var(--radius-lg, 12px);
+    padding: 48px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+    text-align: center;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--border-light, #e0e0e0);
+    border-top-color: var(--primary-color, #172a53);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading p {
+    color: var(--text-secondary, #666);
+    font-size: 1rem;
+}
+
+.success,
+.failed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.success .icon {
+    background: #d4edda;
+    color: #155724;
+}
+
+.failed .icon {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #000);
+    margin: 0;
+}
+
+.message {
+    color: var(--text-secondary, #666);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.primaryButton,
+.secondaryButton {
+    padding: 12px 24px;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.primaryButton {
+    background: var(--primary-color, #172a53);
+    color: var(--bg-primary, #ffffff);
+}
+
+.primaryButton:hover {
+    background: var(--primary-900, #0f1d3a);
+    transform: translateY(-1px);
+}
+
+.secondaryButton {
+    background: var(--bg-secondary, #f5f5f5);
+    color: var(--text-primary, #000);
+    border: 1px solid var(--border-light, #e0e0e0);
+}
+
+.secondaryButton:hover {
+    background: var(--border-light, #e0e0e0);
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 32px 24px;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        width: 100%;
+    }
+}
+

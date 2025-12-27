@@ -39,8 +39,8 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
 
         const result = await execute(() => authService.checkRegisterAvailability(contact, role));
 
-        if (!result.success) {
-            const errorDetail = getErrorMessage(result.error);
+        if (!result || !result.success) {
+            const errorDetail = getErrorMessage(result?.error);
             setApiErrors({ [errorDetail.field]: errorDetail.message });
             return;
         }
@@ -62,15 +62,16 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
         const result = await execute(() => authService.verifyOtp(data));
         console.log(result);
 
-        if (!result.success) {
-            setApiErrors({ code: getErrorMessage(result.code) });
+        if (!result || !result.success) {
+            setApiErrors({ code: getErrorMessage(result?.code) });
             return;
         }
 
-        setRegisterOtpVerifiedUser(result.data);
+        // result.data can be null for new accounts (no existing user profile)
+        setRegisterOtpVerifiedUser(result.data || null);
 
         setCurrentStepIndex(prev => prev + 1);
-    }, [execute, registerData]);
+    }, [execute]);
 
     /**
      *  Action 3: Resend OTP
@@ -83,8 +84,8 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
         console.log(contact, type);
 
         const result = await execute(() => authService.resendOtp(contact, type));
-        if (!result.success) {
-            setApiErrors({ code: getErrorMessage(result.code) });
+        if (!result || !result.success) {
+            setApiErrors({ code: getErrorMessage(result?.code) });
             return;
         }
     }, [execute]);
@@ -99,9 +100,10 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
     const handlePersonalInfo = useCallback(async (fullName: string, gender: string, dob: string) => {
         setRegisterData(prev => ({ ...prev, fullName, gender, dob }));
 
-        if (registerOtpVerifiedUser !== null) {
+        // Only register new role if user exists and has accountId (existing account adding new role)
+        if (registerOtpVerifiedUser && registerOtpVerifiedUser.accountId && registerData.role) {
             const result = await execute(() => authService.registerNewRole(registerOtpVerifiedUser.accountId, registerData.role as UserRole));
-            if (!result.success) {
+            if (!result || !result.success) {
                 console.log(result);
                 return;
             }
@@ -119,7 +121,7 @@ export const RegisterProvider = ({ children }: { children: React.ReactNode }) =>
         const data = { ...registerData, password };
 
         const result = await execute(() => authService.registerNewAccount(data));
-        if (!result.success) {
+        if (!result || !result.success) {
             console.log(result);
             return;
         }

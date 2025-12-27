@@ -1,0 +1,2763 @@
+[
+    {
+        "facilityName": "Đại học Phenikaa",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "duong_noi",
+        "addressDetail": "Đường Nguyễn Trác",
+        "geoLatitude": 20.96183052837131,
+        "geoLongitude": 105.74904628990392,
+        "activeSports": [
+            "football",
+            "tennis",
+            "basketball",
+            "volleyball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "volleyball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng chuyền 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "volleyball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng chuyền 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đại học Kiểm sát",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "duong_noi",
+        "addressDetail": "230/57/3 Đường Thắng Lợi",
+        "geoLatitude": 20.96868808330302,
+        "geoLongitude": 105.74767468023319,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "La Khê",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Đường Lý Tự Trọng",
+        "geoLatitude": 20.969827339756133,
+        "geoLongitude": 105.76004727254558,
+        "activeSports": [
+            "badminton",
+            "football",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đô Nghĩa",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_nghia",
+        "addressDetail": "Khu đô thị Đô Nghĩa",
+        "geoLatitude": 20.96076666312896,
+        "geoLongitude": 105.73731789651674,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Quốc Việt",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_nghia",
+        "addressDetail": "948, Đường Quang Trung",
+        "geoLatitude": 20.954446925876343,
+        "geoLongitude": 105.75094348087588,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Phú Lãm",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "phu_luong",
+        "addressDetail": "Đường Quang Lãm",
+        "geoLatitude": 20.94496917392934,
+        "geoLongitude": 105.75914482188598,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Bala",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Văn La",
+        "geoLatitude": 20.95466881523203,
+        "geoLongitude": 105.75709846995251,
+        "activeSports": [
+            "badminton",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "TTTT Văn La",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Văn La",
+        "geoLatitude": 20.95502683599372,
+        "geoLongitude": 105.76368272712095,
+        "activeSports": [
+            "football",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Bắc Việt 3",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Bắc Việt",
+        "geoLatitude": 20.95540602596167,
+        "geoLongitude": 105.78055469892399,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đa Sỹ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Đa Sỹ",
+        "geoLatitude": 20.95709800146515,
+        "geoLongitude": 105.78265602800181,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Bình Minh 2",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Bình Minh",
+        "geoLatitude": 20.958562225713184,
+        "geoLongitude": 105.77782352875269,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Minh Phong",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Minh Phong",
+        "geoLatitude": 20.958752250737966,
+        "geoLongitude": 105.77715086376466,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đại học Đại Nam",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "phu_luong",
+        "addressDetail": "Khu đô thị Văn Phú",
+        "geoLatitude": 20.94609773161231,
+        "geoLongitude": 105.75915662433464,
+        "activeSports": [
+            "football",
+            "basketball",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng rổ 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "VHD",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Văn La",
+        "geoLatitude": 20.959008288059156,
+        "geoLongitude": 105.76373487192635,
+        "activeSports": [
+            "volleyball"
+        ],
+        "courts": [
+            {
+                "sportCode": "volleyball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng chuyền 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "volleyball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng chuyền 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "volleyball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng chuyền 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "QVBadminton Usilk",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hà Trì",
+        "geoLatitude": 20.97376444285711,
+        "geoLongitude": 105.76075207735,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Hà Trì",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hà Trì",
+        "geoLatitude": 20.964214514383585,
+        "geoLongitude": 105.78147929557659,
+        "activeSports": [
+            "football",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Cầu Đơ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cầu Đơ",
+        "geoLatitude": 20.968297669572586,
+        "geoLongitude": 105.77668283648563,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Học viện Chính trị",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hà Trì",
+        "geoLatitude": 20.97382154930957,
+        "geoLongitude": 105.7673905374993,
+        "activeSports": [
+            "football",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Văn Phú X7",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "kien_hung",
+        "addressDetail": "Khu đô thị Văn Phú",
+        "geoLatitude": 20.962046491445406,
+        "geoLongitude": 105.7680060312854,
+        "activeSports": [
+            "football",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Bắc Việt 1",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Bắc Việt",
+        "geoLatitude": 20.972854585512255,
+        "geoLongitude": 105.79361117725345,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Zone 9 Văn Quán",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Zone 9",
+        "geoLatitude": 20.97175966952259,
+        "geoLongitude": 105.79319506845397,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Citi Sport Avenue",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "tu_liem",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 21.009266578155575,
+        "geoLongitude": 105.78832799454355,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Thượng Đình",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "khuong_dinh",
+        "addressDetail": "Khu đô thị Thượng Đình",
+        "geoLatitude": 21.00010620365481,
+        "geoLongitude": 105.81701552538145,
+        "activeSports": [
+            "football",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Hải Đăng",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "dai_mo",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 20.994483470843928,
+        "geoLongitude": 105.78810666990047,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "VOV Mễ Trì",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "dai_mo",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 20.996898714560142,
+        "geoLongitude": 105.78501394132422,
+        "activeSports": [
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "360 Club",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "thanh_xuan",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 20.999999367354956,
+        "geoLongitude": 105.79916586109101,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Thái Sơn 1",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_hoa",
+        "addressDetail": "Khu đô thị Trung Kính",
+        "geoLatitude": 21.005194299749732,
+        "geoLongitude": 105.79644949952025,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Thành Phát",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_hoa",
+        "addressDetail": "Khu đô thị Trung Kính",
+        "geoLatitude": 21.00481660722976,
+        "geoLongitude": 105.79606812937544,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Phúc Thanh",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "tu_liem",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 21.010512331931054,
+        "geoLongitude": 105.78448532020758,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Trung Kính Hạ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_hoa",
+        "addressDetail": "Khu đô thị Trung Kính",
+        "geoLatitude": 21.0117077196742,
+        "geoLongitude": 105.79541063461417,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "275 Nguyễn Trãi",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "khuong_dinh",
+        "addressDetail": "Khu đô thị Thượng Đình",
+        "geoLatitude": 20.99295969603266,
+        "geoLongitude": 105.80792793867553,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Nguyên Dương",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "dai_mo",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 20.99810571400885,
+        "geoLongitude": 105.77752917963656,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Trung Hoà",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "yen_hoa",
+        "addressDetail": "Khu đô thị Trung Hoà",
+        "geoLatitude": 21.00567535410109,
+        "geoLongitude": 105.80132374907707,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Hội nghị Quốc gia",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "tu_liem",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 21.008078878381696,
+        "geoLongitude": 105.78510768706909,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Tsumani Bay",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "thanh_xuan",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 20.999798943681725,
+        "geoLongitude": 105.80564633804238,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "TTVHTT Thanh Xuân",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "thanh_xuan",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 21.00151110267345,
+        "geoLongitude": 105.79735868531064,
+        "activeSports": [
+            "football",
+            "basketball",
+            "tennis",
+            "pickleball",
+            "table_tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "table_tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "standard_table",
+                "courtName": "Sân Bóng bàn 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "table_tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "outdoor_table",
+                "courtName": "Sân Bóng bàn 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Game On",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "dai_mo",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 20.99527855921987,
+        "geoLongitude": 105.78913004518074,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Vũ Hữu",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "thanh_xuan",
+        "addressDetail": "Khu đô thị Thanh Xuân",
+        "geoLatitude": 20.99492126368278,
+        "geoLongitude": 105.79542780152003,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Mễ Trì",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 20.99205646630203,
+        "geoLongitude": 105.79701484382713,
+        "activeSports": [
+            "football",
+            "basketball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Hoàng Ngân",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.00881319132121,
+        "geoLongitude": 105.80652784089393,
+        "activeSports": [
+            "football",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Mễ Trì Thượng",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Mễ Trì",
+        "geoLatitude": 21.00310948272693,
+        "geoLongitude": 105.77458283656668,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "12 Khuất Duy Tiến",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Phúc Long",
+        "geoLatitude": 20.994064044305947,
+        "geoLongitude": 105.80468485202168,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "G.S77",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Phúc Long",
+        "geoLatitude": 20.99431746312877,
+        "geoLongitude": 105.80441985048095,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Phúc Long 1",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Phúc Long",
+        "geoLatitude": 20.99931934932721,
+        "geoLongitude": 105.80520239113355,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Cầu lông 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Phúc Long 2",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Phúc Long",
+        "geoLatitude": 21.00331252660328,
+        "geoLongitude": 105.80445392065944,
+        "activeSports": [
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Trung Văn",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Trung Văn",
+        "geoLatitude": 20.991977433877516,
+        "geoLongitude": 105.79124842825983,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Rooftop",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.007560651543443,
+        "geoLongitude": 105.79683996499715,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Hoàng Cầu",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.01526080455139,
+        "geoLongitude": 105.81955640351758,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Pick Dee Club",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.000226317167833,
+        "geoLongitude": 105.7992559382054,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Thăng Long Number 1",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.003027845298984,
+        "geoLongitude": 105.79188112033655,
+        "activeSports": [
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Lê Văn Lương",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Hoàng Cầu",
+        "geoLatitude": 21.000532375964674,
+        "geoLongitude": 105.79793199431644,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Giáp Nhất",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Giáp Nhất",
+        "geoLatitude": 21.004817001797413,
+        "geoLongitude": 105.81423789875336,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "futsal",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Ringo Club",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 20.99743834625243,
+        "geoLongitude": 105.78681877115021,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Joyful Club",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 20.99200074815988,
+        "geoLongitude": 105.78577458681514,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Láng Hạ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 21.014367797003104,
+        "geoLongitude": 105.80791721130376,
+        "activeSports": [
+            "tennis",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "grass",
+                "courtName": "Sân Tennis 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Courtyard Greenbay",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 21.001087830080184,
+        "geoLongitude": 105.78577912131932,
+        "activeSports": [
+            "basketball",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đại học Hà Nội",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 20.989450415356362,
+        "geoLongitude": 105.79587866272499,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Minh Khang",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cảnh Hồ",
+        "geoLatitude": 20.99898542260172,
+        "geoLongitude": 105.80668042306185,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Zone Six7",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cảnh Hồ",
+        "geoLatitude": 21.008602789548355,
+        "geoLongitude": 105.8177206479599,
+        "activeSports": [
+            "basketball"
+        ],
+        "courts": [
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Bóng rổ 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "PickFit",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cảnh Hồ",
+        "geoLatitude": 21.002440025722862,
+        "geoLongitude": 105.80433126800804,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Cảnh Hồ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cảnh Hồ",
+        "geoLatitude": 20.99898916700769,
+        "geoLongitude": 105.83103150858607,
+        "activeSports": [
+            "pickleball",
+            "badminton"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "badminton",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Cầu lông 1",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Luxury",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Cảnh Hồ",
+        "geoLatitude": 21.014197429068876,
+        "geoLongitude": 105.80408083741102,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đại học Thuỷ Lợi",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Đầm Hồng",
+        "geoLatitude": 21.005952736595873,
+        "geoLongitude": 105.8273648874036,
+        "activeSports": [
+            "football",
+            "basketball",
+            "tennis",
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "acrylic_concrete",
+                "courtName": "Sân Bóng rổ 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "3_a_side",
+                "surfaceTypeCode": "plastic_floor",
+                "courtName": "Sân Bóng rổ 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "basketball",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "wooden_floor",
+                "courtName": "Sân Bóng rổ 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 4",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đầm Hồng 1",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Đầm Hồng",
+        "geoLatitude": 20.9949944737071,
+        "geoLongitude": 105.82324153910926,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "5_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "La Thành",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị La Thành",
+        "geoLatitude": 20.991834329341906,
+        "geoLongitude": 105.82658793314408,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "11_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 3",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Đầm Hồng 2",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Đầm Hồng",
+        "geoLatitude": 20.99069111104814,
+        "geoLongitude": 105.82500785604171,
+        "activeSports": [
+            "football"
+        ],
+        "courts": [
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "natural_grass",
+                "courtName": "Sân Bóng đá 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "football",
+                "courtTypeCode": "7_a_side",
+                "surfaceTypeCode": "artificial_grass",
+                "courtName": "Sân Bóng đá 2",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "100 Sa Đôi",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị La Thành",
+        "geoLatitude": 20.999917704733075,
+        "geoLongitude": 105.76383355016732,
+        "activeSports": [
+            "pickleball",
+            "tennis"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Tennis 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 2",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 3",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "tennis",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "clay",
+                "courtName": "Sân Tennis 4",
+                "priceListIndex": 0
+            }
+        ]
+    },
+    {
+        "facilityName": "Láng Hạ - Giảng Võ",
+        "openingTime": "06:00",
+        "closingTime": "23:00",
+        "provinceCodeName": "ha_noi",
+        "wardCodeName": "ha_dong",
+        "addressDetail": "Khu đô thị Láng Hạ",
+        "geoLatitude": 21.02043354036283,
+        "geoLongitude": 105.81868364831223,
+        "activeSports": [
+            "pickleball"
+        ],
+        "courts": [
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 1",
+                "priceListIndex": 0
+            },
+            {
+                "sportCode": "pickleball",
+                "courtTypeCode": "singles_doubles",
+                "surfaceTypeCode": "hard_court",
+                "courtName": "Sân Pickleball 2",
+                "priceListIndex": 0
+            }
+        ]
+    }
+]

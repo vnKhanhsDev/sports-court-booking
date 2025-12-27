@@ -1,9 +1,7 @@
 package com.example.scbbackend.config.data.initial;
 
-import com.example.scbbackend.modules.address.entity.District;
 import com.example.scbbackend.modules.address.entity.Province;
 import com.example.scbbackend.modules.address.entity.Ward;
-import com.example.scbbackend.modules.address.repository.DistrictRepository;
 import com.example.scbbackend.modules.address.repository.ProvinceRepository;
 import com.example.scbbackend.modules.address.repository.WardRepository;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,7 +24,6 @@ import java.util.List;
 public class AddressInitialData {
 
     private final ProvinceRepository provinceRepository;
-    private final DistrictRepository districtRepository;
     private final WardRepository wardRepository;
 
     @Transactional
@@ -41,49 +38,39 @@ public class AddressInitialData {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            // Đọc file từ thư mục resources/data/vietnam-address-data.json
-            ClassPathResource resource = new ClassPathResource("/data/vietnam-address-data.json");
+            ClassPathResource resource = new ClassPathResource("/data/vietnam_address_data_minified.json");
             InputStream inputStream = resource.getInputStream();
 
-            // Map JSON vào DTO tạm thời
-            List<ProvinceJsonDto> provinceJsonDtos = mapper.readValue(
-                    inputStream, new TypeReference<>() {});
+            List<ProvinceJsonDto> provinceJsonDtos = mapper.readValue(inputStream, new TypeReference<>() {});
 
             List<Province> provinces = new ArrayList<>();
-            List<District> districts = new ArrayList<>();
             List<Ward> wards = new ArrayList<>();
 
-            for (ProvinceJsonDto pjDto : provinceJsonDtos) {
+            for (ProvinceJsonDto p : provinceJsonDtos) {
                 Province province = new Province();
-                province.setCode(String.valueOf(pjDto.getCode()));
-                province.setName(pjDto.getName());
-                province.setCodeName(pjDto.getCodename());
+                province.setCode(p.getCode());
+                province.setName(p.getName());
+                province.setFullName(p.getFullName());
+                province.setCodeName(p.getCodeName());
+
                 provinces.add(province);
 
-                for (DistrictJsonDto djDto : pjDto.getDistricts()) {
-                    District district = new District();
-                    district.setCode(String.valueOf(djDto.getCode()));
-                    district.setName(djDto.getName());
-                    district.setCodeName(djDto.getCodename());
-                    district.setProvince(province);
-                    districts.add(district);
+                for (WardJsonDto w : p.getWards()) {
+                    Ward ward = new Ward();
+                    ward.setCode(w.getCode());
+                    ward.setName(w.getName());
+                    ward.setFullName(w.getFullName());
+                    ward.setCodeName(w.getCodeName());
+                    ward.setProvince(province);
 
-                    for (WardJsonDto wjDto : djDto.getWards()) {
-                        Ward ward = new Ward();
-                        ward.setCode(String.valueOf(wjDto.getCode()));
-                        ward.setName(wjDto.getName());
-                        ward.setCodeName(wjDto.getCodename());
-                        ward.setDistrict(district);
-                        wards.add(ward);
-                    }
+                    wards.add(ward);
                 }
             }
 
             provinceRepository.saveAll(provinces);
-            districtRepository.saveAll(districts);
             wardRepository.saveAll(wards);
 
-            log.info("Imported {} provinces, {} districts, {} wards", provinces.size(), districts.size(), wards.size());
+            log.info("Imported {} provinces, {} wards", provinces.size(), wards.size());
         } catch (Exception e) {
             log.error("Error while trying to seed database address data", e);
             throw new RuntimeException(e);
@@ -93,27 +80,20 @@ public class AddressInitialData {
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class ProvinceJsonDto {
+        private String code;
         private String name;
-        private int code;
-        private String codename;
-        List<DistrictJsonDto> districts = new ArrayList<>();
-    }
-
-    @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    static class DistrictJsonDto {
-        private String name;
-        private int code;
-        private String codename;
+        private String fullName;
+        private String codeName;
         List<WardJsonDto> wards = new ArrayList<>();
     }
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class WardJsonDto {
+        private String code;
         private String name;
-        private int code;
-        private String codename;
+        private String fullName;
+        private String codeName;
     }
 
 }

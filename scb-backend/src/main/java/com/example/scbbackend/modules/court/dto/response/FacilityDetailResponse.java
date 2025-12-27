@@ -11,7 +11,6 @@ public record FacilityDetailResponse(
         @NonNull LocalTime openingTime,
         @NonNull LocalTime closingTime,
         String provinceCode,
-        String districtCode,
         String wardCode,
         String addressDetail,
         Double geoLatitude,

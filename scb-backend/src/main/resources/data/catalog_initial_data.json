@@ -1,0 +1,310 @@
+[
+    {
+        "sportName": "Bóng đá",
+        "sportCode": "football",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/football_k5gip4.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-football_khggxq.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Sân 5 người",
+                "courtTypeCode": "5_a_side"
+            },
+            {
+                "courtTypeName": "Sân 7 người",
+                "courtTypeCode": "7_a_side"
+            },
+            {
+                "courtTypeName": "Sân 11 người",
+                "courtTypeCode": "11_a_side"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Cỏ nhân tạo",
+                "surfaceTypeCode": "artificial_grass"
+            },
+            {
+                "surfaceTypeName": "Cỏ tự nhiên",
+                "surfaceTypeCode": "natural_grass"
+            },
+            {
+                "surfaceTypeName": "Sân futsal",
+                "surfaceTypeCode": "futsal"
+            }
+        ]
+    },
+    {
+        "sportName": "Bóng rổ",
+        "sportCode": "basketball",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/basketball_nx0jom.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-basketball_dv2ag0.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Sân 3 người",
+                "courtTypeCode": "3_a_side"
+            },
+            {
+                "courtTypeName": "Sân 5 người",
+                "courtTypeCode": "5_a_side"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sàn gỗ",
+                "surfaceTypeCode": "wooden_floor"
+            },
+            {
+                "surfaceTypeName": "Sàn nhựa",
+                "surfaceTypeCode": "plastic_floor"
+            },
+            {
+                "surfaceTypeName": "Sân bê tông phủ acrylic",
+                "surfaceTypeCode": "acrylic_concrete"
+            }
+        ]
+    },
+    {
+        "sportName": "Bóng chuyền",
+        "sportCode": "volleyball",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/volleyball_rwr8rh.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649908/img-volleyball_kw0dj9.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Đơn/Đôi",
+                "courtTypeCode": "singles_doubles"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sân gỗ",
+                "surfaceTypeCode": "wooden_floor"
+            },
+            {
+                "surfaceTypeName": "Sân bê tông phủ acrylic",
+                "surfaceTypeCode": "acrylic_concrete"
+            }
+        ]
+    },
+    {
+        "sportName": "Tennis",
+        "sportCode": "tennis",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/tennis_fvmcnp.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-tennis_hfwlok.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Đơn/Đôi",
+                "courtTypeCode": "singles_doubles"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sân đất sét",
+                "surfaceTypeCode": "clay"
+            },
+            {
+                "surfaceTypeName": "Sân cỏ",
+                "surfaceTypeCode": "grass"
+            },
+            {
+                "surfaceTypeName": "Sân cứng",
+                "surfaceTypeCode": "hard_court"
+            }
+        ]
+    },
+    {
+        "sportName": "Cầu lông",
+        "sportCode": "badminton",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648529/badminton_qa04yg.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-badminton_mafgtm.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Đơn/Đôi",
+                "courtTypeCode": "singles_doubles"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sàn gỗ",
+                "surfaceTypeCode": "wooden_floor"
+            },
+            {
+                "surfaceTypeName": "Sàn nhựa",
+                "surfaceTypeCode": "plastic_floor"
+            },
+            {
+                "surfaceTypeName": "Sân cứng",
+                "surfaceTypeCode": "hard_court"
+            }
+        ]
+    },
+    {
+        "sportName": "Pickleball",
+        "sportCode": "pickleball",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648529/pickleball_i54bai.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-pickleball_j62do4.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Đơn/Đôi",
+                "courtTypeCode": "singles_doubles"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sân cứng",
+                "surfaceTypeCode": "hard_court"
+            }
+        ]
+    },
+    {
+        "sportName": "Bóng bàn",
+        "sportCode": "table_tennis",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/table-tennis_z3n2xi.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766649907/img-tabletennis_b05hls.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Bàn đơn/đôi",
+                "courtTypeCode": "singles_doubles"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Bàn tiêu chuẩn",
+                "surfaceTypeCode": "standard_table"
+            },
+            {
+                "surfaceTypeName": "Bàn ngoài trời",
+                "surfaceTypeCode": "outdoor_table"
+            }
+        ]
+    },
+    {
+        "sportName": "Cầu mây",
+        "sportCode": "sepak_takraw",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766677908/sepak-takraw_hqqj5c.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766677970/img-sepaktakraw_lx05qs.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Sân tiêu chuẩn",
+                "courtTypeCode": "standard"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sân cứng",
+                "surfaceTypeCode": "hard_court"
+            },
+            {
+                "surfaceTypeName": "Sàn gỗ",
+                "surfaceTypeCode": "wooden_floor"
+            }
+        ]
+    },
+    {
+        "sportName": "Bóng ném",
+        "sportCode": "handball",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766648528/handball_sg3s41.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766677523/img-handball_kvy6ct.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Sân tiêu chuẩn",
+                "courtTypeCode": "standard"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Sân cứng",
+                "surfaceTypeCode": "hard_court"
+            },
+            {
+                "surfaceTypeName": "Sàn gỗ",
+                "surfaceTypeCode": "wooden_floor"
+            },
+            {
+                "surfaceTypeName": "Sàn nhựa",
+                "surfaceTypeCode": "plastic_floor"
+            }
+        ]
+    },
+    {
+        "sportName": "Golf",
+        "sportCode": "golf",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678043/golf_yltu0v.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678038/img-golf_jikmxs.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Sân 9 lỗ",
+                "courtTypeCode": "9_holes"
+            },
+            {
+                "courtTypeName": "Sân 18 lỗ",
+                "courtTypeCode": "18_holes"
+            },
+            {
+                "courtTypeName": "Sân tập đánh",
+                "courtTypeCode": "driving_range"
+            },
+            {
+                "courtTypeName": "Sân tập putting",
+                "courtTypeCode": "putting_green"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Cỏ tự nhiên",
+                "surfaceTypeCode": "natural_grass"
+            },
+            {
+                "surfaceTypeName": "Cỏ nhân tạo",
+                "surfaceTypeCode": "artificial_grass"
+            }
+        ]
+    },
+    {
+        "sportName": "Billiards",
+        "sportCode": "pool_table",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678214/pool-table_mhh0nc.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678200/img-pooltable_xzpcon.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Bàn tiêu chuẩn",
+                "courtTypeCode": "standard"
+            },
+            {
+                "courtTypeName": "Bàn giải đấu",
+                "courtTypeCode": "tournament"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Bàn nỉ xanh",
+                "surfaceTypeCode": "green_felt"
+            },
+            {
+                "surfaceTypeName": "Bàn nỉ xanh dương",
+                "surfaceTypeCode": "blue_felt"
+            }
+        ]
+    },
+    {
+        "sportName": "Bowling",
+        "sportCode": "bowling",
+        "iconUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678217/bowling_ljb1lx.svg",
+        "imageUrl": "https://res.cloudinary.com/dfconmate/image/upload/v1766678197/img-bowling_a7i4rh.webp",
+        "courtTypes": [
+            {
+                "courtTypeName": "Làn tiêu chuẩn",
+                "courtTypeCode": "standard"
+            }
+        ],
+        "surfaceTypes": [
+            {
+                "surfaceTypeName": "Làn gỗ",
+                "surfaceTypeCode": "wooden_lane"
+            },
+            {
+                "surfaceTypeName": "Làn synthetic",
+                "surfaceTypeCode": "synthetic_lane"
+            }
+        ]
+    }
+]

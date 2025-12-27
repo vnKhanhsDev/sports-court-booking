@@ -71,27 +71,27 @@ export default function MainFooter() {
                             <h3 className={styles.columnTitle}>Liên kết nhanh</h3>
                             <ul className={styles.linkList}>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Trang chủ
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.COURTS.SEARCH} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.SEARCH} className={styles.link}>
                                         Tìm sân thể thao
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Về chúng tôi
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Câu hỏi thường gặp
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Hỗ trợ khách hàng
                                     </Link>
                                 </li>
@@ -134,27 +134,27 @@ export default function MainFooter() {
                             <h3 className={styles.columnTitle}>Chính sách & Hướng dẫn</h3>
                             <ul className={styles.linkList}>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Chính sách bảo mật
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Điều khoản sử dụng
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Hướng dẫn đặt sân
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Chính sách hoàn tiền
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={ROUTES.PUBLIC.HOME} className={styles.link}>
+                                    <Link to={ROUTES.PUBLIC.MARKETPLACE.HOME} className={styles.link}>
                                         Câu hỏi thường gặp
                                     </Link>
                                 </li>

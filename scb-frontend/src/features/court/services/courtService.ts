@@ -93,12 +93,24 @@ export const courtServiceForAdmin = {
 export const publicCourtService = {
     /**
      * Get all public courts (ACTIVE courts from APPROVED facilities)
+     * @param facilityId - Optional facility ID to filter by
+     * @param sportId - Optional sport ID to filter by
      * @returns List of public courts
      */
-    getPublicCourts: async (): Promise<PublicCourt[]> => {
-        const response = await publicClient.get<ApiResponse<PublicCourt[]>>(
-            ENDPOINTS.PUBLIC.COURTS
-        );
+    getPublicCourts: async (facilityId?: number, sportId?: number): Promise<PublicCourt[]> => {
+        const params = new URLSearchParams();
+        if (facilityId !== undefined) {
+            params.append('facilityId', facilityId.toString());
+        }
+        if (sportId !== undefined) {
+            params.append('sportId', sportId.toString());
+        }
+        
+        const url = params.toString() 
+            ? `${ENDPOINTS.PUBLIC.COURTS}?${params.toString()}`
+            : ENDPOINTS.PUBLIC.COURTS;
+            
+        const response = await publicClient.get<ApiResponse<PublicCourt[]>>(url);
         return response.data.data || [];
     },
 
@@ -114,5 +126,17 @@ export const publicCourtService = {
             : ENDPOINTS.PUBLIC.COURT_DETAIL(id);
         const response = await publicClient.get<ApiResponse<PublicCourtDetail>>(url);
         return response.data.data!;
+    },
+
+    /**
+     * Get court price slots by court ID
+     * @param id - Court ID
+     * @returns Price slots for the court
+     */
+    getPublicCourtPrice: async (id: number | string): Promise<PriceSlot[]> => {
+        const response = await publicClient.get<ApiResponse<{ slots: PriceSlot[] }>>(
+            ENDPOINTS.PUBLIC.COURT_PRICE(id)
+        );
+        return response.data.data?.slots || [];
     },
 };

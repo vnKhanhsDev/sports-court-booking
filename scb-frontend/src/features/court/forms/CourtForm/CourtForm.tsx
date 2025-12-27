@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import type { OwnerFacilitySummary } from "../../types/facility.types";
-import useCatalog from "@/hooks/useCatalog";
+import useCatalog from "@/hooks/usePublicCatalog";
 import ImageUpload from "@/components/form/ImageUpload/ImageUpload";
 import { TextField } from "@/components/form";
 import { uploadImage } from "@/services/uploadService";
