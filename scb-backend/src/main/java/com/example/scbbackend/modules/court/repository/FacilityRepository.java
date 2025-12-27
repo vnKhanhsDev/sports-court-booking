@@ -138,4 +138,52 @@ public interface FacilityRepository extends JpaRepository<@NonNull Facility, @No
             @Param("id") Long id,
             @Param("status") FacilityStatus status
     );
+
+    /**
+     * Find nearby facilities using Haversine formula
+     * Returns facilities within reasonable distance, ordered by distance
+     * Limits to 10 results
+     */
+    @Query(value = """
+        SELECT f.id, f.name, ats.id as sport_id, ats.name as sport_name,
+               CONCAT(COALESCE(f.address_detail, ''), 
+                      CASE WHEN f.address_detail IS NOT NULL THEN ', ' ELSE '' END,
+                      COALESCE(w.name, ''), 
+                      CASE WHEN w.name IS NOT NULL AND p.name IS NOT NULL THEN ', ' ELSE '' END,
+                      COALESCE(p.name, '')) as address,
+               COUNT(DISTINCT c.id) as total_courts,
+               MIN(ps.price) as min_price,
+               MAX(ps.price) as max_price,
+               NULL as image_urls,
+               (6371 * acos(cos(radians(:latitude)) * cos(radians(f.geo_latitude)) * 
+                            cos(radians(f.geo_longitude) - radians(:longitude)) + 
+                            sin(radians(:latitude)) * sin(radians(f.geo_latitude)))) as distance
+        FROM facilities f
+        JOIN owner_infos o ON f.owner_account_id = o.account_id
+        JOIN facility_sports fs ON f.id = fs.facility_id
+        JOIN sports ats ON fs.sport_id = ats.id
+        LEFT JOIN provinces p ON f.province_code = p.code
+        LEFT JOIN wards w ON f.ward_code = w.code
+        LEFT JOIN courts c ON c.facility_id = f.id AND c.sport_id = ats.id AND c.status = :courtStatus
+        LEFT JOIN price_lists pl ON c.price_list_id = pl.id
+        LEFT JOIN price_slots ps ON pl.id = ps.price_list_id
+        WHERE f.status = :facilityStatus
+          AND f.geo_latitude IS NOT NULL
+          AND f.geo_longitude IS NOT NULL
+          AND (6371 * acos(cos(radians(:latitude)) * cos(radians(f.geo_latitude)) * 
+                           cos(radians(f.geo_longitude) - radians(:longitude)) + 
+                           sin(radians(:latitude)) * sin(radians(f.geo_latitude)))) < 50
+        GROUP BY f.id, f.name, ats.id, ats.name, f.address_detail, w.name, p.name, 
+                 f.geo_latitude, f.geo_longitude
+        ORDER BY (6371 * acos(cos(radians(:latitude)) * cos(radians(f.geo_latitude)) * 
+                              cos(radians(f.geo_longitude) - radians(:longitude)) + 
+                              sin(radians(:latitude)) * sin(radians(f.geo_latitude)))) ASC
+        LIMIT 10
+        """, nativeQuery = true)
+    List<Object[]> findNearbyFacilitiesNative(
+            @Param("latitude") Double latitude,
+            @Param("longitude") Double longitude,
+            @Param("facilityStatus") String facilityStatus,
+            @Param("courtStatus") String courtStatus
+    );
 }

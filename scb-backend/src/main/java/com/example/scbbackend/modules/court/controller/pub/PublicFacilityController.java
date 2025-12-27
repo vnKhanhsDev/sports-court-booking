@@ -41,11 +41,11 @@ public class PublicFacilityController {
 
     @GetMapping("/nearby")
     public ApiResponse<List<PublicFacilitySummaryResponse>> getAllNearbyFacilities(
-            @RequestParam Double geoLatitude, @RequestParam Double geoLongitude
+            @RequestParam Double latitude, @RequestParam Double longitude
     ) {
         return ApiResponse.success(
                 ApiCode.GET_ALL_NEARBY_FACILITIES_SUCCESS,
-                facilityService.getAllNearbyFacilities(geoLatitude, geoLongitude)
+                facilityService.getAllNearbyFacilities(latitude, longitude)
         );
     }
 

@@ -218,12 +218,44 @@ public class FacilityService {
 
     /**
      * PUBLIC: GET ALL NEARBY FACILITIES
+     * Returns up to 10 facilities closest to the given coordinates
      * */
     @Transactional(readOnly = true)
     public List<PublicFacilitySummaryResponse> getAllNearbyFacilities(
             Double geoLatitude, Double geoLongitude
     ) {
-        return null;
+        List<Object[]> results = facilityRepository.findNearbyFacilitiesNative(
+                geoLatitude,
+                geoLongitude,
+                FacilityStatus.APPROVED.name(),
+                CourtStatus.ACTIVE.name()
+        );
+
+        return results.stream()
+                .map(row -> {
+                    Long facilityId = ((Number) row[0]).longValue();
+                    String facilityName = (String) row[1];
+                    Long sportId = ((Number) row[2]).longValue();
+                    String sportName = (String) row[3];
+                    String address = (String) row[4];
+                    Long totalCourts = ((Number) row[5]).longValue();
+                    BigDecimal minPrice = row[6] != null ? (BigDecimal) row[6] : null;
+                    BigDecimal maxPrice = row[7] != null ? (BigDecimal) row[7] : null;
+                    List<String> imageUrls = null; // Will be populated if needed
+
+                    return new PublicFacilitySummaryResponse(
+                            facilityId,
+                            facilityName,
+                            sportId,
+                            sportName,
+                            address,
+                            totalCourts,
+                            minPrice,
+                            maxPrice,
+                            imageUrls
+                    );
+                })
+                .toList();
     }
 
     /**

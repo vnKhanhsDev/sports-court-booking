@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "court_images")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder(toBuilder = true)
 public class CourtImage {
     @Id
