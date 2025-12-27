@@ -1,0 +1,155 @@
+.filter {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.clearButton {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+    background: rgba(23, 42, 83, 0.05);
+}
+
+.clearButton:active {
+    transform: scale(0.95);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.filterSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sectionTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.selectGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.selectLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    padding-right: 36px;
+}
+
+.select:hover {
+    border-color: var(--border-focus);
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(23, 42, 83, 0.1);
+}
+
+.select:disabled {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.loading {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 12px 0;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .filter {
+        position: static;
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter {
+        padding: 20px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .content {
+        gap: 24px;
+    }
+
+    .filterSection {
+        gap: 12px;
+    }
+}
+

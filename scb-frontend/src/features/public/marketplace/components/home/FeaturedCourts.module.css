@@ -1,0 +1,343 @@
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: var(--bg-primary);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+
+/* Sports Filter */
+.sportsFilter {
+    position: relative;
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.blurEdges {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(89.92deg, hsla(0, 0%, 100%, 0) 0.09%, #fff 103.92%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.blurEdges.left {
+    left: 0;
+    background: linear-gradient(to left, hsla(0, 0%, 100%, 0) 0.09%, #fff 103.92%);
+}
+
+.sportsList {
+    display: flex;
+    gap: 24px;
+    padding: 8px;
+    overflow-x: auto;
+}
+
+.sportsList::-webkit-scrollbar {
+    display: none;
+}
+
+.sportItem {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding: 12px 12px 0;
+    background-color: #ebeefd;
+    border-radius: 12px;
+    outline: 1px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, outline-color 0.3s ease;
+    cursor: pointer;
+}
+
+.sportItem.active {
+    outline-color: #4361ee;
+}
+
+.sportItem:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    outline-color: #4361ee;
+}
+
+.sportImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    object-fit: cover;    
+}
+
+.sportName {
+    display: block;
+    font-size: .75rem;
+    font-weight: 500;
+    text-align: left;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+
+/* Facilities Grid */
+.facilitiesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.facilityCard {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.facilityCard:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.cardImageContainer {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    position: relative;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.facilityCard:hover .cardImage {
+    transform: scale(1.05);
+}
+
+.cardImagePlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    color: var(--text-tertiary);
+}
+
+.cardImagePlaceholder svg {
+    width: 48px;
+    height: 48px;
+}
+
+.cardContent {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.sportBadge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.venueName {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.location {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cardActions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.viewButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--neutral-300);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    justify-content: center;
+}
+
+.viewButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.viewIcon {
+    width: 16px;
+    height: 16px;
+    color: currentColor;
+}
+
+.bookButton {
+    flex: 1;
+    padding: 8px 16px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    color: var(--text-inverse);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.bookButton:hover {
+    background: var(--primary-800);
+    opacity: 0.9;
+}
+
+/*** See More Button ***/
+.seeMoreContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.seeMoreButton {
+    max-width: 300px;
+    color: var(--text-secondary);
+    padding: 8px 24px;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+}
+
+.seeMoreButton:hover {
+    color: var(--text-primary);
+    border-color: var(--border-focus);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .facilitiesGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 32px 16px;
+    }
+
+    .title {
+        font-size: 1.75rem;
+        margin-bottom: 20px;
+    }
+
+    .facilitiesGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .cardImageContainer {
+        height: 180px;
+    }
+
+    .cardContent {
+        padding: 14px;
+    }
+
+    .venueName {
+        font-size: 1rem;
+    }
+
+    .sportsList {
+        gap: 12px;
+    }
+
+    .sportItem {
+        min-width: 70px;
+        padding: 10px 12px;
+    }
+
+    .sportIcon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 24px 12px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .cardActions {
+        flex-direction: column;
+    }
+
+    .viewButton,
+    .bookButton {
+        width: 100%;
+    }
+}
+
