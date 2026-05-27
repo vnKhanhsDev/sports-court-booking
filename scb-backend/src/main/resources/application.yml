@@ -64,7 +64,7 @@ spring:
       on-profile: dev
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/sports_court_booking
+    url: jdbc:postgresql://localhost:5433/sports_court_booking
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
