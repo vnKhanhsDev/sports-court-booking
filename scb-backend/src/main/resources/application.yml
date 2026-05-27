@@ -1,8 +1,10 @@
+#file: noinspection YAMLSchemaValidation
 spring:
   application:
     name: scb-backend
+
   profiles:
-    active: dev
+    active: ${PROFILE:prod}
 
   servlet:
     multipart:
@@ -11,11 +13,17 @@ spring:
       max-request-size: 50MB
       file-size-threshold: 2KB
 
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME:namkhanhs.per@gmail.com}
-    password: ${MAIL_PASSWORD:mcaq qbky jfpe tsgc}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     protocol: smtp
     properties:
       mail:
@@ -27,20 +35,20 @@ spring:
             trust: smtp.gmail.com
 
 jwt:
-  signer-key: ${JWT_SECRET:e2639cd3386d24172c7e92f6e3190afaf3457c910ac2819e7cc782360919f2a6}
+  signer-key: ${JWT_SECRET}
   access-expiration: 900000       # 15 minutes
   refresh-expiration: 604800000   # 7 days
   register-expiration: 1800000    # 30 minutes
 
 cloudinary:
-  cloud-name: dfconmate
-  api-key: 748165771485967
-  api-secret: fNfkvYr-w658DE74fGnmaOyK6jQ
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
 
 payment:
   vnpay:
-    tmn-code: F7RIVO5D
-    secret-key: SLCVL8MXQB9HTX50E24MFB9SC2HQ6DSB
+    tmn-code: ${VNPAY_CODE}
+    secret-key: ${VNPAY_SECRET_KEY}
     init-payment-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     return-url: http://localhost:8080/api/v1/payment/vnpay/return
     ipn-url: http://localhost:8080/api/v1/payment/vnpay/ipn
@@ -50,57 +58,6 @@ app:
   master-data:
     enabled: true
     admin:
-      email: ${ADMIN_EMAIL:admin@domain.com}
-      password: ${ADMIN_PASSWORD:admin}
+      email: ${ADMIN_EMAIL}
+      password: ${ADMIN_PASSWORD}
       full-name: System Administrator
-
----
-# ======================================
-# DEV PROFILE (Local Configuration)
-# ======================================
-spring:
-  config:
-    activate:
-      on-profile: dev
-
-  datasource:
-    url: jdbc:postgresql://localhost:5433/sports_court_booking
-    username: admin
-    password: admin
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-app:
-  mock-data:
-    enabled: true
-
----
-# ======================================
-# PROD PROFILE (Server Configuration)
-# ======================================
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: false
-
-app:
-  mock-data:
-    enabled: false
