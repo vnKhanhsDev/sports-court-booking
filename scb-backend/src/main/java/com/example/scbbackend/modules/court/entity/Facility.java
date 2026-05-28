@@ -1,7 +1,5 @@
 package com.example.scbbackend.modules.court.entity;
 
-import com.example.scbbackend.modules.address.entity.Province;
-import com.example.scbbackend.modules.address.entity.Ward;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.court.enums.FacilityStatus;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
@@ -41,16 +39,17 @@ public class Facility {
     @Column(name = "closing_time", nullable = false)
     private LocalTime closingTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "province_code")
-    private Province province;
+    @Column(name = "province_code", nullable = false)
+    private String provinceCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ward_code")
-    private Ward ward;
+    @Column(name = "ward_code", nullable = false)
+    private String wardCode;
 
-    @Column(name = "address_detail")
+    @Column(name = "address_detail", nullable = false)
     private String addressDetail;
+
+    @Column(name = "full_address", nullable = false)
+    private String fullAddress;
 
     @Column(name = "geo_latitude")
     private Double geoLatitude;
@@ -84,13 +83,5 @@ public class Facility {
     @PrePersist
     public void prePersist() {
         this.status = FacilityStatus.PENDING;
-    }
-
-    public String getFullAddress() {
-        StringBuilder sb = new StringBuilder();
-        if (addressDetail != null) sb.append(addressDetail);
-        if (ward != null) sb.append(", ").append(ward.getName());
-        if (province != null) sb.append(", ").append(province.getName());
-        return sb.toString();
     }
 }

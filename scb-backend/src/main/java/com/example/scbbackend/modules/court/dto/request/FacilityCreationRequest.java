@@ -10,7 +10,6 @@ public record FacilityCreationRequest(
         @NonNull LocalTime openingTime,
         @NonNull LocalTime closingTime,
         @NonNull String provinceCode,
-        @NonNull String districtCode,
         @NonNull String wardCode,
         @NonNull String addressDetail,
         Double geoLatitude,
