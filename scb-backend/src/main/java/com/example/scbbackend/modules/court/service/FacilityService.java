@@ -2,7 +2,6 @@ package com.example.scbbackend.modules.court.service;
 
 import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
-import com.example.scbbackend.modules.address.service.AddressService;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
@@ -28,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,7 +43,19 @@ public class FacilityService {
     private final PriceListRepository priceListRepository;
     private final CourtImageRepository courtImageRepository;
 
-    private final AddressService addressService;
+    // =====================================================
+    // OWNER FACILITY SERVICES
+    // =====================================================
+
+
+    // =====================================================
+    // ADMIN FACILITY SERVICES
+    // =====================================================
+
+
+    // =====================================================
+    // PUBLIC FACILITY SERVICES
+    // =====================================================
 
     @Transactional(readOnly = true)
     public List<OwnerFacilitySummaryResponse> getAllFacilities(OwnerInfo ownerInfo) {
@@ -61,8 +71,8 @@ public class FacilityService {
                         .description(request.description())
                         .openingTime(request.openingTime())
                         .closingTime(request.closingTime())
-                        .province(addressService.findProvinceByCode(request.provinceCode()))
-                        .ward(addressService.findWardByCode(request.wardCode()))
+                        .provinceCode(request.provinceCode())
+                        .wardCode(request.wardCode())
                         .addressDetail(request.addressDetail())
                         .geoLatitude(request.geoLatitude())
                         .geoLongitude(request.geoLongitude())
@@ -81,8 +91,8 @@ public class FacilityService {
                 facility.getDescription(),
                 facility.getOpeningTime(),
                 facility.getClosingTime(),
-                facility.getProvince() != null ? facility.getProvince().getCode() : null,
-                facility.getWard() != null ? facility.getWard().getCode() : null,
+                facility.getProvinceCode(),
+                facility.getWardCode(),
                 facility.getAddressDetail(),
                 facility.getGeoLatitude(),
                 facility.getGeoLongitude(),
@@ -98,8 +108,8 @@ public class FacilityService {
         facility.setDescription(request.description());
         facility.setOpeningTime(request.openingTime());
         facility.setClosingTime(request.closingTime());
-        facility.setProvince(addressService.findProvinceByCode(request.provinceCode()));
-        facility.setWard(addressService.findWardByCode(request.wardCode()));
+        facility.setProvinceCode(request.provinceCode());
+        facility.setWardCode(request.wardCode());
         facility.setAddressDetail(request.addressDetail());
         facility.setGeoLatitude(request.geoLatitude());
         facility.setGeoLongitude(request.geoLongitude());

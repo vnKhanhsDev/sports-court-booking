@@ -1,6 +1,5 @@
 package com.example.scbbackend.config.data.mock;
 
-import com.example.scbbackend.modules.address.service.AddressService;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.catalog.service.CatalogService;
 import com.example.scbbackend.modules.court.entity.Court;
@@ -36,7 +35,6 @@ public class CourtMockData {
     private final FacilityRepository facilityRepository;
     private final CourtRepository courtRepository;
 
-    private final AddressService addressService;
     private final CatalogService catalogService;
 
     @Transactional
@@ -70,8 +68,8 @@ public class CourtMockData {
                         .name(f.getFacilityName())
                         .openingTime(LocalTime.parse(f.getOpeningTime()))
                         .closingTime(LocalTime.parse(f.getClosingTime()))
-                        .province(addressService.getProvinceByCodeName(f.getProvinceCodeName()))
-                        .ward(addressService.getWardByProvinceCodeNameAndWardCodeName(f.getProvinceCodeName(), f.getWardCodeName()))
+                        .provinceCode(f.getProvinceCode())
+                        .wardCode(f.getWardCode())
                         .addressDetail(f.getAddressDetail())
                         .geoLatitude(f.getGeoLatitude())
                         .geoLongitude(f.getGeoLongitude())
@@ -114,8 +112,8 @@ public class CourtMockData {
         private String facilityName;
         private String openingTime;
         private String closingTime;
-        private String provinceCodeName;
-        private String wardCodeName;
+        private String provinceCode;
+        private String wardCode;
         private String addressDetail;
         private double geoLatitude;
         private double geoLongitude;

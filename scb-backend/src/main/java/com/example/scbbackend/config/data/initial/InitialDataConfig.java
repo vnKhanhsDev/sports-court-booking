@@ -16,7 +16,6 @@ public class InitialDataConfig implements ApplicationRunner {
 
     private final UserInitialData userInitialData;
     private final CatalogInitialData catalogInitialData;
-    private final AddressInitialData addressInitialData;
 
     @Override
     public void run(@NonNull ApplicationArguments args) throws Exception {
@@ -25,7 +24,6 @@ public class InitialDataConfig implements ApplicationRunner {
 
         userInitialData.initialize();
         catalogInitialData.initialize();
-        addressInitialData.initialize();
 
         log.info(">>> INITIAL DATA CONFIG SUCCESS <<<");
 
