@@ -61,3 +61,10 @@ app:
       email: ${ADMIN_EMAIL}
       password: ${ADMIN_PASSWORD}
       full-name: System Administrator
+
+  async:
+    email:
+      core-pool-size: 5
+      max-pool-size: 20
+      queue-capacity: 100
+      keep-alive-seconds: 60
