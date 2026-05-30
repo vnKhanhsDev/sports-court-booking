@@ -1,12 +1,14 @@
 package com.example.scbbackend.common.response;
 
 import com.example.scbbackend.common.exception.ErrorCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Builder;
 
 import java.time.Instant;
 
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse <T> {
 
     private boolean success;
@@ -23,6 +25,15 @@ public class ApiResponse <T> {
                 .message("Success")
                 .timestamp(Instant.now())
                 .path(request.getRequestURI())
+                .build();
+    }
+
+    public static <T> ApiResponse<T> error(ErrorCode errorCode) {
+        return ApiResponse.<T>builder()
+                .success(false)
+                .errorCode(errorCode.name())
+                .message(errorCode.getMessage())
+                .timestamp(Instant.now())
                 .build();
     }
 
