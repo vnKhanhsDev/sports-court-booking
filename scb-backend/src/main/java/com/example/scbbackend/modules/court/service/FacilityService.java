@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.court.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.catalog.entity.Sport;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
@@ -125,13 +125,13 @@ public class FacilityService {
         // Check if facility has any courts
         long courtCount = courtRepository.countByFacility(facility);
         if (courtCount > 0) {
-            throw new AppException(ApiCode.FACILITY_HAS_COURTS);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         // Check if facility is referenced by any price lists
         long priceListCount = priceListRepository.countByFacility(facility);
         if (priceListCount > 0) {
-            throw new AppException(ApiCode.FACILITY_HAS_PRICE_LISTS);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         facilityRepository.delete(facility);
@@ -374,13 +374,13 @@ public class FacilityService {
         Facility facility = facilityRepository.findPublicFacilityById(
                 facilityId,
                 FacilityStatus.APPROVED
-        ).orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+        ).orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
         
         // Verify sport is in facility's active sports
         boolean hasSport = facility.getActiveSports().stream()
                 .anyMatch(sport -> sport.getId().equals(sportId));
         if (!hasSport) {
-            throw new AppException(ApiCode.FACILITY_NOT_FOUND);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
         
         // Get sport name
@@ -468,13 +468,13 @@ public class FacilityService {
     @Transactional(readOnly = true)
     protected Facility getFacilityById(Long id) {
         return facilityRepository.findById(id)
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     protected Facility getFacilityByIdAndOwnerInfo(Long id, OwnerInfo ownerInfo) {
         return facilityRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
 }

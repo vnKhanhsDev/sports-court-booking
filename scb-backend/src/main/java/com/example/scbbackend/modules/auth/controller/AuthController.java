@@ -1,8 +1,8 @@
 package com.example.scbbackend.modules.auth.controller;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.auth.dto.request.LoginRequest;
 import com.example.scbbackend.modules.auth.dto.request.RegisterNewAccountRequest;
 import com.example.scbbackend.modules.auth.dto.request.RegisterNewRoleRequest;
@@ -33,7 +33,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ApiResponse<?> login(
-            @Valid @RequestBody LoginRequest request, HttpServletResponse httpServletResponse
+            @Valid @RequestBody LoginRequest request,
+            HttpServletRequest httpRequest,
+            HttpServletResponse httpServletResponse
     ) {
         var authResponse = authService.login(request);
 
@@ -44,37 +46,54 @@ public class AuthController {
                 .user(authResponse.user())
                 .build();
 
-        return ApiResponse.success(ApiCode.LOGIN_SUCCESS, loginResponse);
+        return ApiResponse.success(loginResponse, httpRequest);
     }
 
     @PostMapping("/register")
-    public ApiResponse<?> registerNewAccount(@Valid @RequestBody RegisterNewAccountRequest request) {
+    public ApiResponse<?> registerNewAccount(
+            @Valid @RequestBody RegisterNewAccountRequest request,
+            HttpServletRequest httpRequest
+    ) {
         authService.registerNewAccount(request);
-        return ApiResponse.success(ApiCode.REGISTER_SUCCESS);
+        return ApiResponse.success(null, httpRequest);
     }
 
     @PostMapping("/register/new-role")
-    public ApiResponse<?> registerNewRole(@Valid @RequestBody RegisterNewRoleRequest request) {
+    public ApiResponse<?> registerNewRole(
+            @Valid @RequestBody RegisterNewRoleRequest request,
+            HttpServletRequest httpRequest
+    ) {
         authService.registerNewRole(request);
-        return ApiResponse.success(ApiCode.REGISTER_SUCCESS);
+        return ApiResponse.success(null, httpRequest);
     }
 
     @PostMapping("/verify-otp")
-    public ApiResponse<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
+    public ApiResponse<?> verifyOtp(
+            @RequestBody VerifyOtpRequest request,
+            HttpServletRequest httpRequest
+    ) {
         Object user = authService.verifyOtp(request);
-        return ApiResponse.success(ApiCode.VERIFY_OTP_SUCCESS, user);
+        return ApiResponse.success(user, httpRequest);
     }
 
     @PostMapping("/resend-otp")
-    public ApiResponse<?> resendOtp(@RequestParam String contact, @RequestParam String type) {
+    public ApiResponse<?> resendOtp(
+            @RequestParam String contact,
+            @RequestParam String type,
+            HttpServletRequest httpRequest
+    ) {
         authService.resendOtp(contact, type);
-        return ApiResponse.success(ApiCode.RESEND_OTP_SUCCESS);
+        return ApiResponse.success(null, httpRequest);
     }
 
     @GetMapping("/register/availability")
-    public ApiResponse<?> checkRegisterAvailability(@RequestParam String contact, @RequestParam String role) {
+    public ApiResponse<?> checkRegisterAvailability(
+            @RequestParam String contact,
+            @RequestParam String role,
+            HttpServletRequest httpRequest
+    ) {
         AuthFlowStepsResponse stepsResponse = authService.checkRegisterAvailability(contact, role);
-        return ApiResponse.success(ApiCode.REGISTER_AVAILABILITY, stepsResponse);
+        return ApiResponse.success(stepsResponse, httpRequest);
     }
 
     @PostMapping("/refresh-token")
@@ -88,14 +107,14 @@ public class AuthController {
                 }
             }
         }
-        if (refreshToken == null) throw new AppException(ApiCode.REFRESH_TOKEN_INVALID);
+        if (refreshToken == null) throw new AppException(ErrorCode.INVALID_CREDENTIALS, request);
 
         var authResponse = authService.refreshToken(refreshToken);
         cookieUtils.setRefreshTokenCookie(response, authResponse.refreshToken());
 
         Map<String, String> token = new HashMap<>();
         token.put("accessToken", authResponse.accessToken());
-        return ApiResponse.success(ApiCode.LOGIN_SUCCESS, token);
+        return ApiResponse.success(token, request);
     }
 
 }

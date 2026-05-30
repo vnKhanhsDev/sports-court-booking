@@ -1,10 +1,10 @@
 package com.example.scbbackend.modules.court.controller.pub;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilityDetailResponse;
 import com.example.scbbackend.modules.court.dto.response.pub.PublicFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.service.FacilityService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,42 +22,36 @@ public class PublicFacilityController {
     private final FacilityService facilityService;
 
     @GetMapping
-    public ApiResponse<List<PublicFacilitySummaryResponse>> getAllPublicFacilities() {
-        return ApiResponse.success(
-                ApiCode.GET_ALL_PUBLIC_FACILITIES_SUCCESS,
-                facilityService.getAllPublicFacilities()
-        );
+        public ApiResponse<List<PublicFacilitySummaryResponse>> getAllPublicFacilities(
+                        HttpServletRequest httpRequest
+        ) {
+                return ApiResponse.success(facilityService.getAllPublicFacilities(), httpRequest);
     }
 
     @GetMapping("/featured")
     public ApiResponse<List<PublicFacilitySummaryResponse>> getFeaturedFacilities(
-            @RequestParam Long sportId
+                        @RequestParam Long sportId,
+                        HttpServletRequest httpRequest
     ) {
-        return ApiResponse.success(
-                ApiCode.GET_ALL_PUBLIC_FACILITIES_SUCCESS,
-                facilityService.getFeaturedFacilitiesBySportId(sportId)
-        );
+                return ApiResponse.success(facilityService.getFeaturedFacilitiesBySportId(sportId), httpRequest);
     }
 
     @GetMapping("/nearby")
     public ApiResponse<List<PublicFacilitySummaryResponse>> getAllNearbyFacilities(
-            @RequestParam Double latitude, @RequestParam Double longitude
+                        @RequestParam Double latitude,
+                        @RequestParam Double longitude,
+                        HttpServletRequest httpRequest
     ) {
-        return ApiResponse.success(
-                ApiCode.GET_ALL_NEARBY_FACILITIES_SUCCESS,
-                facilityService.getAllNearbyFacilities(latitude, longitude)
-        );
+                return ApiResponse.success(facilityService.getAllNearbyFacilities(latitude, longitude), httpRequest);
     }
 
     @GetMapping("/{facilityId}")
     public ApiResponse<PublicFacilityDetailResponse> getPublicFacilityDetail(
             @PathVariable Long facilityId,
-            @RequestParam Long sportId
+                        @RequestParam Long sportId,
+                        HttpServletRequest httpRequest
     ) {
-        return ApiResponse.success(
-                ApiCode.GET_PUBLIC_FACILITY_DETAIL_SUCCESS,
-                facilityService.getPublicFacilityDetail(facilityId, sportId)
-        );
+                return ApiResponse.success(facilityService.getPublicFacilityDetail(facilityId, sportId), httpRequest);
     }
 
 }

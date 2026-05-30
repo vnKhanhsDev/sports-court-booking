@@ -1,9 +1,9 @@
 package com.example.scbbackend.modules.court.controller.admin;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.court.dto.response.AdminFacilitySummaryResponse;
 import com.example.scbbackend.modules.court.service.FacilityService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,35 +17,33 @@ public class AdminFacilityController {
     private final FacilityService facilityService;
 
     @GetMapping
-    public ApiResponse<List<AdminFacilitySummaryResponse>> getAllAdminFacilities() {
-        return ApiResponse.success(
-                ApiCode.GET_ALL_ADMIN_FACILITIES_SUCCESS,
-                facilityService.getAllAdminFacilities()
-        );
+    public ApiResponse<List<AdminFacilitySummaryResponse>> getAllAdminFacilities(
+            HttpServletRequest httpRequest
+    ) {
+        return ApiResponse.success(facilityService.getAllAdminFacilities(), httpRequest);
     }
 
     @PutMapping("/{id}/approve")
-    public ApiResponse<List<AdminFacilitySummaryResponse>> approveFacility(@PathVariable Long id) {
-        return ApiResponse.success(
-                ApiCode.APPROVE_FACILITY_SUCCESS,
-                facilityService.approveFacility(id)
-        );
+    public ApiResponse<List<AdminFacilitySummaryResponse>> approveFacility(
+            @PathVariable Long id,
+            HttpServletRequest httpRequest
+    ) {
+        return ApiResponse.success(facilityService.approveFacility(id), httpRequest);
     }
 
     @PutMapping("/{id}/reject")
-    public ApiResponse<List<AdminFacilitySummaryResponse>> rejectFacility(@PathVariable Long id) {
-        return ApiResponse.success(
-                ApiCode.REJECT_FACILITY_SUCCESS,
-                facilityService.rejectFacility(id)
-        );
+    public ApiResponse<List<AdminFacilitySummaryResponse>> rejectFacility(
+            @PathVariable Long id,
+            HttpServletRequest httpRequest
+    ) {
+        return ApiResponse.success(facilityService.rejectFacility(id), httpRequest);
     }
 
     @PutMapping("/approve-all")
-    public ApiResponse<List<AdminFacilitySummaryResponse>> approveAllFacilities() {
-        return ApiResponse.success(
-                ApiCode.APPROVE_ALL_FACILITIES_SUCCESS,
-                facilityService.approveAllFacilities()
-        );
+    public ApiResponse<List<AdminFacilitySummaryResponse>> approveAllFacilities(
+            HttpServletRequest httpRequest
+    ) {
+        return ApiResponse.success(facilityService.approveAllFacilities(), httpRequest);
     }
 
 }

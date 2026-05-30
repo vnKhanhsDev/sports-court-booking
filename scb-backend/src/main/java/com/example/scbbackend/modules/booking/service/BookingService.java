@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.booking.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.booking.dto.request.BookingCreationRequest;
 import com.example.scbbackend.modules.booking.dto.response.BookingResponse;
 import com.example.scbbackend.modules.booking.entity.Booking;
@@ -42,22 +42,22 @@ public class BookingService {
     @Transactional
     public BookingResponse createBooking(BookingCreationRequest request) {
         Facility facility = facilityRepository.findById(request.getFacilityId())
-                .orElseThrow(() -> new AppException(ApiCode.FACILITY_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         Court court = courtRepository.findById(request.getCourtId())
-                .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         if (bookingRepository.existsConflictingBooking(
                 court.getId(), request.getBookingDate(), request.getStartTime(), request.getEndTime())
         ) {
-            throw new AppException(ApiCode.BOOKING_CONFLICT);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         PlayerInfo playerInfo = null;
         BookingGuestInfo bookingGuestInfo = null;
         if (request.getPlayerId() != null) {
             playerInfo = playerInfoRepository.findById(request.getPlayerId())
-                    .orElseThrow(() -> new AppException(ApiCode.PLAYER_NOT_FOUND));
+                    .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
         } else {
             bookingGuestInfo = bookingGuestInfoRespository.save(
                     BookingGuestInfo.builder()
@@ -105,7 +105,7 @@ public class BookingService {
     @Transactional
     public void updateBookingStatus(UUID bookingId, BookingStatus newStatus) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new AppException(ApiCode.BOOKING_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
         
         BookingStatus oldStatus = booking.getStatus();
         

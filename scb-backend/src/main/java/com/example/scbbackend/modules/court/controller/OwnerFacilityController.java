@@ -1,8 +1,8 @@
 package com.example.scbbackend.modules.court.controller;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.court.dto.request.FacilityCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.FacilityUpdationRequest;
 import com.example.scbbackend.modules.court.dto.response.FacilityDetailResponse;
@@ -11,6 +11,7 @@ import com.example.scbbackend.modules.court.dto.response.OwnerFacilitySummaryRes
 import com.example.scbbackend.modules.court.service.FacilityService;
 import com.example.scbbackend.modules.user.entity.Account;
 import com.example.scbbackend.security.annotation.CurrentAccount;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,72 +26,82 @@ public class OwnerFacilityController {
 
     @GetMapping
     public ApiResponse<List<OwnerFacilitySummaryResponse>> getAllFacilities(
-            @CurrentAccount Account account
+                        @CurrentAccount Account account,
+                        HttpServletRequest httpRequest
     ) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.GET_FACILITIES_SUCCESS,
-                facilityService.getAllFacilities(account.getOwnerInfo())
-        );
+                return ApiResponse.success(facilityService.getAllFacilities(account.getOwnerInfo()), httpRequest);
     }
 
     @PostMapping
     public ApiResponse<List<OwnerFacilitySummaryResponse>> createFacility(
-            @CurrentAccount Account account, @RequestBody FacilityCreationRequest request
+                        @CurrentAccount Account account,
+                        @RequestBody FacilityCreationRequest request,
+                        HttpServletRequest httpRequest
     ) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.CREATE_FACILITY_SUCCESS,
-                facilityService.createFacility(account.getOwnerInfo(), request)
-        );
+                return ApiResponse.success(facilityService.createFacility(account.getOwnerInfo(), request), httpRequest);
     }
 
     @GetMapping("/{id}")
     public ApiResponse<FacilityDetailResponse> getFacilityById(
-            @PathVariable Long id, @CurrentAccount Account account
+                        @PathVariable Long id,
+                        @CurrentAccount Account account,
+                        HttpServletRequest httpRequest
     ) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.GET_FACILITY_SUCCESS,
-                facilityService.getFacilityDetail(id, account.getOwnerInfo())
-        );
+                return ApiResponse.success(facilityService.getFacilityDetail(id, account.getOwnerInfo()), httpRequest);
     }
 
     @PutMapping("/{id}")
     public ApiResponse<List<OwnerFacilitySummaryResponse>> updateFacility(
-            @PathVariable Long id, @CurrentAccount Account account, @RequestBody FacilityUpdationRequest request
+                        @PathVariable Long id,
+                        @CurrentAccount Account account,
+                        @RequestBody FacilityUpdationRequest request,
+                        HttpServletRequest httpRequest
     ) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.UPDATE_FACILITY_SUCCESS,
-                facilityService.updateFacility(id, account.getOwnerInfo(), request)
-        );
+                return ApiResponse.success(
+                                facilityService.updateFacility(id, account.getOwnerInfo(), request),
+                                httpRequest
+                );
     }
 
     @DeleteMapping("/{id}")
     public ApiResponse<List<OwnerFacilitySummaryResponse>> deleteFacility(
-            @PathVariable Long id, @CurrentAccount Account account
+                        @PathVariable Long id,
+                        @CurrentAccount Account account,
+                        HttpServletRequest httpRequest
     ) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.DELETE_FACILITY_SUCCESS,
-                facilityService.deleteFacility(id, account.getOwnerInfo())
-        );
+                return ApiResponse.success(facilityService.deleteFacility(id, account.getOwnerInfo()), httpRequest);
     }
 
     @GetMapping("/options")
-    public ApiResponse<List<FacilityOptionResponse>> getFacilityOptions(@CurrentAccount Account account) {
-        if (account.getOwnerInfo() == null) throw new AppException(ApiCode.UNAUTHENTICATED);
+        public ApiResponse<List<FacilityOptionResponse>> getFacilityOptions(
+                        @CurrentAccount Account account,
+                        HttpServletRequest httpRequest
+        ) {
+                if (account.getOwnerInfo() == null) {
+                        throw new AppException(ErrorCode.INVALID_CREDENTIALS, httpRequest);
+                }
 
-        return ApiResponse.success(
-                ApiCode.GET_FACILITIES_SUCCESS,
-                facilityService.getFacilityOptions(account.getOwnerInfo())
-        );
+                return ApiResponse.success(facilityService.getFacilityOptions(account.getOwnerInfo()), httpRequest);
     }
 
 }

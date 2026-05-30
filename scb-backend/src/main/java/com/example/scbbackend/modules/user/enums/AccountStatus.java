@@ -1,6 +1,5 @@
 package com.example.scbbackend.modules.user.enums;
 
-import com.example.scbbackend.common.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

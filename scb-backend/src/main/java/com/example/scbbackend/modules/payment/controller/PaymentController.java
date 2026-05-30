@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.payment.controller;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.exception.ErrorCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.payment.dto.request.InitPaymentRequest;
 import com.example.scbbackend.modules.payment.services.PaymentService;
 import com.example.scbbackend.modules.payment.utils.RequestUtil;
@@ -33,13 +33,13 @@ public class PaymentController {
 
             var response = paymentService.initPayment(request);
             log.info("VNPay payment initialized successfully, txnRef: {}", response.getTxnRef());
-            return ApiResponse.success(ApiCode.INIT_PAYMENT_SUCCESS, response);
+            return ApiResponse.success(response, httpRequest);
         } catch (IllegalArgumentException e) {
             log.error("Invalid payment request: {}", e.getMessage());
-            return ApiResponse.error(ApiCode.PAYMENT_INIT_FAILED);
+            return ApiResponse.error(ErrorCode.INVALID_CREDENTIALS, httpRequest);
         } catch (Exception e) {
             log.error("Error initializing VNPay payment: {}", e.getMessage(), e);
-            return ApiResponse.error(ApiCode.PAYMENT_INIT_FAILED);
+            return ApiResponse.error(ErrorCode.INVALID_CREDENTIALS, httpRequest);
         }
     }
 }
