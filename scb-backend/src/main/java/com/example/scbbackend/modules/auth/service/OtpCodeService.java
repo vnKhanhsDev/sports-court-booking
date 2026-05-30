@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.auth.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.auth.entity.OtpCode;
 import com.example.scbbackend.modules.auth.enums.OtpChannel;
 import com.example.scbbackend.modules.auth.enums.OtpType;
@@ -56,7 +56,7 @@ public class OtpCodeService {
         switch (channel) {
             case OtpChannel.EMAIL -> sendEmail(contact, code);
             case OtpChannel.PHONE -> sendSms(contact, code);
-            default -> throw new AppException(ApiCode.OTP_CHANNEL_INVALID);
+            default -> throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
     }
 
@@ -76,19 +76,19 @@ public class OtpCodeService {
     public void verifyOtpCode(String contact, OtpType type, String code) {
         OtpCode otpCode = otpCodeRepository
                 .findTopByContactAndTypeAndUsedFalseOrderByCreatedAtDesc(contact, type)
-                .orElseThrow(() -> new AppException(ApiCode.OTP_INVALID));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         if (otpCode.getExpiryAt().isBefore(LocalDateTime.now()))
-            throw new AppException(ApiCode.OTP_EXPIRED);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
 
         otpCode.setAttempts(otpCode.getAttempts() + 1);
         otpCodeRepository.save(otpCode);
 
         if (otpCode.getAttempts() > MAX_ATTEMPTS)
-            throw new AppException(ApiCode.OTP_MAX_ATTEMPTS);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
 
         if (!otpCode.getCode().equals(code))
-            throw new AppException(ApiCode.OTP_INCORRECT);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
 
         otpCode.setUsed(true);
         otpCodeRepository.save(otpCode);

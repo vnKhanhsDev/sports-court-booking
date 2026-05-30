@@ -1,8 +1,7 @@
 package com.example.scbbackend.config.data.mock;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
-import com.example.scbbackend.modules.court.entity.Facility;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.court.entity.PriceList;
 import com.example.scbbackend.modules.user.entity.OwnerInfo;
 import com.example.scbbackend.modules.user.repository.OwnerInfoRepository;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -48,7 +46,7 @@ public class MockDataConfig implements ApplicationRunner {
         userMockData.mock();
 
         OwnerInfo ownerInfo = ownerInfoRepository.findByAccountUsername("chusan1")
-                        .orElseThrow(() -> new AppException(ApiCode.USER_NOT_FOUND));
+                        .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         List<PriceList> priceLists = priceMockData.mock(ownerInfo);
         PriceList firstPriceList = priceLists.isEmpty() ? null : priceLists.getFirst();

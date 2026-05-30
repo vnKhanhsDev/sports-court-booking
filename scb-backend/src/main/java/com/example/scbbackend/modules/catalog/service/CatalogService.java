@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.catalog.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.catalog.dto.response.PublicCourtTypeResponse;
 import com.example.scbbackend.modules.catalog.dto.response.PublicSportResponse;
 import com.example.scbbackend.modules.catalog.dto.response.PublicSurfaceTypeResponse;
@@ -83,13 +83,13 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public Sport getSportById(Long id) {
         return sportRepository.findById(id)
-                .orElseThrow(() -> new AppException(ApiCode.SPORT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     public Sport getSportByCode(String code) {
         return sportRepository.findByCode(code)
-                .orElseThrow(() -> new AppException(ApiCode.SPORT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
@@ -100,20 +100,20 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public CourtType getCourtTypeById(Long id) {
         return courtTypeRepository.findById(id)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     public CourtType getCourtTypeByCode(String code) {
         return courtTypeRepository.findByCode(code)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     public CourtType getCourtTypeBySportCodeAndCode(String sportCode, String code) {
         Sport sport = getSportByCode(sportCode);
         return courtTypeRepository.findBySportAndCode(sport, code)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
@@ -124,20 +124,20 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public SurfaceType getSurfaceTypeById(Long id) {
         return surfaceTypeRepository.findById(id)
-                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     public SurfaceType getSurfaceTypeByCode(String code) {
         return surfaceTypeRepository.findByCode(code)
-                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional(readOnly = true)
     public SurfaceType getSurfaceTypeBySportCodeAndCode(String sportCode, String code) {
         Sport sport = getSportByCode(sportCode);
         return surfaceTypeRepository.findBySportAndCode(sport, code)
-                .orElseThrow(() -> new AppException(ApiCode.SURFACE_TYPE_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
 }

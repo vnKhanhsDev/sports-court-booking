@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.auth.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.auth.dto.request.LoginRequest;
 import com.example.scbbackend.modules.auth.dto.request.RegisterNewAccountRequest;
 import com.example.scbbackend.modules.auth.dto.request.RegisterNewRoleRequest;
@@ -47,12 +47,12 @@ public class AuthService {
 
         if (account == null || !account.hasRole(UserRole.fromString(request.role()))) {
             log.warn("Invalid login request. Account not found.");
-            throw new AppException(ApiCode.ACCOUNT_NOT_FOUND);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
         if (!passwordEncoder.matches(request.password(), account.getPassword()))
-            throw new AppException(ApiCode.PASSWORD_INCORRECT);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         if (account.getStatus() == AccountStatus.BANNED)
-            throw new AppException(ApiCode.ACCOUNT_BANNED);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
 
         String accessToken = jwtService.generateAccessToken(account);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(account);
@@ -110,7 +110,7 @@ public class AuthService {
         UserRole userRole = UserRole.fromString(role);
 
         if (account != null && account.hasRole(userRole))
-            throw new AppException(ApiCode.ACCOUNT_EXISTED);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
 
         otpCodeService.sendOtpCode(contact, OtpType.REGISTER);
 
@@ -128,7 +128,7 @@ public class AuthService {
 
         if (account.getStatus() == AccountStatus.BANNED) {
             refreshTokenService.deleteByAccountId(account.getId());
-            throw new AppException(ApiCode.ACCOUNT_BANNED);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         String newAccessToken = jwtService.generateAccessToken(account);

@@ -1,7 +1,7 @@
 package com.example.scbbackend.common.exception;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.response.ApiResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,8 +13,10 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppException.class)
-    public ApiResponse<?> handleAppException(AppException e) {
-        return ApiResponse.error(e.getApiCode());
+    public ResponseEntity<ApiResponse<?>> handleAppException(AppException e) {
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(ApiResponse.error(e.getErrorCode(), e.getRequest()));
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -25,7 +27,7 @@ public class GlobalExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
 
-        return ApiResponse.error(ApiCode.INPUT_INVALID, errors);
+        return ApiResponse.error(ErrorCode.INVALID_CREDENTIALS, null);
     }
 
 }
