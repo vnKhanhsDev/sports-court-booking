@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.user.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.user.dto.request.UserCreationRequest;
 import com.example.scbbackend.modules.user.entity.Account;
 import com.example.scbbackend.modules.user.entity.AccountRole;
@@ -55,7 +55,7 @@ public class AccountService {
     @Transactional
     public void addNewRoleToAccount(String accountId, String role) {
         Account account = accountRepository.findById(UUID.fromString(accountId))
-                .orElseThrow(() -> new AppException(ApiCode.ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         saveAccountRole(account, role);
     }

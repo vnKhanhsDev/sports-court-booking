@@ -1,7 +1,7 @@
 package com.example.scbbackend.security.jwt;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.exception.ErrorCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -33,22 +33,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        String exceptionType = (String) request.getAttribute("exception");
-        ApiCode apiCode = mapExceptionToApiCode(exceptionType);
-
-        response.getWriter().write(mapper.writeValueAsString(ApiResponse.error(apiCode)));
+        response.getWriter().write(
+                mapper.writeValueAsString(ApiResponse.error(ErrorCode.INVALID_CREDENTIALS, request))
+        );
         response.flushBuffer();
-    }
-
-    private ApiCode mapExceptionToApiCode(String exceptionType) {
-        if (exceptionType == null) return ApiCode.UNAUTHENTICATED;
-
-        return switch (exceptionType) {
-            case "TOKEN_EXPIRED" -> ApiCode.TOKEN_EXPIRED;
-            case "TOKEN_INVALID" -> ApiCode.TOKEN_INVALID;
-            case "USER_NOT_FOUND" -> ApiCode.USER_NOT_FOUND;
-            default -> ApiCode.UNAUTHENTICATED;
-        };
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.court.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.catalog.service.CatalogService;
 import com.example.scbbackend.modules.court.dto.request.CourtCreationRequest;
 import com.example.scbbackend.modules.court.dto.request.CourtUpdationRequest;
@@ -82,7 +82,7 @@ public class CourtService {
             priceList = priceListService.savePriceListForCourt(privatePriceList, request.slots());
         } else {
             // Court must always have a price list: either reuse an existing one or define slots
-            throw new AppException(ApiCode.COURT_PRICE_INPUT_INVALID);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         Court court = courtRepository.save(
@@ -106,7 +106,7 @@ public class CourtService {
      */
     public OwnerCourtDetailResponse getCourtDetail(Long id, OwnerInfo ownerInfo) {
         Court court = courtRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         // Build slots from the court's price list (shared or private)
         List<PriceSlotDto> slots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
@@ -162,7 +162,7 @@ public class CourtService {
     @Transactional
     public List<OwnerCourtSummaryResponse> updateCourt(Long id, OwnerInfo ownerInfo, CourtUpdationRequest request) {
         Court court = courtRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         // Update basic court info
         court.setFacility(facilityService.getFacilityByIdAndOwnerInfo(request.facilityId(), ownerInfo));
@@ -247,7 +247,7 @@ public class CourtService {
     @Transactional
     public List<OwnerCourtSummaryResponse> deleteCourt(Long id, OwnerInfo ownerInfo) {
         Court court = courtRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         courtRepository.delete(court);
 
@@ -314,7 +314,7 @@ public class CourtService {
                 courtId,
                 CourtStatus.ACTIVE,
                 FacilityStatus.APPROVED
-        ).orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+        ).orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         List<PriceSlotDto> priceSlots = (court.getPriceList() != null && court.getPriceList().getPriceSlots() != null)
                 ? court.getPriceList().getPriceSlots().stream()
@@ -390,7 +390,7 @@ public class CourtService {
                 id,
                 CourtStatus.ACTIVE,
                 FacilityStatus.APPROVED
-        ).orElseThrow(() -> new AppException(ApiCode.COURT_NOT_FOUND));
+        ).orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
 
         Facility facility = court.getFacility();
         

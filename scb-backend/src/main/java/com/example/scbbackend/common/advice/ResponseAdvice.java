@@ -1,6 +1,5 @@
 package com.example.scbbackend.common.advice;
 
-import com.example.scbbackend.common.dto.ApiResponse;
 import lombok.NonNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -30,9 +29,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<@NonNull Object> {
             @NonNull ServerHttpRequest request,
             @NonNull ServerHttpResponse response
     ) {
-        if (body instanceof ApiResponse<?> apiResponse && apiResponse.getHttpStatus() != null) {
-            response.setStatusCode(apiResponse.getHttpStatus());
-        }
         return body;
     }
 

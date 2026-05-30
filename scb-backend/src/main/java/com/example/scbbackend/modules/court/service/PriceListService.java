@@ -1,7 +1,7 @@
 package com.example.scbbackend.modules.court.service;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.catalog.service.CatalogService;
 import com.example.scbbackend.modules.court.domain.valueobject.PriceSlotKey;
 import com.example.scbbackend.modules.court.dto.request.PriceListUpsertRequest;
@@ -132,7 +132,7 @@ public class PriceListService {
         PriceList priceList = getPriceListById(id, ownerInfo);
 
         if (courtRepository.countByPriceList(priceList) > 0) {
-            throw new AppException(ApiCode.PRICE_TEMPLATE_IN_USE);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         List<PriceSlot> existingSlots = priceList.getPriceSlots().stream().toList();
@@ -162,7 +162,7 @@ public class PriceListService {
     @Transactional(readOnly = true)
     protected PriceList getPriceListById(Long id, OwnerInfo ownerInfo) {
         return priceListRepository.findByIdAndOwnerInfo(id, ownerInfo)
-                .orElseThrow(() -> new AppException(ApiCode.PRICE_LIST_NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, null));
     }
 
     @Transactional

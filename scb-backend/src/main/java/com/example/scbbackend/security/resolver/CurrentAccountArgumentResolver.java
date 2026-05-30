@@ -1,7 +1,7 @@
 package com.example.scbbackend.security.resolver;
 
-import com.example.scbbackend.common.enums.ApiCode;
 import com.example.scbbackend.common.exception.AppException;
+import com.example.scbbackend.common.exception.ErrorCode;
 import com.example.scbbackend.modules.user.entity.Account;
 import com.example.scbbackend.modules.user.repository.AccountRepository;
 import com.example.scbbackend.security.annotation.CurrentAccount;
@@ -46,7 +46,7 @@ public class CurrentAccountArgumentResolver implements HandlerMethodArgumentReso
         
         if (authentication == null || authentication.getPrincipal() == null) {
             log.warn("No authentication found in SecurityContext");
-            throw new AppException(ApiCode.UNAUTHENTICATED);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
 
         String accountId = authentication.getPrincipal().toString();
@@ -56,11 +56,11 @@ public class CurrentAccountArgumentResolver implements HandlerMethodArgumentReso
             return accountRepository.findByIdWithRoles(uuid)
                     .orElseThrow(() -> {
                         log.warn("Account not found for ID: {}", accountId);
-                        return new AppException(ApiCode.ACCOUNT_NOT_FOUND);
+                        return new AppException(ErrorCode.INVALID_CREDENTIALS, null);
                     });
         } catch (IllegalArgumentException e) {
             log.error("Invalid account ID format: {}", accountId, e);
-            throw new AppException(ApiCode.ACCOUNT_NOT_FOUND);
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, null);
         }
     }
 }

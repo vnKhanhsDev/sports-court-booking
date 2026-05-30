@@ -1,10 +1,10 @@
 package com.example.scbbackend.modules.media.controller;
 
-import com.example.scbbackend.common.dto.ApiResponse;
-import com.example.scbbackend.common.enums.ApiCode;
+import com.example.scbbackend.common.response.ApiResponse;
 import com.example.scbbackend.modules.media.dto.response.MediaUploadResponse;
 import com.example.scbbackend.modules.media.entity.Media;
 import com.example.scbbackend.modules.media.service.MediaService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,8 @@ public class MediaController {
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ApiResponse<MediaUploadResponse> uploadMedia(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "folder", required = false, defaultValue = "media") String folderName
+            @RequestParam(value = "folder", required = false, defaultValue = "media") String folderName,
+            HttpServletRequest httpRequest
     ) {
         Media media = mediaService.uploadMedia(file, folderName);
         
@@ -31,7 +32,7 @@ public class MediaController {
                 .url(media.getUrl())
                 .build();
         
-        return ApiResponse.success(ApiCode.UPLOAD_MEDIA_SUCCESS, response);
+        return ApiResponse.success(response, httpRequest);
     }
 
 }
