@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "accounts")
 @AllArgsConstructor
@@ -24,5 +26,8 @@ public class Account extends BaseEntity {
     @Column(name = "account_status", nullable = false)
     @Builder.Default
     private AccountStatus status = AccountStatus.PENDING_VERIFICATION;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<AccountRole> roles;
 
 }

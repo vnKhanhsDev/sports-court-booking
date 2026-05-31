@@ -15,6 +15,8 @@ public enum ErrorCode {
     ACCOUNT_PENDING_VERIFICATION(HttpStatus.FORBIDDEN, "Account pending verification"),
     ACCOUNT_BANNED(HttpStatus.FORBIDDEN, "Account banned"),
 
+    ROLE_INVALID(HttpStatus.BAD_REQUEST, "Role invalid"),
+
     OTP_EXPIRED(HttpStatus.BAD_REQUEST, "OTP expired"),
     OTP_EXCEEDED(HttpStatus.TOO_MANY_REQUESTS, "OTP exceeded"),
     OTP_INCORRECT(HttpStatus.BAD_REQUEST, "OTP incorrect"),
